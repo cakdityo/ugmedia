@@ -1,0 +1,45 @@
+<md-sidenav
+        class="md-sidenav-left md-whiteframe-z2"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-sm')">
+
+    <!-- sidenav header -->
+    <md-toolbar layout="row">
+        <div class="md-toolbar-tools">
+            <h2><span>UG MEDIA</span></h2>
+            <span flex></span>
+            <md-button hide-gt-sm class="md-icon-button" aria-label="Close Side Panel" ng-click="tb.toggleSidenav()">
+                <md-tooltip>Close Side Panel</md-tooltip>
+                <md-icon class="md-default-theme material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <!-- end sidenav header -->
+
+    <!-- sidenav content -->
+    <md-list style="padding-top: 0">
+        <md-list-item ui-sref="user.profile({username: U.profile.username})" class="md-2-line"
+                      ng-click="tb.toggleSidenav()">
+            <img class="md-avatar avatar-75" src="{{ U.profile.avatar }}" alt="{{ U.profile.username }}">
+            <div class="md-list-item-text" layout="column">
+                <h3>{{ U.profile.username }}</h3>
+                <h4>{{ U.profile.name }}</h4>
+            </div>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-list-item ui-sref="user.home" ng-click="tb.toggleSidenav()">
+            <md-icon class="material-icons">home</md-icon>
+            <p>Home</p>
+        </md-list-item>
+        <md-list-item ui-sref="user.settings({username: U.profile.username, token: U.auth.token})"
+                      ng-click="tb.toggleSidenav()">
+            <md-icon class="material-icons">settings</md-icon>
+            <p>Setting Account</p>
+        </md-list-item>
+        <md-list-item ng-click="tb.logout()">
+            <md-icon>power_settings_new</md-icon>
+            <p>Logout</p>
+        </md-list-item>
+    </md-list>
+    <!-- end sidenav content -->
+</md-sidenav>

@@ -6,6 +6,7 @@ module.exports = function(){
         app: app,
         assets: assets,
         alljs: [
+            app + 'src/*.js',
             app + 'src/**/*.js',
             './*.js'
         ],
@@ -15,7 +16,7 @@ module.exports = function(){
             app + 'src/**/*.js',
             '!' + app + 'src/**/*.spec.js'
         ],
-        css : assets + '*.css',
+        css : assets + 'styles/*.css',
         sass: assets + 'styles/**/*.scss',
         bower: {
             json: require('./bower.json'),

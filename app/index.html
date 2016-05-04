@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="ugMedia">
+<html lang="en" ng-app="app">
 <head>
     <title>UG MEDIA</title>
 
@@ -7,31 +7,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic">-->
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css"/>
     <!-- endbower -->
 
     <!-- inject:css -->
+    <link rel="stylesheet" href="assets/styles/main.css">
     <!-- endinject -->
 
 </head>
 
 <body>
 
-    <!-- bower:js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-material/angular-material.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <!-- endbower -->
 
-    <!-- inject:js -->
-    <script src="src/main.module.js"></script>
-    <!-- endinject -->
+<div ui-view></div>
+
+
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/firebase/firebase.js"></script>
+<script src="bower_components/angularfire/dist/angularfire.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
+<!-- endbower -->
+
+<!-- inject:js -->
+<script src="src/app.module.js"></script>
+<script src="src/auth/auth.module.js"></script>
+<script src="src/layout/layout.module.js"></script>
+<script src="src/service/service.module.js"></script>
+<script src="src/user/user.module.js"></script>
+<script src="src/app.config.js"></script>
+<script src="src/auth/auth.controller.js"></script>
+<script src="src/layout/sidenavLeft.directive.js"></script>
+<script src="src/layout/toolbar.directive.js"></script>
+<script src="src/service/data.service.js"></script>
+<script src="src/user/user.controller.js"></script>
+<script src="src/user/userHome.controller.js"></script>
+<script src="src/user/userProfile.controller.js"></script>
+<script src="src/user/userSettings.controller.js"></script>
+<!-- endinject -->
 </body>
 
 </html>

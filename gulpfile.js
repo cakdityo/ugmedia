@@ -14,19 +14,8 @@ gulp.task('serve', function(){
         }
     });
 
-    gulp.watch(['*.html', 'assets/styles/*.css', 'src/**/*.js', 'src/**/*.html'], {cwd: 'app'}, reload);
-});
-
-// Analyzing source with JSHint and JSCS
-gulp.task('vet', function(){
-    log('Analyzing source with JSHint and JSCS...');
-    return gulp
-        .src(config.alljs)
-        .pipe($.if(args.verbose, $.print()))
-        .pipe($.jscs())
-        .pipe($.jshint())
-        .pipe($.jshint.reporter('jshint-stylish', {verbose: true}))
-        .pipe($.jshint.reporter('fail'));
+    gulp.watch(['*.html', 'src/**/*.js', 'src/**/*.html'], {cwd: 'app'}, reload);
+    gulp.watch(['assets/styles/*.scss'], {cwd: 'app'}, ['styles']);
 });
 
 //Compile Sass to CSS
@@ -37,7 +26,7 @@ gulp.task('styles', ['clean-styles'], function(){
         .pipe($.plumber())
         .pipe($.sass())
         .pipe($.autoprefixer({browsers: ['Last 2 versions', '> 5%']}))
-        .pipe(gulp.dest(config.assets))
+        .pipe(gulp.dest(config.assets + 'styles/'))
         .pipe(reload({stream:true}));
 });
 
@@ -65,6 +54,17 @@ gulp.task('inject',['wiredep', 'styles'], function(){
         .pipe(gulp.dest(config.app));
 });
 
+// Analyzing source with JSHint and JSCS
+gulp.task('vet', function(){
+    log('Analyzing source with JSHint and JSCS...');
+    return gulp
+        .src(config.alljs)
+        .pipe($.if(args.verbose, $.print()))
+        .pipe($.jscs())
+        .pipe($.jshint())
+        .pipe($.jshint.reporter('jshint-stylish', {verbose: true}))
+        .pipe($.jshint.reporter('fail'));
+});
 ////////////
 function clean(path){
     log('Cleaning: ' + $.util.colors.blue(path));
