@@ -10,29 +10,30 @@
         var users = {
             getUser: getUser,
             getUserByUsername: getUserByUsername,
-            getUsers: getUsers
+            getUsers: getUsers,
+            getUserObjects: getUserObjects
         };
 
         return users;
 
-        function getUser(userId) {
-            return $firebaseObject($firebaseRef.users.child(userId));
+        function getUser(userID) {
+            var user = $firebaseObject($firebaseRef.users.child(userID));
+            return user;
         }
 
         function getUserByUsername(username) {
-            var userID = $firebaseObject($firebaseRef.userIDs.child(username));
-            return userID.$loaded().then(function(){
-                var user = $firebaseObject($firebaseRef.users.child(userID.$value));
-                return user.$loaded();
-            });
+            var user = $firebaseArray($firebaseRef.users.orderByChild('username').equalTo(username));
+            return user;
         }
 
-        function getUsers(filter) {
-            var filteredUsers = [];
-            if (filter.length > 2) {
-                filteredUsers = $firebaseArray($firebaseRef.users.orderByChild('filter').startAt(filter).endAt(filter + '~'));
-            }
-            return filteredUsers;
+        function getUsers() {
+            var users = $firebaseArray($firebaseRef.users);
+            return users;
+        }
+
+        function getUserObjects(userID){
+            var userObjects = $firebaseObject($firebaseRef.userObjects.child(userID));
+            return userObjects;
         }
     }
 })();

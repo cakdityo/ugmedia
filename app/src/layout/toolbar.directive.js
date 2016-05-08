@@ -12,21 +12,24 @@
             controllerAs: 'tb'
         };
 
-        function ugToolbarController($firebaseAuthService){
+        function ugToolbarController($state, DataService){
             var vm = this;
 
-            vm.logout = logout;
+            vm.goToUser = goToUser;
+            vm.searchText = '';
+            vm.users = DataService.getUsers();
             vm.toggleSidenav = toggleSidenav;
+
+            function goToUser(username){
+                if (username){
+                    $state.go('user.profile',{username: username});
+                }
+            }
 
             function toggleSidenav(){
                 if(!$mdSidenav('left').isLockedOpen()){
                     $mdSidenav('left').toggle();
                 }
-            }
-
-            function logout(){
-                $firebaseAuthService.$unauth();
-                $state.go('auth');
             }
         }
     }

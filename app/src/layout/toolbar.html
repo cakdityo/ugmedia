@@ -6,6 +6,24 @@
         <h2 hide-gt-sm>
             <span>UG MEDIA</span>
         </h2>
+        <md-autocomplete
+                md-selected-item="tb.selectedUser"
+                md-search-text="tb.searchText"
+                md-items="user in tb.users | filter: tb.searchText"
+                md-item-text="user.username"
+                md-selected-item-change="tb.goToUser(user.username)"
+                md-autoselect="false"
+                md-min-length="2"
+                placeholder="Search users">
+            <md-item-template>
+                <span md-highlight-text="tb.searchText" md-highlight-flags="^i">
+                    {{ user.username }}
+                </span>
+            </md-item-template>
+            <md-not-found>
+                No matches found
+            </md-not-found>
+        </md-autocomplete>
         <span flex></span>
     </div>
 </md-toolbar>

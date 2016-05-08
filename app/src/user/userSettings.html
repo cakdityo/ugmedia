@@ -4,29 +4,27 @@
     </div>
     <md-divider></md-divider>
     <div layout="row" layout-xs="column" layout-padding>
-        <div layout="column" flex="65" flex-xs="100">
-            <md-input-container class="md-block">
-                <label>Name</label>
-                <input type="text" ng-model="U.profile.name">
-            </md-input-container>
-            <md-input-container class="md-block">
-                <label>Bio</label>
-                <textarea ng-model="U.profile.bio" rows="3"></textarea>
-            </md-input-container>
-        </div>
-        <div flex flex-xs="100">
+        <div layout="column" flex="30" flex-xs="100">
             <md-card>
-                <img class="" ng-show="!US.picFile" ng-src="{{ U.profile.avatar }}">
+                <img class="" ng-show="!US.picFile" ng-src="{{ U.user.profile.avatar }}">
                 <div ng-show="US.picFile" ngf-drop ng-model="US.picFile" ngf-pattern="image/*" class="cropArea">
                     <img-crop area-type="square" image="US.picFile | ngfDataUrl"
                               result-image="US.croppedAvatar" result-image-size=500></img-crop>
                 </div>
-                <md-card-actions layout="row" layout-align="center center">
-                    <md-button class="md-primary" ngf-select ng-model="US.picFile" accept="image/*">Select Avatar
-                    </md-button>
-                </md-card-actions>
             </md-card>
+            <md-button class="md-primary" ngf-select ng-model="US.picFile" accept="image/*">Select Avatar
+            </md-button>
+        </div>
+        <div layout="column" flex flex-xs="100">
+            <md-input-container class="md-block">
+                <label>Name</label>
+                <input type="text" ng-model="U.user.profile.name">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Bio</label>
+                <textarea ng-model="U.user.profile.bio" rows="3"></textarea>
+            </md-input-container>
         </div>
     </div>
-    <md-button class="md-primary md-raised" ng-click="US.updateUser(U.profile)">Save</md-button>
+    <md-button class="md-primary md-raised" ng-click="US.updateUser(U.profile.user)">Save</md-button>
 </div>

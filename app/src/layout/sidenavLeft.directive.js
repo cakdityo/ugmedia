@@ -12,8 +12,15 @@
             controllerAs: 'sl'
         };
 
-        function SidenavLeftController(){
-            var sl = this;
+        function SidenavLeftController($firebaseAuthService, $state){
+            var vm = this;
+
+            vm.logout = logout;
+
+            function logout(){
+                $firebaseAuthService.$unauth();
+                $state.go('auth');
+            }
         }
     }
 })();

@@ -8,7 +8,8 @@
             $firebaseRefProvider.registerUrl({
                 default: FirebaseUrl,
                 userIDs: FirebaseUrl + 'userIDs',
-                users: FirebaseUrl + 'users'
+                users: FirebaseUrl + 'users',
+                userObjects: FirebaseUrl + 'userObjects'
             });
 
             $stateProvider
@@ -35,10 +36,15 @@
                                 $state.go('auth');
                             });
                         },
-                        profile: function($firebaseAuthService, DataService){
+                        user: function ($firebaseAuthService, DataService) {
                             return $firebaseAuthService.$requireAuth().then(function (auth) {
                                 return DataService.getUser(auth.uid);
                             });
+                        },
+                        userObjects: function ($firebaseAuthService, DataService) {
+                            return $firebaseAuthService.$requireAuth().then(function (auth) {
+                                return DataService.getUserObjects(auth.uid);
+                            })
                         }
                     }
                 })
@@ -47,25 +53,20 @@
                     templateUrl: 'src/user/userHome.html',
                     controller: 'UserHomeController as UH'
                 })
-                .state('user.profile', {
-                    url: '/{username}',
-                    templateUrl: 'src/user/userProfile.html',
-                    controller: 'UserProfileController as UP',
-                    resolve: {
-                        user: function(DataService, $stateParams){
-                            return DataService.getUserByUsername($stateParams.username);
-                        }
-                    }
-                })
                 .state('user.settings', {
-                    url: '/{username}/settings/{token}',
+                    url: '/settings/{token}',
                     templateUrl: 'src/user/userSettings.html',
                     controller: 'UserSettingsController as US',
-                    onEnter: function($state, $stateParams, auth){
-                        if ($stateParams.token != auth.token){
+                    onEnter: function ($state, $stateParams, auth) {
+                        if ($stateParams.token != auth.token) {
                             $state.go('user.home');
                         }
                     }
+                })
+                .state('user.profile', {
+                    url: '/{username}',
+                    templateUrl: 'src/user/userProfile.html',
+                    controller: 'UserProfileController as UP'
                 });
         });
 })();
