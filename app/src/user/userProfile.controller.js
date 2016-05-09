@@ -5,36 +5,23 @@
         .module('app.user')
         .controller('UserProfileController', UserProfileController);
 
-    UserProfileController.$inject = ['$stateParams', 'user', 'userObjects', 'DataService','$firebaseRef'];
+    UserProfileController.$inject = ['$firebaseRef','person'];
 
-    function UserProfileController($stateParams, user, userObjects, DataService, $firebaseRef){
+    function UserProfileController($firebaseRef, person){
         var vm = this;
 
         vm.countObject = countObject;
-        vm.user = {};
-        vm.user.profile = {};
-        vm.user.objects = {};
         vm.followUser = followUser;
         vm.unFollowUser = unFollowUser;
+        vm.user = {};
+        vm.user.profile = person.profile;
+        vm.user.objects = person.objects;
+        console.log(person);
 
-        //Initialize user's profile.
-        user.$loaded().then(function(){
-            if (user.username != $stateParams.username){
-                //Initialize only the unauthenticated user
-                DataService.getUserByUsername($stateParams.username).$loaded().then(function(profile){
-                    vm.user.profile = profile[0];
-                    DataService.getUserObjects(vm.user.profile.$id).$loaded().then(function(userObjects){
-                        vm.user.objects = userObjects;
-                    });
-                });
-                console.log(vm.profile);
-            } else {
-                //Initialize the authenticated user
-                vm.user.profile = user;
-                vm.user.objects = userObjects;
-            }
-        });
-
+        /*
+            Helper function to count keys in an object.
+            Is it correct to put it here? No of course.
+         */
         function countObject(obj){
             if (obj){
                 return Object.keys(obj).length;
@@ -43,10 +30,10 @@
             }
         }
         /*
-            =========== Follow User ===========
-            1. Set vm.profile.follow to true
-            2. Set {auth}/following/{user}/true
-            3. Set {user}/followers/{auth}/true
+            ============= Follow User =============
+            1. Set vm.profile.follow to true.
+            2. Set {authID}/following/{userID}/true.
+            3. Set {userID}/followers/{authID}/true.
          */
         function followUser(authUserID, userID){
             if (!vm.user.objects.followers){
@@ -66,15 +53,12 @@
         }
 
         /*
-         ========== UnFollow user ==========
-         1. Set vm.profile.follow to false
-         2. Set {auth}/following/{user}/null
-         3. Set {user}/followers/{auth}/null
+         ============ UnFollow user ============
+         1. Set vm.profile.follow to false.
+         2. Set {authID}/following/{userID}/null.
+         3. Set {userID}/followers/{authID}/null.
          */
         function unFollowUser(authUserID, userID){
-            if (!vm.user.objects.followers){
-                vm.user.objects.followers = {};
-            }
             vm.user.objects.followers[authUserID] = null;
             $firebaseRef.userObjects
                 .child(authUserID)

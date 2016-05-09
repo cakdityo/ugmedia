@@ -5,16 +5,16 @@
         .module('app.user')
         .controller('UserController', UserController);
 
-    UserController.$inject = ['auth','user','userObjects'];
+    UserController.$inject = ['user'];
 
-    function UserController(auth, user, userObjects){
+    function UserController(user){
         var vm = this;
 
         //Initialize the authenticated user data
-        vm.auth = auth;
+        vm.auth = user.auth;
         vm.user = {};
-        vm.user.objects = userObjects;
-        vm.user.profile = user;
+        vm.user.objects = user.objects;
+        vm.user.profile = user.profile;
 
         console.log(vm.user);
 

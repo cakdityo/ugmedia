@@ -5,6 +5,7 @@
         .module('app')
         .constant('FirebaseUrl', 'http://ug-media.firebaseio.com/')
         .config(function ($firebaseRefProvider, FirebaseUrl, $stateProvider) {
+
             $firebaseRefProvider.registerUrl({
                 default: FirebaseUrl,
                 userIDs: FirebaseUrl + 'userIDs',
@@ -31,20 +32,17 @@
                     templateUrl: 'src/user/user.html',
                     controller: 'UserController as U',
                     resolve: {
-                        auth: function ($state, $firebaseAuthService) {
-                            return $firebaseAuthService.$requireAuth().catch(function () {
-                                $state.go('auth');
-                            });
-                        },
-                        user: function ($firebaseAuthService, DataService) {
-                            return $firebaseAuthService.$requireAuth().then(function (auth) {
-                                return DataService.getUser(auth.uid);
-                            });
-                        },
-                        userObjects: function ($firebaseAuthService, DataService) {
-                            return $firebaseAuthService.$requireAuth().then(function (auth) {
-                                return DataService.getUserObjects(auth.uid);
-                            })
+                        user: function (DataService, $firebaseAuthService, $state) {
+                            return $firebaseAuthService.$requireAuth()
+                                .then(function (auth) {
+                                    return {
+                                        auth: auth,
+                                        profile: DataService.getUser(auth.uid),
+                                        objects: DataService.getUserObjects(auth.uid)
+                                    }
+                                }).catch(function () {
+                                    $state.go('auth');
+                                });
                         }
                     }
                 })
@@ -57,8 +55,8 @@
                     url: '/settings/{token}',
                     templateUrl: 'src/user/userSettings.html',
                     controller: 'UserSettingsController as US',
-                    onEnter: function ($state, $stateParams, auth) {
-                        if ($stateParams.token != auth.token) {
+                    onEnter: function ($state, $stateParams, user) {
+                        if ($stateParams.token != user.auth.token) {
                             $state.go('user.home');
                         }
                     }
@@ -66,7 +64,22 @@
                 .state('user.profile', {
                     url: '/{username}',
                     templateUrl: 'src/user/userProfile.html',
-                    controller: 'UserProfileController as UP'
+                    controller: 'UserProfileController as UP',
+                    resolve: {
+                        person: function (user, $stateParams, DataService) {
+                            var username = $stateParams.username;
+                            if (user.profile.username != username){
+                                return DataService.getUserByUsername(username).$loaded().then(function(profile){
+                                    return {
+                                        profile: profile[0],
+                                        objects: DataService.getUserObjects(profile[0].$id)
+                                    }
+                                });
+                            } else {
+                                return user;
+                            }
+                        }
+                    }
                 });
         });
 })();
