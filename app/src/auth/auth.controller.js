@@ -38,7 +38,7 @@
                 username: username,
                 name: username,
                 email: authData.password.email,
-                avatar: "https://www.mautic.org/media/images/default_avatar.png",
+                avatar: 'https://www.mautic.org/media/images/default_avatar.png',
                 filter: username
             });
         }

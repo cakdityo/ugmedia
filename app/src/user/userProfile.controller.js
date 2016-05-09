@@ -10,7 +10,6 @@
     function UserProfileController($firebaseRef, person){
         var vm = this;
 
-        vm.countObject = countObject;
         vm.followUser = followUser;
         vm.unFollowUser = unFollowUser;
         vm.user = {};
@@ -18,17 +17,6 @@
         vm.user.objects = person.objects;
         console.log(person);
 
-        /*
-            Helper function to count keys in an object.
-            Is it correct to put it here? No of course.
-         */
-        function countObject(obj){
-            if (obj){
-                return Object.keys(obj).length;
-            } else {
-                return 0;
-            }
-        }
         /*
             ============= Follow User =============
             1. Set vm.profile.follow to true.

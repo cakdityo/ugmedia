@@ -39,7 +39,7 @@
                                         auth: auth,
                                         profile: DataService.getUser(auth.uid),
                                         objects: DataService.getUserObjects(auth.uid)
-                                    }
+                                    };
                                 }).catch(function () {
                                     $state.go('auth');
                                 });
@@ -56,7 +56,7 @@
                     templateUrl: 'src/user/userSettings.html',
                     controller: 'UserSettingsController as US',
                     onEnter: function ($state, $stateParams, user) {
-                        if ($stateParams.token != user.auth.token) {
+                        if ($stateParams.token !== user.auth.token) {
                             $state.go('user.home');
                         }
                     }
@@ -67,19 +67,48 @@
                     controller: 'UserProfileController as UP',
                     resolve: {
                         person: function (user, $stateParams, DataService) {
-                            var username = $stateParams.username;
-                            if (user.profile.username != username){
-                                return DataService.getUserByUsername(username).$loaded().then(function(profile){
+                            if (user.profile.username !== $stateParams.username) {
+                                return DataService.getUserByUsername($stateParams.username).$loaded().then(function (profile) {
                                     return {
                                         profile: profile[0],
                                         objects: DataService.getUserObjects(profile[0].$id)
-                                    }
+                                    };
                                 });
                             } else {
                                 return user;
                             }
                         }
                     }
-                });
+                })
+                .state('user.profile.followers', {
+                    url: '/followers',
+                    templateUrl: 'src/user/userProfileFollow.html',
+                    controller: 'UserProfileFollowController as UF',
+                    resolve: {
+                        friends: function (person, DataService) {
+                            var friends = [];
+                            angular.forEach(person.objects.followers, function(value, key){
+                                friends.push(DataService.getUser(key));
+                            });
+                            console.log(friends);
+                            return friends;
+                        }
+                    }
+                })
+                .state('user.profile.following', {
+                    url: '/following',
+                    templateUrl: 'src/user/userProfileFollow.html',
+                    controller: 'UserProfileFollowController as UF',
+                    resolve: {
+                        friends: function (person, DataService) {
+                            var friends = [];
+                            angular.forEach(person.objects.following, function(value, key){
+                                friends.push(DataService.getUser(key));
+                            });
+                            console.log(friends);
+                            return friends;
+                        }
+                    }
+                })
         });
 })();

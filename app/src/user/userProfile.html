@@ -15,16 +15,16 @@
             <img src="{{ UP.user.profile.avatar }}" alt="{{ UP.user.profile.name }}">
         </md-card>
         <div flex layout="row" layout-align="center center">
-            <md-button class="user-object-button">
-                <div class="user-object-length">{{ UP.countObject(UP.user.objects.followers) }}</div>
+            <md-button ui-sref="user.profile.followers" class="user-object-button">
+                <div class="user-object-length">{{ U.countObject(UP.user.objects.followers) }}</div>
                 Followers
             </md-button>
-            <md-button class="user-object-button">
-                <div class="user-object-length">{{ UP.countObject(UP.user.objects.following) }}</div>
+            <md-button ui-sref="user.profile.following" class="user-object-button">
+                <div class="user-object-length">{{ U.countObject(UP.user.objects.following) }}</div>
                 Following
             </md-button>
             <md-button class="user-object-button">
-                <div class="user-object-length">{{ UP.countObject(UP.user.objects.posts) }}</div>
+                <div class="user-object-length">{{ U.countObject(UP.user.objects.posts) }}</div>
                 Posts
             </md-button>
         </div>

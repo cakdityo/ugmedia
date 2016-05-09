@@ -1,0 +1,44 @@
+<md-card flex>
+    <md-card-content>
+        <md-autocomplete
+                class="profile-search-box"
+                md-search-text="UF.searchText"
+                md-items="friend in UF.friends"
+                md-item-text="friend.username"
+                md-min-length="0"
+                placeholder="Search user">
+            <span md-highlight-text="UF.searchText" md-highlight-flags="^i">{{ friend.username }}</span>
+            <md-not-found>
+                No users matching "{{UF.searchText}}" were found.
+            </md-not-found>
+        </md-autocomplete>
+    </md-card-content>
+</md-card>
+
+<md-list flex>
+    <md-subheader class="md-no-sticky">
+        <ng-pluralize ng-show="UF.followState == 'user.profile.followers'" count="U.countObject(UF.friends)"
+                      when="{
+                          '0': 'No user found.',
+                          '1': 'One follower.',
+                          'other': '{} followers.'
+                          }">
+        </ng-pluralize>
+        <ng-pluralize ng-show="UF.followState == 'user.profile.following'" count="U.countObject(UF.friends)"
+                      when="{
+                          '0': 'No user found.',
+                          '1': 'One following.',
+                          'other': '{} following.'
+                          }">
+        </ng-pluralize>
+    </md-subheader>
+    <md-list-item ui-sref="user.profile({username: friend.username})" class="md-2-line"
+                  ng-repeat="friend in UF.friends | filter:UF.searchText">
+        <img src="{{ friend.avatar }}" alt="{{ friend.username }}" class="md-avatar">
+        <div class="md-list-item-text" layout="column">
+            <h3>{{ friend.username }}</h3>
+            <h4>{{ friend.name }}</h4>
+        </div>
+        <md-divider md-inset ng-if="!$last"></md-divider>
+    </md-list-item>
+</md-list>

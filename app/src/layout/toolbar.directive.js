@@ -5,7 +5,7 @@
         .module('app.layout')
         .directive('ugToolbar', ugToolbar);
 
-    function ugToolbar($mdSidenav, $state){
+    function ugToolbar($mdSidenav){
         return {
             templateUrl: 'src/layout/toolbar.html',
             controller: ugToolbarController,
