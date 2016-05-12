@@ -35,5 +35,6 @@
   },
   "scripts": {
     "prestart": "npm update"
-  }
+  },
+  "dependencies": {}
 }

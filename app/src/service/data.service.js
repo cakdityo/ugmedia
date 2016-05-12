@@ -7,14 +7,14 @@
 
     function DataService($firebaseRef, $firebaseArray, $firebaseObject) {
 
-        var users = {
+        var data = {
             getUser: getUser,
             getUserByUsername: getUserByUsername,
             getUserObjects: getUserObjects,
             getUsers: getUsers
         };
 
-        return users;
+        return data;
 
         /*
          Get single user by ID.

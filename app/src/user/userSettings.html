@@ -5,14 +5,21 @@
     <md-divider></md-divider>
     <div layout="row" layout-xs="column" layout-padding>
         <div layout="column" flex="30" flex-xs="100">
-            <md-card>
-                <img class="" ng-show="!US.picFile" ng-src="{{ U.user.profile.avatar }}">
-                <div ng-show="US.picFile" ngf-drop ng-model="US.picFile" ngf-pattern="image/*" class="cropArea">
-                    <img-crop area-type="square" image="US.picFile | ngfDataUrl"
+            <md-card ng-show="!US.progress">
+                <img ng-show="!US.originalAvatar" ng-src="{{ U.user.profile.avatar }}">
+                <div ng-show="US.originalAvatar" ngf-drop ng-model="US.picFile" ngf-pattern="image/*" class="cropArea">
+                    <img-crop area-type="square" image="US.originalAvatar | ngfDataUrl"
                               result-image="US.croppedAvatar" result-image-size=500></img-crop>
                 </div>
             </md-card>
-            <md-button class="md-primary" ngf-select ng-model="US.picFile" accept="image/*">Select Avatar
+            <md-card ng-show="US.progress">
+                <md-card-content layout="column" layout-align="center center">
+                    <h4>Uploading Avatar</h4>
+                    <md-progress-circular md-mode="determinate" value="{{ US.progress }}"></md-progress-circular>
+                    <h4>{{ US.progress }} %</h4>
+                </md-card-content>
+            </md-card>
+            <md-button class="md-primary" ngf-select ng-model="US.originalAvatar" accept="image/*">Select Avatar
             </md-button>
         </div>
         <div layout="column" flex flex-xs="100">
