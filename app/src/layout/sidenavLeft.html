@@ -19,7 +19,7 @@
     <!-- sidenav content -->
     <md-list style="padding-top: 0">
         <md-list-item class="md-2-line" ng-click="sl.navigateTo('user.profile', {username: U.user.profile.username}); tb.toggleSidenav()">
-            <img class="md-avatar avatar-75" src="{{ U.user.profile.avatar }}" alt="{{ U.user.profile.username }}">
+            <img class="md-avatar avatar-75" ng-src="{{ U.user.profile.avatar }}" alt="{{ U.user.profile.username }}">
             <div class="md-list-item-text" layout="column">
                 <h3>{{ U.user.profile.username }}</h3>
                 <h4>{{ U.user.profile.name }}</h4>
