@@ -13,6 +13,7 @@
 
             //App dependencies
             'app.auth',
+            'app.component',
             'app.layout',
             'app.service',
             'app.user'

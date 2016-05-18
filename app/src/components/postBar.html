@@ -1,0 +1,19 @@
+<md-card flex>
+    <md-card-content id="post-bar" layout="column">
+        <md-input-container>
+            <label>Write something</label>
+            <textarea rows="2" ng-model="pb.post" md-maxlength="500"></textarea>
+        </md-input-container>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button class="md-icon-button" aria-label="Image">
+            <md-icon>image</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Document">
+            <md-icon>attach_file</md-icon>
+        </md-button>
+        <md-button class="md-raised md-primary" aria-label="Document">
+            Share
+        </md-button>
+    </md-card-actions>
+</md-card>

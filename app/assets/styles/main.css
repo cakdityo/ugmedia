@@ -46,3 +46,12 @@ body {
 
 .profile-search-box > md-autocomplete-wrap {
   box-shadow: none; }
+
+#post-bar {
+  padding-bottom: 0; }
+
+#post-bar > md-input-container {
+  margin-bottom: 0; }
+
+#post-bar + md-card-actions {
+  margin-top: 0; }

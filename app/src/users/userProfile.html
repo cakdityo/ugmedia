@@ -29,23 +29,26 @@
             </md-button>
         </div>
         <div ng-if="U.auth.uid != UP.user.profile.$id" layout="column">
-            <md-button ng-if="!UP.user.objects.followers[U.auth.uid]" ng-click="UP.followUser(U.auth.uid, UP.user.profile.$id)" class="md-accent md-raised">
+            <md-button ng-if="!UP.user.objects.followers[U.auth.uid]"
+                       ng-click="UP.followUser(U.auth.uid, UP.user.profile.$id)" class="md-accent md-raised">
                 Follow
             </md-button>
-            <md-button ng-if="UP.user.objects.followers[U.auth.uid]" ng-click="UP.unFollowUser(U.auth.uid, UP.user.profile.$id)" class="md-primary md-raised">
+            <md-button ng-if="UP.user.objects.followers[U.auth.uid]"
+                       ng-click="UP.unFollowUser(U.auth.uid, UP.user.profile.$id)" class="md-primary md-raised">
                 Following
             </md-button>
         </div>
         <md-card>
             <md-card-content>
                 <strong>Bio:</strong>
+
                 <p>{{ UP.user.profile.bio }}</p>
             </md-card-content>
         </md-card>
     </div>
-    <div flex flex-xs layout="column">
+    <div flex="50" flex-xs layout="column">
         <div ui-view>
-
+            <ug-post-bar></ug-post-bar>
         </div>
     </div>
 </div>

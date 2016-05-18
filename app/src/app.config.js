@@ -29,7 +29,7 @@
                     }
                 })
                 .state('user', {
-                    templateUrl: 'src/users/users.html',
+                    templateUrl: 'src/users/user.html',
                     controller: 'UserController as U',
                     resolve: {
                         user: function (DataService, $firebaseAuthService, $state) {
