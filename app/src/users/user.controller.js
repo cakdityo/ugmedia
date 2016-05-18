@@ -10,7 +10,7 @@
     function UserController(user){
         var vm = this;
 
-        //Initialize the authenticated user data
+        //Initialize the authenticated users data
         vm.auth = user.auth;
         vm.countObject = countObject;
         vm.user = {};

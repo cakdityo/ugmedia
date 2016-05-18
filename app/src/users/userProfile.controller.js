@@ -41,7 +41,7 @@
         }
 
         /*
-         ============ UnFollow user ============
+         ============ UnFollow users ============
          1. Set vm.profile.follow to false.
          2. Set {authID}/following/{userID}/null.
          3. Set {userID}/followers/{authID}/null.

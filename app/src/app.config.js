@@ -29,7 +29,7 @@
                     }
                 })
                 .state('user', {
-                    templateUrl: 'src/user/user.html',
+                    templateUrl: 'src/users/users.html',
                     controller: 'UserController as U',
                     resolve: {
                         user: function (DataService, $firebaseAuthService, $state) {
@@ -48,12 +48,12 @@
                 })
                 .state('user.home', {
                     url: '/',
-                    templateUrl: 'src/user/userHome.html',
+                    templateUrl: 'src/users/userHome.html',
                     controller: 'UserHomeController as UH'
                 })
                 .state('user.settings', {
                     url: '/settings/{token}',
-                    templateUrl: 'src/user/userSettings.html',
+                    templateUrl: 'src/users/userSettings.html',
                     controller: 'UserSettingsController as US',
                     onEnter: function ($state, $stateParams, user) {
                         if ($stateParams.token !== user.auth.token) {
@@ -63,7 +63,7 @@
                 })
                 .state('user.profile', {
                     url: '/{username}',
-                    templateUrl: 'src/user/userProfile.html',
+                    templateUrl: 'src/users/userProfile.html',
                     controller: 'UserProfileController as UP',
                     resolve: {
                         person: function (user, $stateParams, DataService) {
@@ -82,8 +82,8 @@
                 })
                 .state('user.profile.followers', {
                     url: '/followers',
-                    templateUrl: 'src/user/userProfileFollow.html',
-                    controller: 'UserProfileFollowController as UF',
+                    templateUrl: 'src/users/userProfileFollow.html',
+                    controller: 'UserProfileFollowController as UPF',
                     resolve: {
                         friends: function (person, DataService) {
                             var friends = [];
@@ -97,8 +97,8 @@
                 })
                 .state('user.profile.following', {
                     url: '/following',
-                    templateUrl: 'src/user/userProfileFollow.html',
-                    controller: 'UserProfileFollowController as UF',
+                    templateUrl: 'src/users/userProfileFollow.html',
+                    controller: 'UserProfileFollowController as UPF',
                     resolve: {
                         friends: function (person, DataService) {
                             var friends = [];

@@ -17,7 +17,7 @@
         return data;
 
         /*
-         Get single user by ID.
+         Get single users by ID.
          */
         function getUser(userID) {
             var user = $firebaseObject($firebaseRef.users.child(userID));
@@ -25,9 +25,9 @@
         }
 
         /*
-         Get single user by Username.
+         Get single users by Username.
          Index has already set to username in Firebase rules.
-         Need to invoke it via $firebaseArray then access it by user[0].
+         Need to invoke it via $firebaseArray then access it by users[0].
          */
         function getUserByUsername(username) {
             var user = $firebaseArray($firebaseRef.users.orderByChild('username').equalTo(username));
@@ -35,7 +35,7 @@
         }
 
         /*
-         Get all objects for the given user.
+         Get all objects for the given users.
          Followers, Following, Posts.
          */
         function getUserObjects(userID) {
@@ -45,7 +45,7 @@
 
         /*
          Get all registered users.
-         Recently used to populate the search user box.
+         Recently used to populate the search users box.
          ==== STILL WRONG === need future attention ===.
          */
         function getUsers() {
