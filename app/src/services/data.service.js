@@ -11,7 +11,9 @@
             getUser: getUser,
             getUserByUsername: getUserByUsername,
             getUserObjects: getUserObjects,
-            getUsers: getUsers
+            getUsers: getUsers,
+            setPost: setPost,
+            setUserPost: setUserPost
         };
 
         return data;
@@ -51,6 +53,22 @@
         function getUsers() {
             var users = $firebaseArray($firebaseRef.users);
             return users;
+        }
+
+        /*
+            Set a post authored by a user then reference it on user's post object
+         */
+        function setPost(post){
+            var newPost = $firebaseRef.posts.push();
+            newPost.set(post);
+            setUserPost(post.author, newPost.key());
+        }
+
+        /*
+            Set user's post object from existing post object
+         */
+        function setUserPost(userID, postID){
+            $firebaseRef.userObjects.child(userID + '/posts/' + postID).set(true);
         }
     }
 })();

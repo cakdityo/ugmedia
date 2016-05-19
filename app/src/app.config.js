@@ -10,7 +10,8 @@
                 default: FirebaseUrl,
                 userIDs: FirebaseUrl + 'userIDs',
                 users: FirebaseUrl + 'users',
-                userObjects: FirebaseUrl + 'userObjects'
+                userObjects: FirebaseUrl + 'userObjects',
+                posts: FirebaseUrl + 'posts'
             });
 
             $stateProvider

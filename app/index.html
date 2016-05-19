@@ -27,7 +27,6 @@
 
 <div ui-view></div>
 
-
 <!-- bower:js -->
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -41,17 +40,26 @@
 <script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
 <script src="bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.js"></script>
 <!-- endbower -->
-
+<!--<script>-->
+    <!--// Initialize Firebase-->
+    <!--var config = {-->
+        <!--apiKey: "AIzaSyBad5b5cAI6AJb6B3EtkW9DN0JIC4CZ08Q",-->
+        <!--authDomain: "ug-media.firebaseapp.com",-->
+        <!--databaseURL: "https://ug-media.firebaseio.com",-->
+        <!--storageBucket: "ug-media.appspot.com"-->
+    <!--};-->
+    <!--firebase.initializeApp(config);-->
+<!--</script>-->
 <!-- inject:js -->
 <script src="src/app.module.js"></script>
-<script src="src/components/component.module.js"></script>
 <script src="src/auth/auth.module.js"></script>
+<script src="src/components/component.module.js"></script>
 <script src="src/layout/layout.module.js"></script>
 <script src="src/services/service.module.js"></script>
 <script src="src/users/user.module.js"></script>
 <script src="src/app.config.js"></script>
-<script src="src/components/postBar.directive.js"></script>
 <script src="src/auth/auth.controller.js"></script>
+<script src="src/components/postBar.directive.js"></script>
 <script src="src/layout/sidenavLeft.directive.js"></script>
 <script src="src/layout/toolbar.directive.js"></script>
 <script src="src/services/data.service.js"></script>
