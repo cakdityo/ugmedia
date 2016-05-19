@@ -12,6 +12,8 @@
             getUserByUsername: getUserByUsername,
             getUserObjects: getUserObjects,
             getUsers: getUsers,
+            setFollower: setFollower,
+            setFollowing: setFollowing,
             setPost: setPost,
             setUserPost: setUserPost
         };
@@ -53,6 +55,22 @@
         function getUsers() {
             var users = $firebaseArray($firebaseRef.users);
             return users;
+        }
+
+        /*
+            Set or unset a given user's follower object with ID of authenticated user.
+            followState param could be true or false.
+         */
+        function setFollower(userID, authUserID, followState){
+            $firebaseRef.userObjects.child(userID + '/followers/' + authUserID).set(followState);
+        }
+
+        /*
+            Set or unset an authenticated user's following object with ID of given user.
+            followState param could be true or false.
+         */
+        function setFollowing(authUserID, userID, followState){
+            $firebaseRef.userObjects.child(authUserID + '/following/' + userID).set(followState);
         }
 
         /*
