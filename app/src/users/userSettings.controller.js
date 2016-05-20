@@ -5,8 +5,8 @@
         .module('app.user')
         .controller('UserSettingsController', UserSettingsController);
 
-    UserSettingsController.$inject = ['$state', 'StorageService'];
-    function UserSettingsController($state, StorageService) {
+    UserSettingsController.$inject = ['$state', 'StorageService', 'DataService'];
+    function UserSettingsController($state, StorageService, DataService) {
         var vm = this;
 
         vm.croppedAvatar = null;
@@ -20,7 +20,7 @@
                 upload.then(
                     function (success) {
                         user.avatar = success.config.url + success.config.data.key;
-                        user.$save();
+                        DataService.updateUser(user);
                         $state.go('user.profile', {username: user.username});
                     }, function (error) {
                         alert('Error: ' + error);
@@ -28,7 +28,7 @@
                         vm.progress = parseInt(100.0 * progress.loaded / progress.total);
                     });
             } else {
-                user.$save();
+                DataService.updateUser(user);
                 $state.go('user.profile', {username: user.username});
             }
         }

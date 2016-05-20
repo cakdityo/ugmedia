@@ -3,10 +3,11 @@
         <h2>Setting Account</h2>
     </div>
     <md-divider></md-divider>
-    <div layout="row" layout-xs="column" layout-padding>
+    <div layout="row" layout-xs="column" layout-align-gt-xs="center center" layout-padding>
         <div layout="column" flex="30" flex-xs="100">
             <md-card ng-show="!US.progress">
                 <img ng-show="!US.originalAvatar" ng-src="{{ U.user.profile.avatar }}">
+
                 <div ng-show="US.originalAvatar" ngf-drop ng-model="US.picFile" ngf-pattern="image/*" class="cropArea">
                     <img-crop area-type="square" image="US.originalAvatar | ngfDataUrl"
                               result-image="US.croppedAvatar" result-image-size=500></img-crop>
@@ -22,7 +23,7 @@
             <md-button class="md-primary" ngf-select ng-model="US.originalAvatar" accept="image/*">Select Avatar
             </md-button>
         </div>
-        <div layout="column" flex flex-xs="100">
+        <div layout="column" flex="50" flex-xs="100">
             <md-input-container class="md-block">
                 <label>Name</label>
                 <input type="text" ng-model="U.user.profile.name">
@@ -33,5 +34,8 @@
             </md-input-container>
         </div>
     </div>
-    <md-button class="md-primary md-raised" ng-click="US.updateUser(U.user.profile)">Save</md-button>
+    <md-divider></md-divider>
+    <div layout="row" layout-align="end center">
+        <md-button class="md-primary md-raised" ng-click="US.updateUser(U.user.profile)">Save</md-button>
+    </div>
 </div>

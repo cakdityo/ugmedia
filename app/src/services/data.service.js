@@ -15,7 +15,8 @@
             setFollower: setFollower,
             setFollowing: setFollowing,
             setPost: setPost,
-            setUserPost: setUserPost
+            setUserPost: setUserPost,
+            updateUser: updateUser
         };
 
         return data;
@@ -87,6 +88,13 @@
          */
         function setUserPost(userID, postID){
             $firebaseRef.userObjects.child(userID + '/posts/' + postID).set(true);
+        }
+
+        /*
+            Update a given user.
+         */
+        function updateUser(user){
+            user.$save();
         }
     }
 })();
