@@ -3,11 +3,11 @@
 
     angular
         .module('app.user')
-        .controller('UserProfileFollowController', UserProfileFollowController);
+        .controller('UserFollowController', UserFollowController);
 
-    UserProfileFollowController.$inject = ['friends', '$state'];
+    UserFollowController.$inject = ['friends', '$state'];
 
-    function UserProfileFollowController(friends, $state){
+    function UserFollowController(friends, $state){
         var vm = this;
 
         vm.friends = friends;

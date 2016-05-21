@@ -17,7 +17,7 @@
         vm.user.objects = user.objects;
         vm.user.profile = user.profile;
 
-        console.log(vm.user);
+        console.log(user);
 
         /*
          Helper function to count keys in an object.

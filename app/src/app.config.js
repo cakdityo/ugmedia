@@ -38,6 +38,7 @@
                                 .then(function (auth) {
                                     return {
                                         auth: auth,
+                                        posts: DataService.getUserPosts(auth.uid),
                                         profile: DataService.getUser(auth.uid),
                                         objects: DataService.getUserObjects(auth.uid)
                                     };
@@ -71,6 +72,7 @@
                             if (user.profile.username !== $stateParams.username) {
                                 return DataService.getUserByUsername($stateParams.username).$loaded().then(function (profile) {
                                     return {
+                                        posts: DataService.getUserPosts(profile[0].$id),
                                         profile: profile[0],
                                         objects: DataService.getUserObjects(profile[0].$id)
                                     };
@@ -83,30 +85,28 @@
                 })
                 .state('user.profile.followers', {
                     url: '/followers',
-                    templateUrl: 'src/users/userProfileFollow.html',
-                    controller: 'UserProfileFollowController as UPF',
+                    templateUrl: 'src/users/userFollow.html',
+                    controller: 'UserFollowController as UF',
                     resolve: {
                         friends: function (person, DataService) {
                             var friends = [];
                             angular.forEach(person.objects.followers, function(value, key){
                                 friends.push(DataService.getUser(key));
                             });
-                            console.log(friends);
                             return friends;
                         }
                     }
                 })
                 .state('user.profile.following', {
                     url: '/following',
-                    templateUrl: 'src/users/userProfileFollow.html',
-                    controller: 'UserProfileFollowController as UPF',
+                    templateUrl: 'src/users/userFollow.html',
+                    controller: 'UserFollowController as UF',
                     resolve: {
                         friends: function (person, DataService) {
                             var friends = [];
                             angular.forEach(person.objects.following, function(value, key){
                                 friends.push(DataService.getUser(key));
                             });
-                            console.log(friends);
                             return friends;
                         }
                     }

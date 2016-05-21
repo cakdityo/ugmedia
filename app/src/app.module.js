@@ -10,6 +10,7 @@
             'firebase',
             'ngFileUpload',
             'ngImgCrop',
+            'angularMoment',
 
             //App dependencies
             'app.auth',

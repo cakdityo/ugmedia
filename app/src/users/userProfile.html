@@ -23,8 +23,8 @@
                 <div class="user-object-length">{{ U.countObject(UP.user.objects.following) }}</div>
                 Following
             </md-button>
-            <md-button class="user-object-button">
-                <div class="user-object-length">{{ U.countObject(UP.user.objects.posts) }}</div>
+            <md-button ui-sref="user.profile({username: U.user.profile.username})" class="user-object-button">
+                <div class="user-object-length">{{ UP.user.posts.length }}</div>
                 Posts
             </md-button>
         </div>
@@ -49,7 +49,12 @@
     <div hide-xs flex="5"></div>
     <div layout="column" flex="50" flex-xs="100">
         <div ui-view>
-            <ug-post-bar auth="U.auth"></ug-post-bar>
+            <ug-post-bar auth="U.auth" posts="UP.user.posts"></ug-post-bar>
+            <br />
+            <div ng-if="!UP.user.objects.posts"> No post yet </div>
+            <div>
+                <ug-post-card ng-if="UP.user.objects.posts" ng-repeat="post in UP.user.posts | orderBy:'-createdAt'" post="post"></ug-post-card>
+            </div>
         </div>
     </div>
 </div>

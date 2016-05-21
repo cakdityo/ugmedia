@@ -8,6 +8,7 @@
     function ugPostBar(){
         return {
             scope: {
+                posts: '=',
                 auth: '='
             },
             templateUrl: 'src/components/postBar.html',
@@ -23,8 +24,9 @@
 
             function setPost(post){
                 post.author = $scope.auth.uid;
+                post.createdAt = Firebase.ServerValue.TIMESTAMP;
                 if (post.author && post.caption) {
-                    DataService.setPost(post);
+                    DataService.setPost($scope.posts, post);
                     vm.post = {};
                 }
             }

@@ -13,15 +13,17 @@
         vm.followUser = followUser;
         vm.unFollowUser = unFollowUser;
         vm.user = {};
+        vm.user.posts = person.posts;
         vm.user.profile = person.profile;
         vm.user.objects = person.objects;
+
         console.log(person);
 
         /*
-            ============= Follow User =============
-            1. Set vm.user.objects.followers[authUserID] to true.
-            2. Set {authID}/following/{userID}/true.
-            3. Set {userID}/followers/{authID}/true.
+         ============= Follow User =============
+         1. Set vm.user.objects.followers[authUserID] to true.
+         2. Set {authID}/following/{userID}/true.
+         3. Set {userID}/followers/{authID}/true.
          */
         function followUser(authUserID, userID){
             var followState = true;

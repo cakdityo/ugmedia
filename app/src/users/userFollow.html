@@ -2,14 +2,14 @@
     <md-card-content>
         <md-autocomplete
                 class="profile-search-box"
-                md-search-text="UPF.searchText"
-                md-items="friend in UPF.friends"
+                md-search-text="UF.searchText"
+                md-items="friend in UF.friends"
                 md-item-text="friend.username"
                 md-min-length="0"
                 placeholder="Search user">
-            <span md-highlight-text="UPF.searchText" md-highlight-flags="^i">{{ friend.username }}</span>
+            <span md-highlight-text="UF.searchText" md-highlight-flags="^i">{{ friend.username }}</span>
             <md-not-found>
-                No users matching "{{UPF.searchText}}" were found.
+                No users matching "{{UF.searchText}}" were found.
             </md-not-found>
         </md-autocomplete>
     </md-card-content>
@@ -17,14 +17,14 @@
 
 <md-list flex>
     <md-subheader class="md-no-sticky">
-        <ng-pluralize ng-show="UPF.followState == 'user.profile.followers'" count="U.countObject(UPF.friends)"
+        <ng-pluralize ng-show="UF.followState == 'user.profile.followers'" count="U.countObject(UF.friends)"
                       when="{
                           '0': 'No user found.',
                           '1': 'One follower.',
                           'other': '{} followers.'
                           }">
         </ng-pluralize>
-        <ng-pluralize ng-show="UPF.followState == 'user.profile.following'" count="U.countObject(UPF.friends)"
+        <ng-pluralize ng-show="UF.followState == 'user.profile.following'" count="U.countObject(UF.friends)"
                       when="{
                           '0': 'No user found.',
                           '1': 'One following.',
@@ -33,8 +33,8 @@
         </ng-pluralize>
     </md-subheader>
     <md-list-item ui-sref="user.profile({username: friend.username})" class="md-2-line"
-                  ng-repeat="friend in UPF.friends | filter:UPF.searchText">
-        <img src="{{ friend.avatar }}" alt="{{ friend.username }}" class="md-avatar">
+                  ng-repeat="friend in UF.friends | filter:UF.searchText">
+        <img ng-src="{{ friend.avatar }}" alt="{{ friend.username }}" class="md-avatar">
         <div class="md-list-item-text" layout="column">
             <h3>{{ friend.username }}</h3>
             <h4>{{ friend.name }}</h4>
