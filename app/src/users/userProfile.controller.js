@@ -26,16 +26,16 @@
          3. Set {userID}/followers/{authID}/true.
          */
         function followUser(authUserID, userID){
-            var followState = true;
+            var state = true;
 
             //fix undefined variable issue
             if (!vm.user.objects.followers){
                 vm.user.objects.followers = {};
             }
 
-            vm.user.objects.followers[authUserID] = true;
-            DataService.setFollower(userID, authUserID, followState);
-            DataService.setFollowing(authUserID, userID, followState);
+            vm.user.objects.followers[authUserID] = state;
+            DataService.setUserFollower(userID, authUserID, state);
+            DataService.setUserFollowing(authUserID, userID, state);
         }
 
         /*
@@ -45,11 +45,11 @@
          3. Set {userID}/followers/{authID}/null.
          */
         function unFollowUser(authUserID, userID){
-            var followState = null;
+            var state = null;
 
-            vm.user.objects.followers[authUserID] = null;
-            DataService.setFollower(userID, authUserID, followState);
-            DataService.setFollowing(authUserID, userID, followState);
+            vm.user.objects.followers[authUserID] = state;
+            DataService.setUserFollower(userID, authUserID, state);
+            DataService.setUserFollowing(authUserID, userID, state);
         }
 
     }

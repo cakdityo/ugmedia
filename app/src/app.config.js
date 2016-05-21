@@ -11,7 +11,8 @@
                 userIDs: FirebaseUrl + 'userIDs',
                 users: FirebaseUrl + 'users',
                 userObjects: FirebaseUrl + 'userObjects',
-                posts: FirebaseUrl + 'posts'
+                posts: FirebaseUrl + 'posts',
+                postObjects: FirebaseUrl + 'postObjects'
             });
 
             $stateProvider

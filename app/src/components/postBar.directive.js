@@ -26,7 +26,7 @@
                 post.author = $scope.auth.uid;
                 post.createdAt = Firebase.ServerValue.TIMESTAMP;
                 if (post.author && post.caption) {
-                    DataService.setPost($scope.posts, post);
+                    DataService.addPost($scope.posts, post);
                     vm.post = {};
                 }
             }

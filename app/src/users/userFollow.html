@@ -32,13 +32,13 @@
                           }">
         </ng-pluralize>
     </md-subheader>
-    <md-list-item ui-sref="user.profile({username: friend.username})" class="md-2-line"
+    <md-list-item ng-click="sl.navigateTo('user.profile', {username: friend.username})" class="md-2-line"
                   ng-repeat="friend in UF.friends | filter:UF.searchText">
         <img ng-src="{{ friend.avatar }}" alt="{{ friend.username }}" class="md-avatar">
         <div class="md-list-item-text" layout="column">
             <h3>{{ friend.username }}</h3>
             <h4>{{ friend.name }}</h4>
         </div>
-        <md-divider md-inset ng-if="!$last"></md-divider>
+        <md-button class="md-secondary md-accent" ng-click="">follow</md-button>
     </md-list-item>
 </md-list>

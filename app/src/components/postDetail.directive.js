@@ -14,13 +14,14 @@
             },
             templateUrl: 'src/components/postDetail.html',
             controller: PostDetailController,
-            controllerAs: 'pc'
+            controllerAs: 'pd'
         };
 
         function PostDetailController($scope, DataService){
             var vm = this;
 
             vm.author = DataService.getUser($scope.post.author);
+            vm.comments = DataService.getPostComments($scope.post.$id);
             vm.deletePost = $scope.onDelete;
             vm.post = $scope.post;
 

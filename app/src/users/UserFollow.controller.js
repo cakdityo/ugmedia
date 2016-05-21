@@ -13,6 +13,11 @@
         vm.friends = friends;
         vm.followState = $state.current.name;
         vm.searchText = '';
+        vm.tes = tes;
+
+        function tes(event){
+
+        }
     }
 
 })();

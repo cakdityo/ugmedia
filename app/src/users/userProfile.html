@@ -23,7 +23,7 @@
                 <div class="user-object-length">{{ U.countObject(UP.user.objects.following) }}</div>
                 Following
             </md-button>
-            <md-button ui-sref="user.profile({username: U.user.profile.username})" class="user-object-button">
+            <md-button ui-sref="user.profile({username: UP.user.profile.username})" class="user-object-button">
                 <div class="user-object-length">{{ UP.user.posts.length }}</div>
                 Posts
             </md-button>
@@ -50,9 +50,10 @@
     <div layout="column" flex="50" flex-xs="100">
         <div ui-view>
             <ug-post-bar auth="U.auth" posts="UP.user.posts"></ug-post-bar>
-            <br />
-            <div ng-if="UP.user.posts.length == 0"> No post yet </div>
+            <br/>
+            <!-- Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue) -->
             <div>
+                <div ng-if="UP.user.posts.length == 0"> No post yet</div>
                 <ug-post-list ng-if="UP.user.posts.length > 0" posts="UP.user.posts"></ug-post-list>
             </div>
         </div>

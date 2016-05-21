@@ -8,15 +8,16 @@
     function DataService($firebaseRef, $firebaseArray, $firebaseObject) {
 
         var DataService = {
+            addPost: addPost,
             deletePost: deletePost,
+            getPostComments: getPostComments,
             getUser: getUser,
             getUserByUsername: getUserByUsername,
             getUserObjects: getUserObjects,
             getUserPosts: getUserPosts,
             getUsers: getUsers,
-            setFollower: setFollower,
-            setFollowing: setFollowing,
-            setPost: setPost,
+            setUserFollower: setUserFollower,
+            setUserFollowing: setUserFollowing,
             setUserPost: setUserPost,
             updateUser: updateUser
         };
@@ -24,12 +25,29 @@
         return DataService;
 
         /*
-            Delete single post from list of posts.
+         Set a post authored by a user then reference it on user's post object
          */
-        function deletePost(posts, post){
-            posts.$remove(post).then(function(){
-                $firebaseRef.userObjects.child(post.author).child('posts').child(post.$id).set(null);
+        function addPost(posts, post) {
+            posts.$add(post).then(function (newPost) {
+                setUserPost(post.author, newPost.key(), true);
             });
+        }
+
+        /*
+         Delete single post from list of posts.
+         */
+        function deletePost(posts, post) {
+            posts.$remove(post).then(function () {
+                setUserPost(post.author, post.$id, null);
+            });
+        }
+
+        /*
+            Get all comments from the given post.
+         */
+        function getPostComments(postID) {
+            var comments = $firebaseArray($firebaseRef.postObjects.child(postID).child('comments'));
+            return comments;
         }
 
         /*
@@ -60,9 +78,9 @@
         }
 
         /*
-            Get all posts for the given user.
+         Get all posts for the given user.
          */
-        function getUserPosts(userID){
+        function getUserPosts(userID) {
             var userPosts = $firebaseArray($firebaseRef.posts.orderByChild('author').equalTo(userID));
             return userPosts;
         }
@@ -81,38 +99,29 @@
          Set or unset a given user's follower object with ID of authenticated user.
          followState param could be true or false.
          */
-        function setFollower(userID, authUserID, followState){
-            $firebaseRef.userObjects.child(userID + '/followers/' + authUserID).set(followState);
+        function setUserFollower(userID, authUserID, state) {
+            $firebaseRef.userObjects.child(userID + '/followers/' + authUserID).set(state);
         }
 
         /*
          Set or unset an authenticated user's following object with ID of given user.
          followState param could be true or false.
          */
-        function setFollowing(authUserID, userID, followState){
-            $firebaseRef.userObjects.child(authUserID + '/following/' + userID).set(followState);
-        }
-
-        /*
-         Set a post authored by a user then reference it on user's post object
-         */
-        function setPost(posts, post){
-            posts.$add(post).then(function(newPost){
-                setUserPost(post.author, newPost.key());
-            });
+        function setUserFollowing(authUserID, userID, state) {
+            $firebaseRef.userObjects.child(authUserID + '/following/' + userID).set(state);
         }
 
         /*
          Set user's post object from existing post object
          */
-        function setUserPost(userID, postID){
-            $firebaseRef.userObjects.child(userID + '/posts/' + postID).set(true);
+        function setUserPost(userID, postID, state) {
+            $firebaseRef.userObjects.child(userID + '/posts/' + postID).set(state);
         }
 
         /*
          Update a given user.
          */
-        function updateUser(user){
+        function updateUser(user) {
             user.$save();
         }
     }

@@ -1,0 +1,7 @@
+<md-list>
+    <ug-post-comment-detail
+            ng-repeat="comment in pcl.comments"
+            comment="comment">
+        <md-divider md-inset ng-if="!$last"></md-divider>
+    </ug-post-comment-detail>
+</md-list>
