@@ -1,0 +1,5 @@
+<ug-post-detail
+        ng-repeat="post in pl.posts | orderBy:'-createdAt'"
+        post="post"
+        on-delete="pl.deletePost(post)">
+</ug-post-detail>

@@ -8,6 +8,7 @@
     function DataService($firebaseRef, $firebaseArray, $firebaseObject) {
 
         var DataService = {
+            deletePost: deletePost,
             getUser: getUser,
             getUserByUsername: getUserByUsername,
             getUserObjects: getUserObjects,
@@ -21,6 +22,15 @@
         };
 
         return DataService;
+
+        /*
+            Delete single post from list of posts.
+         */
+        function deletePost(posts, post){
+            posts.$remove(post).then(function(){
+                $firebaseRef.userObjects.child(post.author).child('posts').child(post.$id).set(null);
+            });
+        }
 
         /*
          Get single users by ID.
@@ -88,7 +98,7 @@
          */
         function setPost(posts, post){
             posts.$add(post).then(function(newPost){
-                setUserPost(newPost.author, newPost.key());
+                setUserPost(post.author, newPost.key());
             });
         }
 
