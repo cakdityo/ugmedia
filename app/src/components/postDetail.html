@@ -1,7 +1,7 @@
 <md-card class="post-card">
     <md-card-header>
         <md-card-avatar>
-            <img class="md-user-avatar" ng-src="{{ pd.author.avatar }}" alt="pd.author.username">
+            <img ui-sref="user.profile({username: pd.author.username})" class="md-user-avatar" ng-src="{{ pd.author.avatar }}" alt="pd.author.username">
         </md-card-avatar>
         <md-card-header-text>
             <span class="md-title" layout="row">
@@ -51,9 +51,9 @@
         </md-card-avatar>
         <md-input-container flex layout="column">
             <label>Enter a comment</label>
-            <textarea rows="2" ng-model="pd.comment" md-maxlength="100"></textarea>
+            <textarea rows="2" ng-model="pd.commentText"></textarea>
         </md-input-container>
-        <md-button class="md-icon-button" ng-click="pd.addComment(pd.comment)">
+        <md-button class="md-icon-button" ng-click="pd.addComment(pd.commentText)">
             <md-icon>send</md-icon>
         </md-button>
     </md-card-header>

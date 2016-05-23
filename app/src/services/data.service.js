@@ -54,7 +54,8 @@
             Get all comments from the given post.
          */
         function getPostComments(postID) {
-            var comments = $firebaseArray($firebaseRef.postObjects.child(postID).child('comments'));
+            var ref = $firebaseRef.postObjects.child(postID).child('comments');
+            var comments = $firebaseArray(ref.limitToLast(5));
             return comments;
         }
 

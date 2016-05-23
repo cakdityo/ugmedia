@@ -1,7 +1,19 @@
 <md-list-item class="md-2-line md-long-text comment">
-    <img ng-src="{{ pcd.author.avatar }}" alt="pcd.author.username" class="md-avatar">
+    <img ui-sref="user.profile({username: pcd.author.username})" ng-src="{{ pcd.author.avatar }}" alt="pcd.author.username" class="md-avatar">
     <div class="md-list-item-text">
-        <h3>{{ pcd.author.username }}</h3>
-        <p>{{ pcd.comment.text }}</p>
+        <h3 layout="row">
+            {{ pcd.author.username }}
+            <span flex></span>
+            <md-subheader hide-xs am-time-ago="pcd.comment.createdAt">
+            </md-subheader>
+        </h3>
+        <p>
+            {{ pcd.comment.text }}
+            <md-subheader hide-gt-xs am-time-ago="pcd.comment.createdAt">
+            </md-subheader>
+        </p>
     </div>
+    <md-button class="md-icon-button">
+        <md-icon>cancel</md-icon>
+    </md-button>
 </md-list-item>

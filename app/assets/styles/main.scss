@@ -84,3 +84,11 @@ body {
 md-list-item.comment {
   margin: 0 0 0 0 !important;
 }
+
+.md-avatar, .md-user-avatar {
+  cursor: pointer;
+}
+
+[layout-xs="column"] {
+  display: block;
+}

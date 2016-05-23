@@ -24,7 +24,7 @@
             vm.addComment = addComment;
             vm.author = DataService.getUser($scope.post.author);
             vm.comments = DataService.getPostComments($scope.post.$id);
-            vm.comment = '';
+            vm.commentText = '';
             vm.deletePost = $scope.deletePost;
             vm.menuAction = menuAction;
             vm.menuItems = [
@@ -34,10 +34,11 @@
             vm.post = $scope.post;
             vm.user = $scope.user;
 
-            function addComment(comment) {
-                if (comment && $scope.user.$id) {
-                    DataService.addComment(vm.comments, {text: comment, author: $scope.user.$id});
-                    vm.comment = '';
+            function addComment(text) {
+                if (text && $scope.user.$id) {
+                    var comment = {text: text, author: $scope.user.$id, createdAt: Firebase.ServerValue.TIMESTAMP};
+                    DataService.addComment(vm.comments, comment);
+                    vm.commentText = '';
                 }
             }
 
