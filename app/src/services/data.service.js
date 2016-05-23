@@ -8,6 +8,7 @@
     function DataService($firebaseRef, $firebaseArray, $firebaseObject) {
 
         var DataService = {
+            addComment: addComment,
             addPost: addPost,
             deletePost: deletePost,
             getPostComments: getPostComments,
@@ -24,6 +25,10 @@
 
         return DataService;
 
+        function addComment(comments, comment){
+            comments.$add(comment);
+        }
+
         /*
          Set a post authored by a user then reference it on user's post object
          */
@@ -37,7 +42,10 @@
          Delete single post from list of posts.
          */
         function deletePost(posts, post) {
+            // Delete all objects associated with given post.
+            $firebaseRef.postObjects.child(post.$id).set(null);
             posts.$remove(post).then(function () {
+                // Delete user's reference to given post.
                 setUserPost(post.author, post.$id, null);
             });
         }

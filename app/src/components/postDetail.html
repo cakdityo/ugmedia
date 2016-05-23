@@ -1,4 +1,4 @@
-<md-card>
+<md-card class="post-card">
     <md-card-header>
         <md-card-avatar>
             <img class="md-user-avatar" ng-src="{{ pd.author.avatar }}" alt="pd.author.username">
@@ -11,12 +11,12 @@
                     <md-button aria-label="Open post menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
                         <md-icon md-menu-origin>more_horiz</md-icon>
                     </md-button>
-                    <md-menu-content width="3" >
-                        <md-menu-item>
-                            <md-button ng-click="pd.deletePost({post: pd.post})">
+                    <md-menu-content width="3">
+                        <md-menu-item ng-repeat="menu in pd.menuItems" ng-if="pd.user.$id === pd.author.$id ? true : menu.name === 'Copy URL'">
+                            <md-button ng-click="pd.menuAction(menu.name)">
                                 <div layout="row">
-                                    <p flex>Delete</p>
-                                    <md-icon md-menu-align-target>times</md-icon>
+                                    <p flex>{{ menu.name }}</p>
+                                    <md-icon md-menu-align-target>{{ menu.icon }}</md-icon>
                                 </div>
                             </md-button>
                         </md-menu-item>
@@ -27,6 +27,8 @@
         </md-card-header-text>
     </md-card-header>
     <img ng-show="pd.post.pictures" ng-src="{{ pd.post.pictures }}" alt="">
+
+    <!-- Post meta section -->
     <md-card-content>
         {{ pd.post.caption }}
         <md-subheader layout="row" layout-align="end end">
@@ -34,15 +36,26 @@
             <span ng-if="pd.post.editedAt">, Edited <span am-time-ago="pd.post.editedAt"></span></span>
         </md-subheader>
         <md-divider></md-divider>
-        <ug-post-comment-list comments="pd.comments"></ug-post-comment-list>
-        <div layout="row" layout-align="end center">
-            <md-input-container flex layout="column">
-                <label>Enter a comment</label>
-                <textarea rows="2" ng-model="pd.comment"></textarea>
-            </md-input-container>
-            <md-button class="md-icon-button" flex-gt-xs="10">
-                <md-icon>send</md-icon>
-            </md-button>
-        </div>
     </md-card-content>
+
+    <!-- Comment section -->
+    <md-card-content ng-if="pd.comments.length > 0">
+        <ug-post-comment-list comments="pd.comments"></ug-post-comment-list>
+        <md-divider></md-divider>
+    </md-card-content>
+
+    <!-- Comment bar section -->
+    <md-card-header class="post-bar" layout="row" layout-align="start center">
+        <md-card-avatar>
+            <img class="md-user-avatar" ng-src="{{ pd.user.avatar }}" alt="{{ pd.user.username }}">
+        </md-card-avatar>
+        <md-input-container flex layout="column">
+            <label>Enter a comment</label>
+            <textarea rows="2" ng-model="pd.comment" md-maxlength="100"></textarea>
+        </md-input-container>
+        <md-button class="md-icon-button" ng-click="pd.addComment(pd.comment)">
+            <md-icon>send</md-icon>
+        </md-button>
+    </md-card-header>
+
 </md-card>

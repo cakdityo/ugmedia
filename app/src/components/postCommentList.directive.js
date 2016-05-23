@@ -11,6 +11,7 @@
             scope: {
                 comments: '='
             },
+            replace: true,
             templateUrl: 'src/components/postCommentList.html',
             controller: PostCommentListController,
             controllerAs: 'pcl'

@@ -49,12 +49,12 @@
     <div hide-xs flex="5"></div>
     <div layout="column" flex="50" flex-xs="100">
         <div ui-view>
-            <ug-post-bar auth="U.auth" posts="UP.user.posts"></ug-post-bar>
+            <ug-post-bar user="U.user.profile" posts="UP.user.posts"></ug-post-bar>
             <br/>
             <!-- Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue) -->
             <div>
                 <div ng-if="UP.user.posts.length == 0"> No post yet</div>
-                <ug-post-list ng-if="UP.user.posts.length > 0" posts="UP.user.posts"></ug-post-list>
+                <ug-post-list ng-if="UP.user.posts.length > 0" user="U.user.profile" posts="UP.user.posts"></ug-post-list>
             </div>
         </div>
     </div>

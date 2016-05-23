@@ -56,14 +56,31 @@ body {
   box-shadow: none;
 }
 
-#post-bar {
+.post-card > md-card-content {
+  padding-top: 0;
   padding-bottom: 0;
 }
 
-#post-bar > md-input-container {
+.post-card > md-card-header > md-card-avatar {
+  margin-left: 0 !important;
+  margin-right: 12px;
+}
+
+.post-card > md-card-header > button {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
+.post-bar > md-input-container {
+  margin-top: 0;
   margin-bottom: 0;
 }
 
-#post-bar + md-card-actions {
+.post-bar + md-card-actions {
   margin-top: 0;
+}
+
+md-list-item.comment {
+  margin: 0 0 0 0 !important;
 }

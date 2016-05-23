@@ -9,7 +9,7 @@
         return {
             scope: {
                 posts: '=',
-                auth: '='
+                user: '='
             },
             templateUrl: 'src/components/postBar.html',
             controller: postBarController,
@@ -21,9 +21,10 @@
 
             vm.post = {};
             vm.setPost = setPost;
+            vm.user = $scope.user;
 
             function setPost(post){
-                post.author = $scope.auth.uid;
+                post.author = $scope.user.$id;
                 post.createdAt = Firebase.ServerValue.TIMESTAMP;
                 if (post.author && post.caption) {
                     DataService.addPost($scope.posts, post);

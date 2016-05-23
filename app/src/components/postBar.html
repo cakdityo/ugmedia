@@ -1,10 +1,13 @@
-<md-card flex>
-    <md-card-content id="post-bar">
-        <md-input-container layout="column">
+<md-card>
+    <md-card-header class="post-bar" layout="row" layout-align="start center">
+        <md-card-avatar>
+            <img class="md-user-avatar" ng-src="{{ pb.user.avatar }}" alt="{{ pb.user.username }}">
+        </md-card-avatar>
+        <md-input-container flex layout="column">
             <label>Write something</label>
             <textarea rows="2" ng-model="pb.post.caption" md-maxlength="500"></textarea>
         </md-input-container>
-    </md-card-content>
+    </md-card-header>
     <md-card-actions layout="row" layout-align="end center">
         <md-button class="md-icon-button" aria-label="Image">
             <md-icon>image</md-icon>

@@ -9,7 +9,8 @@
     function ugPostList(){
         return {
             scope: {
-                posts: '='
+                posts: '=',
+                user: '='
             },
             templateUrl: 'src/components/postList.html',
             controller: PostListController,
@@ -21,6 +22,7 @@
 
             vm.deletePost = deletePost;
             vm.posts = $scope.posts;
+            vm.user = $scope.user;
 
             function deletePost(post){
                 DataService.deletePost(vm.posts, post);

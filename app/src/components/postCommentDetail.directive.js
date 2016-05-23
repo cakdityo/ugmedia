@@ -12,7 +12,6 @@
                 comment: '='
             },
             replace: true,
-            transclude: true,
             templateUrl: 'src/components/postCommentDetail.html',
             controller: PostCommentDetailController,
             controllerAs: 'pcd'
