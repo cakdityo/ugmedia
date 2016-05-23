@@ -12,7 +12,7 @@
                         <md-icon md-menu-origin>more_horiz</md-icon>
                     </md-button>
                     <md-menu-content width="3">
-                        <md-menu-item ng-repeat="menu in pd.menuItems" ng-if="pd.user.$id === pd.author.$id ? true : menu.name === 'Copy URL'">
+                        <md-menu-item ng-repeat="menu in pd.menuItems">
                             <md-button ng-click="pd.menuAction(menu.name)">
                                 <div layout="row">
                                     <p flex>{{ menu.name }}</p>

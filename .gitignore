@@ -5,6 +5,3 @@ app/bower_components/
 tmp
 .DS_Store
 .idea
-.firebaserc
-database.rules.json
-firebase.json

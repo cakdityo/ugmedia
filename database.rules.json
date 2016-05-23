@@ -1,0 +1,79 @@
+{
+  ".read": "auth.uid !== null",
+  ".write": "false",
+  "users": {
+    ".indexOn": "username",
+    "$userID": {
+      ".write": "$userID === auth.uid",
+      ".validate": "newData.hasChildren(['email','username'])",
+      "lastSeen": {
+        ".validate": "newData.val() <= now"
+      },
+      "createdAt": {
+        ".validate": "newData.val() <= now"
+      },
+      "updatedAt": {
+        ".validate": "newData.val() <= now"
+      }
+    }
+  },
+  "userObjects": {
+    "$userID": {
+      ".write": "$userID === auth.uid",
+      "followers": {
+        "$userID": {
+          ".write": "$userID === auth.uid"
+        }
+      },
+      "following": {
+        "$userID": {
+          ".validate": "root.child('users').hasChild($userID)"
+        }
+      },
+      "posts": {
+        "$postID": {
+          ".write": "root.child('posts/' + $postID + '/author').val() === auth.uid"
+        }
+      }
+    }
+  },
+  "posts": {
+    ".indexOn": "author",
+    "$postID": {
+      ".write": "newData.child('author').val() === auth.uid || data.child('author').val() === auth.uid",
+      ".validate": "newData.hasChildren(['author','caption'])",
+      "caption": {
+        ".validate": "newData.isString()"
+      },
+      "createdAt": {
+        ".validate": "newData.val() <= now"
+      },
+      "updatedAt": {
+        ".validate": "newData.val() <= now"
+      }
+    }
+  },
+  "postObjects": {
+    "$postID": {
+      ".write": "root.child('posts/' + $postID + '/author').val() === auth.uid",
+      "comments": {
+        "$commentID": {
+          ".write": "newData.child('author').val() === auth.uid || data.child('author').val() === auth.uid",
+          ".validate": "newData.hasChildren(['text','author'])",
+          "author": {
+            ".validate": "newData.val() === auth.uid"
+          },
+          "text": {
+            ".validate": "newData.isString()"
+          },
+          "createdAt": {
+            ".validate": "newData.val() <= now"
+          },
+          "updatedAt": {
+            ".validate": "newData.val() <= now"
+          }
+        }
+      }
+    }
+  }
+}

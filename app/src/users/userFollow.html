@@ -1,4 +1,4 @@
-<md-card flex>
+<md-card>
     <md-card-content>
         <md-autocomplete
                 class="profile-search-box"
@@ -15,7 +15,7 @@
     </md-card-content>
 </md-card>
 
-<md-list flex>
+<md-list>
     <md-subheader class="md-no-sticky">
         <ng-pluralize ng-show="UF.followState == 'user.profile.followers'" count="U.countObject(UF.friends)"
                       when="{

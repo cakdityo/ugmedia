@@ -43,6 +43,7 @@
          */
         function deletePost(posts, post) {
             // Delete all objects associated with given post.
+            // These have to be deleted first when author property in post data still exist.
             $firebaseRef.postObjects.child(post.$id).set(null);
             posts.$remove(post).then(function () {
                 // Delete user's reference to given post.

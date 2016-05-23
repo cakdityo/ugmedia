@@ -1,18 +1,28 @@
 <div layout="column">
+
+    <!-- Header section -->
     <div class="header">
         <h2>Setting Account</h2>
     </div>
+
     <md-divider></md-divider>
-    <div layout="row" layout-xs="column" layout-align-gt-xs="center center" layout-padding>
-        <div layout="column" flex="30" flex-xs="100">
+
+    <!-- Content section -->
+    <div layout-gt-xs="row" layout="column" layout-padding>
+
+        <!-- Avatar section -->
+        <div flex-gt-xs="30" layout="column">
+            <!-- Image section -->
             <md-card ng-show="!US.progress">
-                <img ng-show="!US.originalAvatar" ng-src="{{ U.user.profile.avatar }}">
+                <img class="md-avatar" ngf-select ng-model="US.originalAvatar" ngf-accept="'image/*'" ng-show="!US.originalAvatar" ng-src="{{ U.user.profile.avatar }}">
 
                 <div ng-show="US.originalAvatar" ngf-drop ng-model="US.picFile" ngf-pattern="image/*" class="cropArea">
                     <img-crop area-type="square" image="US.originalAvatar | ngfDataUrl"
                               result-image="US.croppedAvatar" result-image-size=500></img-crop>
                 </div>
             </md-card>
+
+            <!-- Upload loading section -->
             <md-card ng-show="US.progress">
                 <md-card-content layout="column" layout-align="center center">
                     <h4>Uploading Avatar</h4>
@@ -20,10 +30,14 @@
                     <h4>{{ US.progress }} %</h4>
                 </md-card-content>
             </md-card>
-            <md-button class="md-primary" ngf-select ng-model="US.originalAvatar" accept="image/*">Select Avatar
+
+            <!-- Upload button section -->
+            <md-button class="md-primary" ngf-select ng-model="US.originalAvatar" ngf-accept="'image/*'">Select Avatar
             </md-button>
         </div>
-        <div layout="column" flex="50" flex-xs="100">
+
+        <!-- Data section -->
+        <div flex-gt-xs="50" layout="column">
             <md-input-container class="md-block">
                 <label>Name</label>
                 <input type="text" ng-model="U.user.profile.name">
@@ -34,7 +48,10 @@
             </md-input-container>
         </div>
     </div>
+
     <md-divider></md-divider>
+
+    <!-- Footer section -->
     <div layout="row" layout-align="end center">
         <md-button class="md-primary md-raised" ng-click="US.updateUser(U.user.profile)">Save</md-button>
     </div>

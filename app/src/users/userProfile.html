@@ -1,9 +1,14 @@
-<div layout="row" layout-align-gt-xs="center start" layout-xs="column">
-    <div flex="30" layout="column" flex-xs="100">
+<div layout="column" layout-gt-xs="row">
+
+    <!-- User profile section -->
+    <div flex-gt-xs="30" layout="column">
+
+        <!-- Mini avatar, username and name section -->
         <md-card>
             <md-card-header>
                 <md-card-avatar>
-                    <img ui-sref="user.profile({username: UP.user.profile.username})" class="md-user-avatar" ng-src="{{ UP.user.profile.avatar }}" alt="{{ UP.user.profile.name }}">
+                    <img ui-sref="user.profile({username: UP.user.profile.username})" class="md-user-avatar"
+                         ng-src="{{ UP.user.profile.avatar }}" alt="{{ UP.user.profile.name }}">
                 </md-card-avatar>
                 <md-card-header-text>
                     <span class="md-title">{{ UP.user.profile.username }}</span>
@@ -11,9 +16,13 @@
                 </md-card-header-text>
             </md-card-header>
         </md-card>
+
+        <!-- Avatar section -->
         <md-card>
             <img ng-src="{{ UP.user.profile.avatar }}" alt="{{ UP.user.profile.name }}">
         </md-card>
+
+        <!-- User objects section -->
         <div layout="row" layout-align="center center">
             <md-button ui-sref="user.profile.followers" class="user-object-button">
                 <div class="user-object-length">{{ U.countObject(UP.user.objects.followers) }}</div>
@@ -28,6 +37,8 @@
                 Posts
             </md-button>
         </div>
+
+        <!-- Follow button section -->
         <div ng-if="U.auth.uid != UP.user.profile.$id" layout="column">
             <md-button ng-if="!UP.user.objects.followers[U.auth.uid]"
                        ng-click="UP.followUser(U.auth.uid, UP.user.profile.$id)" class="md-accent md-raised">
@@ -38,6 +49,8 @@
                 Following
             </md-button>
         </div>
+
+        <!-- User meta section -->
         <md-card>
             <md-card-content>
                 <strong>Bio:</strong>
@@ -46,16 +59,16 @@
             </md-card-content>
         </md-card>
     </div>
-    <div hide-xs flex="5"></div>
-    <div flex="50" layout="column" flex-xs="100">
-        <div ui-view>
-            <ug-post-bar user="U.user.profile" posts="UP.user.posts"></ug-post-bar>
-            <br/>
-            <!-- Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue) -->
-            <div>
-                <div ng-if="UP.user.posts.length == 0"> No post yet</div>
-                <ug-post-list ng-if="UP.user.posts.length > 0" user="U.user.profile" posts="UP.user.posts"></ug-post-list>
-            </div>
+
+    <!-- User object section -->
+    <div flex-gt-xs="50" layout="column" ui-view>
+        <ug-post-bar user="U.user.profile" posts="UP.user.posts"></ug-post-bar>
+        <br/>
+        <!-- Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue) -->
+        <div>
+            <div ng-if="UP.user.posts.length == 0"> No post yet</div>
+            <ug-post-list ng-if="UP.user.posts.length > 0" user="U.user.profile" posts="UP.user.posts"></ug-post-list>
         </div>
     </div>
+
 </div>
