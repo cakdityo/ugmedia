@@ -31,10 +31,12 @@
     <!-- Post meta section -->
     <md-card-content>
         {{ pd.post.caption }}
-        <md-subheader layout="row" layout-align="end end">
-            <span am-time-ago="pd.post.createdAt"></span>
-            <span ng-if="pd.post.editedAt">( Edited <span am-time-ago="pd.post.editedAt"> )</span></span>
-        </md-subheader>
+        <div layout="row" layout-align="end end">
+            <span class="timestamp">
+                <span am-time-ago="pd.post.createdAt"></span>
+                <span ng-if="pd.post.editedAt">( Edited <span am-time-ago="pd.post.editedAt"> )</span></span>
+            </span>
+        </div>
         <md-divider></md-divider>
     </md-card-content>
 

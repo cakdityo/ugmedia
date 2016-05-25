@@ -4,13 +4,12 @@
         <h3 layout="row">
             {{ pcd.author.username }}
             <span flex></span>
-            <md-subheader hide-xs am-time-ago="pcd.comment.createdAt">
-            </md-subheader>
+            <span hide-xs class="timestamp" am-time-ago="pcd.comment.createdAt">
+            </span>
         </h3>
         <p>
             {{ pcd.comment.text }}
-            <md-subheader hide-gt-xs am-time-ago="pcd.comment.createdAt">
-            </md-subheader>
+            <div hide-gt-xs class="timestamp" am-time-ago="pcd.comment.createdAt"></div>
         </p>
     </div>
 

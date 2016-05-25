@@ -47,6 +47,9 @@ body {
 .profile-search-box > md-autocomplete-wrap {
   box-shadow: none; }
 
+.post-card {
+  margin-bottom: 50px; }
+
 .post-card > md-card-content {
   padding-top: 0;
   padding-bottom: 0; }
@@ -72,3 +75,10 @@ md-list-item.comment {
 
 .md-avatar, .md-user-avatar {
   cursor: pointer; }
+
+.timestamp {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+  font-weight: 400;
+  letter-spacing: 0.010em;
+  line-height: 24px; }
