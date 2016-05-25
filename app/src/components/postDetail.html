@@ -32,15 +32,15 @@
     <md-card-content>
         {{ pd.post.caption }}
         <md-subheader layout="row" layout-align="end end">
-            <span>Shared <span am-time-ago="pd.post.createdAt"></span></span>
-            <span ng-if="pd.post.editedAt">, Edited <span am-time-ago="pd.post.editedAt"></span></span>
+            <span am-time-ago="pd.post.createdAt"></span>
+            <span ng-if="pd.post.editedAt">( Edited <span am-time-ago="pd.post.editedAt"> )</span></span>
         </md-subheader>
         <md-divider></md-divider>
     </md-card-content>
 
     <!-- Comment section -->
     <md-card-content ng-if="pd.comments.length > 0">
-        <ug-post-comment-list comments="pd.comments"></ug-post-comment-list>
+        <ug-post-comment-list comments="pd.comments" id="{user: pd.user.$id, postAuthor: pd.post.author}"></ug-post-comment-list>
         <md-divider></md-divider>
     </md-card-content>
 

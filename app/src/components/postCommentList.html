@@ -1,6 +1,7 @@
 <md-list>
     <ug-post-comment-detail
             ng-repeat="comment in pcl.comments"
-            comment="comment">
+            comment="comment"
+            delete-comment="pcl.deleteComment(comment)">
     </ug-post-comment-detail>
 </md-list>

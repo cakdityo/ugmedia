@@ -10,6 +10,7 @@
         var DataService = {
             addComment: addComment,
             addPost: addPost,
+            deleteComment: deleteComment,
             deletePost: deletePost,
             getPostComments: getPostComments,
             getUser: getUser,
@@ -36,6 +37,10 @@
             posts.$add(post).then(function (newPost) {
                 setUserPost(post.author, newPost.key(), true);
             });
+        }
+
+        function deleteComment(comments, comment) {
+            comments.$remove(comment);
         }
 
         /*

@@ -13,7 +13,9 @@
             </md-subheader>
         </p>
     </div>
-    <md-button class="md-icon-button">
+
+    <!-- Cancel button only exists if postAuthor === authenticatedUser or commentAuthor === authenticatedUser -->
+    <md-button ng-if="$parent.id.postAuthor === $parent.id.user || pcd.author.$id === $parent.id.user" class="md-icon-button" ng-click="pcd.deleteComment(pcd.comment)">
         <md-icon>cancel</md-icon>
     </md-button>
 </md-list-item>

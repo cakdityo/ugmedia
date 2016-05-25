@@ -9,7 +9,8 @@
     function ugPostCommentDetail(){
         return {
             scope: {
-                comment: '='
+                comment: '=',
+                deleteComment: '&'
             },
             replace: true,
             templateUrl: 'src/components/postCommentDetail.html',
@@ -22,6 +23,8 @@
 
             vm.author = DataService.getUser($scope.comment.author);
             vm.comment = $scope.comment;
+            vm.deleteComment = $scope.deleteComment;
+
         }
     }
 })();
