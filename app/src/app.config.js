@@ -4,12 +4,15 @@
     angular
         .module('app')
         .constant('FirebaseUrl', 'http://ug-media.firebaseio.com/')
-        .config(function ($firebaseRefProvider, FirebaseUrl, $stateProvider) {
+        .config(function ($firebaseRefProvider, FirebaseUrl, $stateProvider, $locationProvider) {
+
+            //$locationProvider.html5Mode(true);
 
             $firebaseRefProvider.registerUrl({
                 default: FirebaseUrl,
                 userIDs: FirebaseUrl + 'userIDs',
                 users: FirebaseUrl + 'users',
+                userMentions: FirebaseUrl + 'userMentions',
                 userObjects: FirebaseUrl + 'userObjects',
                 posts: FirebaseUrl + 'posts',
                 postObjects: FirebaseUrl + 'postObjects'
@@ -34,6 +37,9 @@
                     templateUrl: 'src/users/user.html',
                     controller: 'UserController as U',
                     resolve: {
+                        users: function(DataService){
+                            return DataService.getUsers();
+                        },
                         user: function (DataService, $firebaseAuthService, $state) {
                             return $firebaseAuthService.$requireAuth()
                                 .then(function (auth) {
@@ -90,9 +96,9 @@
                     controller: 'UserFollowController as UF',
                     resolve: {
                         friends: function (person, DataService) {
-                            var friends = [];
-                            angular.forEach(person.objects.followers, function(value, key){
-                                friends.push(DataService.getUser(key));
+                            var friends = person.objects.followers;
+                            angular.forEach(friends, function(friend, index){
+                                friends[index] = DataService.getUser(friend.$id);
                             });
                             return friends;
                         }
@@ -104,9 +110,9 @@
                     controller: 'UserFollowController as UF',
                     resolve: {
                         friends: function (person, DataService) {
-                            var friends = [];
-                            angular.forEach(person.objects.following, function(value, key){
-                                friends.push(DataService.getUser(key));
+                            var friends = person.objects.following;
+                            angular.forEach(friends, function(friend, index){
+                                friends[index] = DataService.getUser(friend.$id);
                             });
                             return friends;
                         }

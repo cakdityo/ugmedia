@@ -29,9 +29,11 @@
             vm.menuAction = menuAction;
             vm.menuItems = [
                 {name: 'Copy URL', icon: 'content_copy'},
+                {name: 'Edit', icon: 'edit'},
                 {name: 'Delete', icon: 'clear'}
             ];
             vm.post = $scope.post;
+            vm.taggedUsers = DataService.getPostTaggedUsers($scope.post.$id);
             vm.user = $scope.user;
 
             function addComment(text) {
@@ -45,6 +47,8 @@
             function menuAction(menuName) {
                 if (menuName === 'Copy URL') {
                     alert("URL copied!");
+                } else if (menuName === 'Edit') {
+
                 } else if (menuName === 'Delete') {
                     vm.deletePost(vm.post);
                 }

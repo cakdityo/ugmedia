@@ -8,14 +8,31 @@
             <textarea rows="2" ng-model="pb.post.caption" md-maxlength="500"></textarea>
         </md-input-container>
     </md-card-header>
+    <md-card-content ng-show="pb.mention">
+        <md-contact-chips
+                ng-model="pb.mentionedUsers"
+                md-contacts="pb.querySearch($query)"
+                md-contact-name="username"
+                md-contact-image="avatar"
+                md-contact-email="email"
+                md-require-match="true"
+                md-highlight-flags="i"
+                filter-selected="true"
+                placeholder="To"
+                secondary-placeholder="Enter username">
+        </md-contact-chips>
+    </md-card-content>
     <md-card-actions layout="row" layout-align="end center">
         <md-button class="md-icon-button" aria-label="Image">
             <md-icon>image</md-icon>
         </md-button>
-        <md-button class="md-icon-button" aria-label="Document">
+        <md-button class="md-icon-button" aria-label="File">
             <md-icon>attach_file</md-icon>
         </md-button>
-        <md-button class="md-raised md-primary" aria-label="Document" ng-click="pb.setPost(pb.post)">
+        <md-button class="md-primary" aria-label="Mention" ng-click="pb.mention = pb.mention ? false : true;">
+            Tag People
+        </md-button>
+        <md-button class="md-raised md-primary" aria-label="Share" ng-click="pb.setPost(pb.post)">
             Share
         </md-button>
     </md-card-actions>

@@ -12,12 +12,11 @@
             controllerAs: 'tb'
         };
 
-        function ugToolbarController($state, DataService){
+        function ugToolbarController($state){
             var vm = this;
 
             vm.goToUser = goToUser;
             vm.searchText = '';
-            vm.users = DataService.getUsers();
             vm.toggleSidenav = toggleSidenav;
 
             function goToUser(username){

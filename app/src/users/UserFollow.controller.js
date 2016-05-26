@@ -15,6 +15,8 @@
         vm.searchText = '';
         vm.tes = tes;
 
+        console.log(friends);
+
         function tes(event){
 
         }

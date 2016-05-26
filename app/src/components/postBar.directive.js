@@ -9,7 +9,8 @@
         return {
             scope: {
                 posts: '=',
-                user: '='
+                user: '=',
+                users: '='
             },
             templateUrl: 'src/components/postBar.html',
             controller: postBarController,
@@ -20,16 +21,34 @@
             var vm = this;
 
             vm.post = {};
+            vm.mentionedUsers = [];
             vm.setPost = setPost;
             vm.user = $scope.user;
+            vm.users = $scope.users;
+            vm.querySearch = querySearch;
+
 
             function setPost(post){
                 post.author = $scope.user.$id;
                 post.createdAt = Firebase.ServerValue.TIMESTAMP;
                 if (post.author && post.caption) {
-                    DataService.addPost($scope.posts, post);
+                    DataService.addPost($scope.posts, post, vm.mentionedUsers);
                     vm.post = {};
+                    vm.mentionedUsers = [];
                 }
+            }
+
+            function querySearch (query) {
+                return query ? vm.users.filter(createFilterFor(query)) : [];
+            }
+
+            function createFilterFor(query) {
+                var lowercaseQuery = angular.lowercase(query);
+
+                return function filterFn(contact) {
+                    return (contact.username.indexOf(lowercaseQuery) != -1);
+                };
+
             }
         }
     }

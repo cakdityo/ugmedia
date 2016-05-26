@@ -17,8 +17,6 @@
         vm.user.profile = person.profile;
         vm.user.objects = person.objects;
 
-        console.log(person);
-
         /*
          ============= Follow User =============
          1. Set vm.user.objects.followers[authUserID] to true.

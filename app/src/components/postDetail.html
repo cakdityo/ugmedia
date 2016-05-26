@@ -1,7 +1,8 @@
 <md-card class="post-card">
     <md-card-header>
         <md-card-avatar>
-            <img ui-sref="user.profile({username: pd.author.username})" class="md-user-avatar" ng-src="{{ pd.author.avatar }}" alt="pd.author.username">
+            <img ui-sref="user.profile({username: pd.author.username})" class="md-user-avatar"
+                 ng-src="{{ pd.author.avatar }}" alt="pd.author.username">
         </md-card-avatar>
         <md-card-header-text>
             <span class="md-title" layout="row">
@@ -26,12 +27,34 @@
             <span class="md-subhead">{{ pd.author.name }}</span>
         </md-card-header-text>
     </md-card-header>
-    <img ng-show="pd.post.pictures" ng-src="{{ pd.post.pictures }}" alt="">
-
-    <!-- Post meta section -->
+    <img ng-show="pd.post.picture" ng-src="{{ pd.post.picture }}" alt="">
+    <br>
+    <!-- Post content section -->
     <md-card-content>
         {{ pd.post.caption }}
-        <div layout="row" layout-align="end end">
+        <div ng-if="pd.taggedUsers.length > 0" style="padding-top: 8px;">
+            <md-icon>assignment_ind</md-icon>
+            :
+            <span ng-repeat="user in pd.taggedUsers">
+                <a class="simple-link md-primary" ui-sref="user.profile({username: user.username})">{{ user.username
+                    }}</a>
+                <span ng-show="!$last">,</span>
+            </span>
+        </div>
+    </md-card-content>
+
+    <md-card-actions layout="row" layout-align="center center">
+        <md-button class="md-icon-button">
+            <md-icon>favorite</md-icon>
+        </md-button>
+    </md-card-actions>
+
+    <md-card-content layout="column">
+        <div layout="column" layout-gt-xs="row">
+            <span class="timestamp">
+                215 likes, {{ pd.comments.length }} comments
+            </span>
+            <span flex></span>
             <span class="timestamp">
                 <span am-time-ago="pd.post.createdAt"></span>
                 <span ng-if="pd.post.editedAt">( Edited <span am-time-ago="pd.post.editedAt"> )</span></span>
@@ -42,7 +65,8 @@
 
     <!-- Comment section -->
     <md-card-content ng-if="pd.comments.length > 0">
-        <ug-post-comment-list comments="pd.comments" id="{user: pd.user.$id, postAuthor: pd.post.author}"></ug-post-comment-list>
+        <ug-post-comment-list comments="pd.comments"
+                              id="{user: pd.user.$id, postAuthor: pd.post.author}"></ug-post-comment-list>
         <md-divider></md-divider>
     </md-card-content>
 

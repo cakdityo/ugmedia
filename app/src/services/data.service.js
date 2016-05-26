@@ -13,13 +13,19 @@
             deleteComment: deleteComment,
             deletePost: deletePost,
             getPostComments: getPostComments,
+            getPostTaggedUsers: getPostTaggedUsers,
             getUser: getUser,
             getUserByUsername: getUserByUsername,
             getUserObjects: getUserObjects,
+            getUserObjectFollowers: getUserObjectFollowers,
+            getUserObjectFollowing: getUserObjectFollowing,
+            getUserObjectPosts: getUserObjectPosts,
             getUserPosts: getUserPosts,
             getUsers: getUsers,
+            setPostTaggedUsers: setPostTaggedUsers,
             setUserFollower: setUserFollower,
             setUserFollowing: setUserFollowing,
+            setUserMention: setUserMention,
             setUserPost: setUserPost,
             updateUser: updateUser
         };
@@ -33,9 +39,12 @@
         /*
          Set a post authored by a user then reference it on user's post object
          */
-        function addPost(posts, post) {
+        function addPost(posts, post, taggedUsers) {
             posts.$add(post).then(function (newPost) {
                 setUserPost(post.author, newPost.key(), true);
+                if (taggedUsers.length > 0) {
+                    setPostTaggedUsers(post.author, newPost.key(), taggedUsers);
+                }
             });
         }
 
@@ -65,6 +74,17 @@
             return comments;
         }
 
+        function getPostTaggedUsers(postID) {
+            var ref = $firebaseRef.postObjects.child(postID).child('taggedUsers');
+            var users = $firebaseArray(ref);
+            users.$loaded().then(function(){
+                angular.forEach(users, function(user, key){
+                    users[key] = getUser(user.$id);
+                });
+            });
+            return users;
+        }
+
         /*
          Get single users by ID.
          */
@@ -88,8 +108,26 @@
          Followers, Following, Posts.
          */
         function getUserObjects(userID) {
-            var userObjects = $firebaseObject($firebaseRef.userObjects.child(userID));
-            return userObjects;
+            var objects = {};
+            objects.followers = getUserObjectFollowers(userID);
+            objects.following = getUserObjectFollowing(userID);
+            objects.posts = getUserObjectPosts(userID);
+            return objects;
+        }
+
+        function getUserObjectFollowers(userID){
+            var followers = $firebaseArray($firebaseRef.userObjects.child(userID).child('followers'));
+            return followers;
+        }
+
+        function getUserObjectFollowing(userID){
+            var following = $firebaseArray($firebaseRef.userObjects.child(userID).child('following'));
+            return following;
+        }
+
+        function getUserObjectPosts(userID){
+            var posts = $firebaseArray($firebaseRef.userObjects.child(userID).child('posts'));
+            return posts;
         }
 
         /*
@@ -110,6 +148,14 @@
             return users;
         }
 
+        function setPostTaggedUsers(userID, postID, users) {
+            angular.forEach(users, function(user){
+                var mention = {};
+                $firebaseRef.postObjects.child(postID).child('taggedUsers').child(user.$id).set(true);
+                setUserMention(user.$id, {author: userID, post: postID});
+            });
+        }
+
         /*
          Set or unset a given user's follower object with ID of authenticated user.
          followState param could be true or false.
@@ -124,6 +170,10 @@
          */
         function setUserFollowing(authUserID, userID, state) {
             $firebaseRef.userObjects.child(authUserID + '/following/' + userID).set(state);
+        }
+
+        function setUserMention(userID, mention) {
+            $firebaseRef.userMentions.child(userID).push().set(mention);
         }
 
         /*

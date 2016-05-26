@@ -5,31 +5,17 @@
         .module('app.user')
         .controller('UserController', UserController);
 
-    UserController.$inject = ['user'];
+    UserController.$inject = ['user','users'];
 
-    function UserController(user){
+    function UserController(user, users){
         var vm = this;
 
         //Initialize the authenticated users data
         vm.auth = user.auth;
-        vm.countObject = countObject;
         vm.user = {};
         vm.user.objects = user.objects;
         vm.user.profile = user.profile;
-
-        console.log(user);
-
-        /*
-         Helper function to count keys in an object.
-         Is it correct to put it here? No of course.
-         */
-        function countObject(obj){
-            if (obj){
-                return Object.keys(obj).length;
-            } else {
-                return 0;
-            }
-        }
+        vm.users = users;
 
     }
 })();

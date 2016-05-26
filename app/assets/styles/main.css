@@ -48,7 +48,7 @@ body {
   box-shadow: none; }
 
 .post-card {
-  margin-bottom: 50px; }
+  margin-top: 30px; }
 
 .post-card > md-card-content {
   padding-top: 0;
@@ -82,3 +82,7 @@ md-list-item.comment {
   font-weight: 400;
   letter-spacing: 0.010em;
   line-height: 24px; }
+
+.simple-link {
+  margin-right: 3px;
+  text-decoration: none; }

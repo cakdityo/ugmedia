@@ -17,6 +17,14 @@
       }
     }
   },
+  "userMentions": {
+    "$userID": {
+      ".write": "newData.exists()",
+      "$mentionID": {
+        ".validate" : "newData.child('author').val() === auth.uid"
+      }
+    }
+  },
   "userObjects": {
     "$userID": {
       ".write": "$userID === auth.uid",

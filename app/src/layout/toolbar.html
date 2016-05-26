@@ -10,7 +10,7 @@
                 hide-xs
                 md-selected-item="tb.selectedUser"
                 md-search-text="tb.searchText"
-                md-items="user in tb.users | filter: tb.searchText"
+                md-items="user in U.users | filter: tb.searchText"
                 md-item-text="user.username"
                 md-selected-item-change="tb.goToUser(user.username)"
                 md-autoselect="false"

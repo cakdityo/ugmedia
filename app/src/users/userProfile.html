@@ -25,11 +25,11 @@
         <!-- User objects section -->
         <div layout="row" layout-align="center center">
             <md-button ui-sref="user.profile.followers" class="user-object-button">
-                <div class="user-object-length">{{ U.countObject(UP.user.objects.followers) }}</div>
+                <div class="user-object-length">{{ UP.user.objects.followers.length }}</div>
                 Followers
             </md-button>
             <md-button ui-sref="user.profile.following" class="user-object-button">
-                <div class="user-object-length">{{ U.countObject(UP.user.objects.following) }}</div>
+                <div class="user-object-length">{{ UP.user.objects.following.length }}</div>
                 Following
             </md-button>
             <md-button ui-sref="user.profile({username: UP.user.profile.username})" class="user-object-button">
@@ -40,11 +40,11 @@
 
         <!-- Follow button section -->
         <div ng-if="U.auth.uid != UP.user.profile.$id" layout="column">
-            <md-button ng-if="!UP.user.objects.followers[U.auth.uid]"
+            <md-button ng-if="UP.user.objects.followers.$indexFor(U.auth.uid) < 0"
                        ng-click="UP.followUser(U.auth.uid, UP.user.profile.$id)" class="md-accent md-raised">
                 Follow
             </md-button>
-            <md-button ng-if="UP.user.objects.followers[U.auth.uid]"
+            <md-button ng-if="UP.user.objects.followers.$indexFor(U.auth.uid) >= 0"
                        ng-click="UP.unFollowUser(U.auth.uid, UP.user.profile.$id)" class="md-primary md-raised">
                 Following
             </md-button>
@@ -62,9 +62,9 @@
 
     <!-- User object section -->
     <div flex-gt-xs="50" layout="column" ui-view>
-        <ug-post-bar user="U.user.profile" posts="UP.user.posts"></ug-post-bar>
+        <ug-post-bar user="U.user.profile" users="U.users" posts="UP.user.posts"></ug-post-bar>
         <br/>
-        <!-- Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue) -->
+         <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->
         <div>
             <div ng-if="UP.user.posts.length == 0"> No post yet</div>
             <ug-post-list ng-if="UP.user.posts.length > 0" user="U.user.profile" posts="UP.user.posts"></ug-post-list>

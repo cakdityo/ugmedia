@@ -17,14 +17,14 @@
 
 <md-list>
     <md-subheader class="md-no-sticky">
-        <ng-pluralize ng-show="UF.followState == 'user.profile.followers'" count="U.countObject(UF.friends)"
+        <ng-pluralize ng-show="UF.followState == 'user.profile.followers'" count="UF.friends.length"
                       when="{
                           '0': 'No user found.',
                           '1': 'One follower.',
                           'other': '{} followers.'
                           }">
         </ng-pluralize>
-        <ng-pluralize ng-show="UF.followState == 'user.profile.following'" count="U.countObject(UF.friends)"
+        <ng-pluralize ng-show="UF.followState == 'user.profile.following'" count="UF.friends.length"
                       when="{
                           '0': 'No user found.',
                           '1': 'One following.',
