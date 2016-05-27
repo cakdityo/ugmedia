@@ -19,9 +19,10 @@
   },
   "userMentions": {
     "$userID": {
-      ".write": "newData.exists()",
+      ".write": "auth.uid !== null",
+      ".validate": "$userID !== auth.uid",
       "$mentionID": {
-        ".validate" : "newData.child('author').val() === auth.uid"
+        ".validate" : "newData.child('sender').val() === auth.uid"
       }
     }
   },
@@ -80,6 +81,16 @@
           "updatedAt": {
             ".validate": "newData.val() <= now"
           }
+        }
+      },
+      "participants": {
+        "$userID": {
+          ".write": "!data.exists()"
+        }
+      },
+      "taggedUsers": {
+        "$userID": {
+          ".validate": "$userID !== auth.uid"
         }
       }
     }

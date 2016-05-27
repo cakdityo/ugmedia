@@ -22,7 +22,8 @@
             getUserObjectPosts: getUserObjectPosts,
             getUserPosts: getUserPosts,
             getUsers: getUsers,
-            setPostTaggedUsers: setPostTaggedUsers,
+            setPostParticipant: setPostParticipant,
+            setPostTaggedUser: setPostTaggedUser,
             setUserFollower: setUserFollower,
             setUserFollowing: setUserFollowing,
             setUserMention: setUserMention,
@@ -33,23 +34,20 @@
         return DataService;
 
         function addComment(comments, comment){
-            comments.$add(comment);
+            var promise = comments.$add(comment);
+            return promise;
         }
 
         /*
          Set a post authored by a user then reference it on user's post object
          */
-        function addPost(posts, post, taggedUsers) {
-            posts.$add(post).then(function (newPost) {
-                setUserPost(post.author, newPost.key(), true);
-                if (taggedUsers.length > 0) {
-                    setPostTaggedUsers(post.author, newPost.key(), taggedUsers);
-                }
-            });
+        function addPost(posts, post) {
+            var promise = posts.$add(post);
+            return promise;
         }
 
         function deleteComment(comments, comment) {
-            comments.$remove(comment);
+            var promise = comments.$remove(comment);
         }
 
         /*
@@ -148,12 +146,12 @@
             return users;
         }
 
-        function setPostTaggedUsers(userID, postID, users) {
-            angular.forEach(users, function(user){
-                var mention = {};
-                $firebaseRef.postObjects.child(postID).child('taggedUsers').child(user.$id).set(true);
-                setUserMention(user.$id, {author: userID, post: postID});
-            });
+        function setPostParticipant(postID, userID){
+            $firebaseRef.postObjects.child(postID).child('participants').child(userID).set(true);
+        }
+
+        function setPostTaggedUser(postID, userID) {
+            $firebaseRef.postObjects.child(postID).child('taggedUsers').child(userID).set(true);
         }
 
         /*
@@ -173,6 +171,7 @@
         }
 
         function setUserMention(userID, mention) {
+            mention.createdAt = Firebase.ServerValue.TIMESTAMP;
             $firebaseRef.userMentions.child(userID).push().set(mention);
         }
 

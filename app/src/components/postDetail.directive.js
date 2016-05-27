@@ -39,8 +39,12 @@
             function addComment(text) {
                 if (text && $scope.user.$id) {
                     var comment = {text: text, author: $scope.user.$id, createdAt: Firebase.ServerValue.TIMESTAMP};
-                    DataService.addComment(vm.comments, comment);
-                    vm.commentText = '';
+                    var promise = DataService.addComment(vm.comments, comment);
+                    promise.then(function(){
+                        DataService.setPostParticipant(vm.post.$id, comment.author);
+                        DataService.setUserMention(vm.post.author, {comment: comment.text, post:vm.post.$id, sender: comment.author});
+                        vm.commentText = '';
+                    });
                 }
             }
 
