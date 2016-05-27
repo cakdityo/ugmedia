@@ -37,18 +37,14 @@
                     promise.then(function(newPost){
                         //Add reference of this post to author's user post object.
                         DataService.setUserPost(post.author, newPost.key(), true);
-                        //Set the first participant of this post, which is the author itself.
-                        DataService.setPostParticipant(newPost.key(), post.author);
 
                         if (vm.taggedUsers.length > 0){
                             //if there is at least one user tagged,
                             angular.forEach(vm.taggedUsers, function(user){
                                 //Set post taggedUsersObject,
                                 DataService.setPostTaggedUser(newPost.key(), user.$id);
-                                //Set post participant,
-                                DataService.setPostParticipant(newPost.key(), user.$id);
-                                //Mention the tagged user.
-                                DataService.setUserMention(user.$id, {sender: post.author, post: newPost.key(), tagged: true})
+                                //Notice the tagged user.
+                                DataService.setUserNotification(user.$id, {sender: post.author, post: newPost.key()})
                             });
                         }
 

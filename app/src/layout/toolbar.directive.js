@@ -17,7 +17,8 @@
 
             vm.goToUser = goToUser;
             vm.searchText = '';
-            vm.toggleSidenav = toggleSidenav;
+            vm.toggleSidenavNotifications = toggleSidenavNotifications;
+            vm.toggleSidenavUser = toggleSidenavUser;
 
             function goToUser(username){
                 if (username){
@@ -25,9 +26,15 @@
                 }
             }
 
-            function toggleSidenav(){
-                if(!$mdSidenav('left').isLockedOpen()){
-                    $mdSidenav('left').toggle();
+            function toggleSidenavNotifications(){
+                if (!$mdSidenav('notifications').isLockedOpen()){
+                    $mdSidenav('notifications').toggle();
+                }
+            }
+
+            function toggleSidenavUser(){
+                if(!$mdSidenav('user').isLockedOpen()){
+                    $mdSidenav('user').toggle();
                 }
             }
         }

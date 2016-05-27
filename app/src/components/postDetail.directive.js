@@ -40,9 +40,8 @@
                 if (text && $scope.user.$id) {
                     var comment = {text: text, author: $scope.user.$id, createdAt: Firebase.ServerValue.TIMESTAMP};
                     var promise = DataService.addComment(vm.comments, comment);
-                    promise.then(function(){
-                        DataService.setPostParticipant(vm.post.$id, comment.author);
-                        DataService.setUserMention(vm.post.author, {comment: comment.text, post:vm.post.$id, sender: comment.author});
+                    promise.then(function(newComment){
+                        DataService.setUserNotification(vm.post.author, {comment: newComment.key(), post: vm.post.$id, sender: comment.author});
                         vm.commentText = '';
                     });
                 }

@@ -25,7 +25,10 @@
             vm.user = $scope.user;
 
             function deletePost(post){
-                DataService.deletePost(vm.posts, post);
+                var promise = DataService.deletePost(vm.posts, post);
+                promise.then(function(){
+                    DataService.setUserPost(post.author, post.$id, null);
+                });
             }
         }
     }

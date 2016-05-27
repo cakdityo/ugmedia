@@ -17,15 +17,6 @@
       }
     }
   },
-  "userMentions": {
-    "$userID": {
-      ".write": "auth.uid !== null",
-      ".validate": "$userID !== auth.uid",
-      "$mentionID": {
-        ".validate" : "newData.child('sender').val() === auth.uid"
-      }
-    }
-  },
   "userObjects": {
     "$userID": {
       ".write": "$userID === auth.uid",
@@ -42,6 +33,11 @@
       "posts": {
         "$postID": {
           ".write": "root.child('posts/' + $postID + '/author').val() === auth.uid"
+        }
+      },
+      "notifications": {
+        "$notificationID": {
+          ".write": "newData.child('sender').val() === auth.uid || data.child('sender').val() === auth.uid"
         }
       }
     }
@@ -81,11 +77,6 @@
           "updatedAt": {
             ".validate": "newData.val() <= now"
           }
-        }
-      },
-      "participants": {
-        "$userID": {
-          ".write": "!data.exists()"
         }
       },
       "taggedUsers": {

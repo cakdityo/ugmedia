@@ -3,16 +3,16 @@
 
     angular
         .module('app.layout')
-        .directive('ugSidenavLeft', ugSidenavLeft);
+        .directive('ugSidenavUser', ugSidenavUser);
 
-    function ugSidenavLeft(){
+    function ugSidenavUser(){
         return {
-            templateUrl: 'src/layout/sidenavLeft.html',
-            controller: SidenavLeftController,
-            controllerAs: 'sl'
+            templateUrl: 'src/layout/sidenavUser.html',
+            controller: SidenavUserController,
+            controllerAs: 'su'
         };
 
-        function SidenavLeftController($firebaseAuthService, $state){
+        function SidenavUserController($firebaseAuthService, $state){
             var vm = this;
 
             vm.logout = logout;

@@ -1,0 +1,15 @@
+<md-list-item ng-if="!nd.comment" class="md-2-line" ng-click="nd.navigateTo('user.profile', {username: nd.sender.username})">
+    <img ng-src="{{ nd.sender.avatar }}" class="md-avatar" alt="{{ nd.sender.username }}" />
+    <div class="md-list-item-text">
+        <h3>{{ nd.sender.username }}</h3>
+        <p>Tagged you in a post</p>
+    </div>
+</md-list-item>
+
+<md-list-item ng-if="nd.comment" class="md-2-line" ng-click="nd.navigateTo('user.profile', {username: nd.sender.username})">
+    <img ng-src="{{ nd.sender.avatar }}" class="md-avatar" alt="{{ nd.sender.username }}" />
+    <div class="md-list-item-text">
+        <h3>{{ nd.sender.username }}</h3>
+        <p>Commented: "{{ nd.comment.text }}"</p>
+    </div>
+</md-list-item>

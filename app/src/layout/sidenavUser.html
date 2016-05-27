@@ -1,6 +1,6 @@
 <md-sidenav
         class="md-sidenav-left md-whiteframe-z2"
-        md-component-id="left"
+        md-component-id="user"
         md-is-locked-open="$mdMedia('gt-sm')">
 
     <!-- sidenav header -->
@@ -8,7 +8,7 @@
         <div class="md-toolbar-tools">
             <h2><span>UG MEDIA</span></h2>
             <span flex></span>
-            <md-button hide-gt-sm class="md-icon-button" aria-label="Close Side Panel" ng-click="tb.toggleSidenav()">
+            <md-button hide-gt-sm class="md-icon-button" aria-label="Close Side Panel" ng-click="tb.toggleSidenavUser()">
                 <md-tooltip>Close Side Panel</md-tooltip>
                 <md-icon class="md-default-theme material-icons">close</md-icon>
             </md-button>
@@ -18,7 +18,7 @@
 
     <!-- sidenav content -->
     <md-list style="padding-top: 0">
-        <md-list-item class="md-2-line" aria-label="Go to profile" ng-click="sl.navigateTo('user.profile', {username: U.user.profile.username}); tb.toggleSidenav()">
+        <md-list-item class="md-2-line" aria-label="Go to profile" ng-click="su.navigateTo('user.profile', {username: U.user.profile.username}); tb.toggleSidenavUser()">
             <img class="md-avatar avatar-75" ng-src="{{ U.user.profile.avatar }}" alt="{{ U.user.profile.username }}">
             <div class="md-list-item-text" layout="column">
                 <h3>{{ U.user.profile.username }}</h3>
@@ -26,15 +26,15 @@
             </div>
         </md-list-item>
         <md-divider></md-divider>
-        <md-list-item ng-click="sl.navigateTo('user.home'); tb.toggleSidenav()">
+        <md-list-item ng-click="su.navigateTo('user.home'); tb.toggleSidenavUser()">
             <md-icon class="material-icons">home</md-icon>
             <p>Home</p>
         </md-list-item>
-        <md-list-item ng-click="sl.navigateTo('user.settings',{token: U.auth.token}); tb.toggleSidenav()">
+        <md-list-item ng-click="su.navigateTo('user.settings',{token: U.auth.token}); tb.toggleSidenavUser()">
             <md-icon class="material-icons">settings</md-icon>
             <p>Setting Account</p>
         </md-list-item>
-        <md-list-item ng-click="sl.logout()">
+        <md-list-item ng-click="su.logout()">
             <md-icon>power_settings_new</md-icon>
             <p>Logout</p>
         </md-list-item>

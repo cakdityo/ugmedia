@@ -12,7 +12,6 @@
                 default: FirebaseUrl,
                 userIDs: FirebaseUrl + 'userIDs',
                 users: FirebaseUrl + 'users',
-                userMentions: FirebaseUrl + 'userMentions',
                 userObjects: FirebaseUrl + 'userObjects',
                 posts: FirebaseUrl + 'posts',
                 postObjects: FirebaseUrl + 'postObjects'
@@ -81,7 +80,11 @@
                                     return {
                                         posts: DataService.getUserPosts(profile[0].$id),
                                         profile: profile[0],
-                                        objects: DataService.getUserObjects(profile[0].$id)
+                                        objects: {
+                                            followers: DataService.getUserObjectFollowers(profile[0].$id),
+                                            following: DataService.getUserObjectFollowing(profile[0].$id),
+                                            posts: DataService.getUserObjectPosts(profile[0].$id)
+                                        }
                                     };
                                 });
                             } else {

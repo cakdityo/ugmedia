@@ -1,0 +1,11 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="notifications">
+    <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">NOTIFICATIONS</h1>
+    </md-toolbar>
+
+    <md-list>
+        <ug-notification-detail ng-repeat="notification in U.user.objects.notifications"
+                                notification="notification">
+        </ug-notification-detail>
+    </md-list>
+</md-sidenav>

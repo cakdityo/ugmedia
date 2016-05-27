@@ -13,20 +13,21 @@
             deleteComment: deleteComment,
             deletePost: deletePost,
             getPostComments: getPostComments,
+            getPostComment: getPostComment,
             getPostTaggedUsers: getPostTaggedUsers,
             getUser: getUser,
             getUserByUsername: getUserByUsername,
             getUserObjects: getUserObjects,
             getUserObjectFollowers: getUserObjectFollowers,
             getUserObjectFollowing: getUserObjectFollowing,
+            getUserObjectNotifications: getUserObjectNotifications,
             getUserObjectPosts: getUserObjectPosts,
             getUserPosts: getUserPosts,
             getUsers: getUsers,
-            setPostParticipant: setPostParticipant,
             setPostTaggedUser: setPostTaggedUser,
             setUserFollower: setUserFollower,
             setUserFollowing: setUserFollowing,
-            setUserMention: setUserMention,
+            setUserNotification: setUserNotification,
             setUserPost: setUserPost,
             updateUser: updateUser
         };
@@ -57,10 +58,8 @@
             // Delete all objects associated with given post.
             // These have to be deleted first when author property in post data still exist.
             $firebaseRef.postObjects.child(post.$id).set(null);
-            posts.$remove(post).then(function () {
-                // Delete user's reference to given post.
-                setUserPost(post.author, post.$id, null);
-            });
+            var promise = posts.$remove(post);
+            return promise;
         }
 
         /*
@@ -70,6 +69,11 @@
             var ref = $firebaseRef.postObjects.child(postID).child('comments');
             var comments = $firebaseArray(ref.limitToLast(5));
             return comments;
+        }
+
+        function getPostComment (postID, commentID){
+            var comment = $firebaseObject($firebaseRef.postObjects.child(postID).child('comments').child(commentID));
+            return comment;
         }
 
         function getPostTaggedUsers(postID) {
@@ -109,6 +113,7 @@
             var objects = {};
             objects.followers = getUserObjectFollowers(userID);
             objects.following = getUserObjectFollowing(userID);
+            objects.notifications = getUserObjectNotifications(userID);
             objects.posts = getUserObjectPosts(userID);
             return objects;
         }
@@ -121,6 +126,11 @@
         function getUserObjectFollowing(userID){
             var following = $firebaseArray($firebaseRef.userObjects.child(userID).child('following'));
             return following;
+        }
+
+        function getUserObjectNotifications(userID){
+            var notifications = $firebaseArray($firebaseRef.userObjects.child(userID).child('notifications'));
+            return notifications;
         }
 
         function getUserObjectPosts(userID){
@@ -146,9 +156,6 @@
             return users;
         }
 
-        function setPostParticipant(postID, userID){
-            $firebaseRef.postObjects.child(postID).child('participants').child(userID).set(true);
-        }
 
         function setPostTaggedUser(postID, userID) {
             $firebaseRef.postObjects.child(postID).child('taggedUsers').child(userID).set(true);
@@ -170,9 +177,9 @@
             $firebaseRef.userObjects.child(authUserID + '/following/' + userID).set(state);
         }
 
-        function setUserMention(userID, mention) {
-            mention.createdAt = Firebase.ServerValue.TIMESTAMP;
-            $firebaseRef.userMentions.child(userID).push().set(mention);
+        function setUserNotification(userID, notification) {
+            notification.createdAt = Firebase.ServerValue.TIMESTAMP;
+            $firebaseRef.userObjects.child(userID).child('notifications').push().set(notification);
         }
 
         /*

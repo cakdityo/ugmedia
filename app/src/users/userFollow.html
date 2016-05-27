@@ -32,7 +32,7 @@
                           }">
         </ng-pluralize>
     </md-subheader>
-    <md-list-item ng-click="sl.navigateTo('user.profile', {username: friend.username})" class="md-2-line"
+    <md-list-item ng-click="su.navigateTo('user.profile', {username: friend.username})" class="md-2-line"
                   ng-repeat="friend in UF.friends | filter:UF.searchText">
         <img ng-src="{{ friend.avatar }}" alt="{{ friend.username }}" class="md-avatar">
         <div class="md-list-item-text" layout="column">
