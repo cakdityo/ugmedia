@@ -86,3 +86,6 @@ md-list-item.comment {
 .simple-link {
   margin-right: 3px;
   text-decoration: none; }
+
+md-list-item.notification > button {
+  line-height: 25px !important; }

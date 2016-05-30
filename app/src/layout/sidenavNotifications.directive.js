@@ -8,15 +8,7 @@
 
     function ugSidenavNotifications(){
         return {
-            templateUrl: 'src/layout/sidenavNotifications.html',
-            controller: SidenavNotificationsController,
-            controllerAs: 'sn'
+            templateUrl: 'src/layout/sidenavNotifications.html'
         };
-
-        function SidenavNotificationsController(){
-            var vm = this;
-
-            vm.tes = "hello cak!";
-        }
     }
 })();

@@ -33,13 +33,13 @@
                 Following
             </md-button>
             <md-button ui-sref="user.profile({username: UP.user.profile.username})" class="user-object-button">
-                <div class="user-object-length">{{ UP.user.posts.length }}</div>
+                <div class="user-object-length">{{ UP.user.objects.posts.length }}</div>
                 Posts
             </md-button>
         </div>
 
         <!-- Follow button section -->
-        <div ng-if="U.auth.uid != UP.user.profile.$id" layout="column">
+        <div ng-if="U.auth.uid !== UP.user.profile.$id" layout="column">
             <md-button ng-if="UP.user.objects.followers.$indexFor(U.auth.uid) < 0"
                        ng-click="UP.followUser(U.auth.uid, UP.user.profile.$id)" class="md-accent md-raised">
                 Follow
@@ -62,12 +62,12 @@
 
     <!-- User object section -->
     <div flex-gt-xs="50" layout="column" ui-view>
-        <ug-post-bar user="U.user.profile" users="U.users" posts="UP.user.posts"></ug-post-bar>
+        <ug-post-bar user="U.user.profile" users="U.users"></ug-post-bar>
         <br/>
          <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->
         <div>
-            <div ng-if="UP.user.posts.length == 0"> No post yet</div>
-            <ug-post-list ng-if="UP.user.posts.length > 0" user="U.user.profile" posts="UP.user.posts"></ug-post-list>
+            <div ng-if="UP.user.objects.posts.length == 0"> No post yet</div>
+            <ug-post-list ng-if="UP.user.objects.posts.length > 0" user="U.user.profile" posts="UP.user.objects.posts"></ug-post-list>
         </div>
     </div>
 

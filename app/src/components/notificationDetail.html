@@ -1,15 +1,19 @@
-<md-list-item ng-if="!nd.comment" class="md-2-line" ng-click="nd.navigateTo('user.profile', {username: nd.sender.username})">
-    <img ng-src="{{ nd.sender.avatar }}" class="md-avatar" alt="{{ nd.sender.username }}" />
-    <div class="md-list-item-text">
-        <h3>{{ nd.sender.username }}</h3>
-        <p>Tagged you in a post</p>
-    </div>
-</md-list-item>
+<md-list-item>
+    <img ng-src="{{ sender.avatar }}" class="md-avatar"
+         alt="{{ sender.username }}"
+         ui-sref="user.profile({username: sender.username})">
 
-<md-list-item ng-if="nd.comment" class="md-2-line" ng-click="nd.navigateTo('user.profile', {username: nd.sender.username})">
-    <img ng-src="{{ nd.sender.avatar }}" class="md-avatar" alt="{{ nd.sender.username }}" />
-    <div class="md-list-item-text">
-        <h3>{{ nd.sender.username }}</h3>
-        <p>Commented: "{{ nd.comment.text }}"</p>
-    </div>
+    <p>
+        <strong>{{ sender.username }}</strong>
+        <span ng-if="notification.comment"> commented on your post: {{ notification.comment }}</span>
+        <span ng-if="notification.tagged"> tagged you in a post</span>
+        <span ng-if="notification.liked"> liked your post</span>
+        <span class="timestamp" am-time-ago="notification.createdAt"></span>
+    </p>
+
+    <md-icon ng-click="navigateToNotification(notification)" class="md-secondary"
+             aria-label="Notification">comment
+    </md-icon>
+
+    <md-divider ng-if="!$last"></md-divider>
 </md-list-item>

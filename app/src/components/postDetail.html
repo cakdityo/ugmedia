@@ -36,15 +36,17 @@
             <md-icon>assignment_ind</md-icon>
             :
             <span ng-repeat="user in pd.taggedUsers">
-                <a class="simple-link md-primary" ui-sref="user.profile({username: user.username})">{{ user.username
-                    }}</a>
+                <a class="simple-link md-primary" ui-sref="user.profile({username: user.username})">{{ user.username }}</a>
                 <span ng-show="!$last">,</span>
             </span>
         </div>
     </md-card-content>
 
     <md-card-actions layout="row" layout-align="center center">
-        <md-button class="md-icon-button">
+        <md-button ng-if="pd.likes.$indexFor(pd.user.$id) < 0" class="md-icon-button" ng-click="pd.likePost(true)">
+            <md-icon>favorite</md-icon>
+        </md-button>
+        <md-button ng-if="pd.likes.$indexFor(pd.user.$id) >= 0" class="md-icon-button md-primary" ng-click="pd.likePost(null)">
             <md-icon>favorite</md-icon>
         </md-button>
     </md-card-actions>
@@ -52,7 +54,7 @@
     <md-card-content layout="column">
         <div layout="column" layout-gt-xs="row">
             <span class="timestamp">
-                215 likes, {{ pd.comments.length }} comments
+                {{ pd.likes.length }} likes, {{ pd.comments.length }} comments
             </span>
             <span flex></span>
             <span class="timestamp">

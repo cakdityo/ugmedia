@@ -13,7 +13,6 @@
         vm.followUser = followUser;
         vm.unFollowUser = unFollowUser;
         vm.user = {};
-        vm.user.posts = person.posts;
         vm.user.profile = person.profile;
         vm.user.objects = person.objects;
 

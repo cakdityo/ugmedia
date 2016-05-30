@@ -10,8 +10,7 @@
         return {
             scope: {
                 comments: '=',
-                id: '=',
-                postAuthor: '='
+                id: '='
             },
             replace: true,
             templateUrl: 'src/components/postCommentList.html',
@@ -24,7 +23,6 @@
 
             vm.comments = $scope.comments;
             vm.deleteComment = deleteComment;
-            vm.user = $scope.user;
 
             function deleteComment(comment){
                 if (comment){

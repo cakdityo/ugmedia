@@ -44,9 +44,13 @@
                                 .then(function (auth) {
                                     return {
                                         auth: auth,
-                                        posts: DataService.getUserPosts(auth.uid),
                                         profile: DataService.getUser(auth.uid),
-                                        objects: DataService.getUserObjects(auth.uid)
+                                        objects: {
+                                            followers: DataService.getUserObjectFollowers(auth.uid),
+                                            following: DataService.getUserObjectFollowing(auth.uid),
+                                            posts: DataService.getUserObjectPosts(auth.uid),
+                                            notifications: DataService.getUserObjectNotifications(auth.uid)
+                                        }
                                     };
                                 }).catch(function () {
                                     $state.go('auth');
@@ -58,6 +62,16 @@
                     url: '/',
                     templateUrl: 'src/users/userHome.html',
                     controller: 'UserHomeController as UH'
+                })
+                .state('user.post', {
+                    url: '/p/{postID}',
+                    templateUrl: 'src/users/userPost.html',
+                    controller: 'UserPostController as UPO',
+                    resolve: {
+                        post: function($stateParams, DataService){
+                            return DataService.getPost($stateParams.postID);
+                        }
+                    }
                 })
                 .state('user.settings', {
                     url: '/settings/{token}',
@@ -78,7 +92,6 @@
                             if (user.profile.username !== $stateParams.username) {
                                 return DataService.getUserByUsername($stateParams.username).$loaded().then(function (profile) {
                                     return {
-                                        posts: DataService.getUserPosts(profile[0].$id),
                                         profile: profile[0],
                                         objects: {
                                             followers: DataService.getUserObjectFollowers(profile[0].$id),
@@ -120,6 +133,6 @@
                             return friends;
                         }
                     }
-                })
+                });
         });
 })();

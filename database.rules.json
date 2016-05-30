@@ -1,5 +1,5 @@
 {
-  ".read": "auth.uid !== null",
+  ".read": "true",
   ".write": "false",
   "users": {
     ".indexOn": "username",
@@ -37,7 +37,8 @@
       },
       "notifications": {
         "$notificationID": {
-          ".write": "newData.child('sender').val() === auth.uid || data.child('sender').val() === auth.uid"
+          ".write": "newData.child('sender').val() === auth.uid",
+          ".validate": "newData.child('sender').val() !== $userID"
         }
       }
     }
@@ -73,10 +74,12 @@
           },
           "createdAt": {
             ".validate": "newData.val() <= now"
-          },
-          "updatedAt": {
-            ".validate": "newData.val() <= now"
           }
+        }
+      },
+      "likes": {
+        "$userID": {
+          ".write": "$userID === auth.uid"
         }
       },
       "taggedUsers": {

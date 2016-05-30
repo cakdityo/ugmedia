@@ -1,6 +1,5 @@
 <ug-post-detail
         ng-repeat="post in pl.posts | orderBy:'-createdAt'"
-        delete-post="pl.deletePost(post)"
         post="post"
         user="pl.user">
 </ug-post-detail>

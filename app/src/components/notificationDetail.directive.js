@@ -1,5 +1,4 @@
 (function(){
-
     'use strict';
 
     angular
@@ -12,24 +11,20 @@
                 notification: '='
             },
             templateUrl: 'src/components/notificationDetail.html',
-            controller: NotificationDetailController,
-            controllerAs: 'nd'
+            replace: true,
+            controller: NotificationDetailController
         };
 
-        function NotificationDetailController($scope, $state, DataService){
-            var vm = this;
+        function NotificationDetailController($scope, DataService, $state){
 
-            vm.navigateTo = navigateTo;
-            vm.sender = DataService.getUser($scope.notification.sender);
+            $scope.navigateToNotification = navigateToNotification;
+            $scope.sender = DataService.getUser($scope.notification.sender);
 
-            if ($scope.notification.comment){
-                vm.comment = DataService.getPostComment($scope.notification.post, $scope.notification.comment);
-            }
-
-            function navigateTo(state, params){
-                $state.go(state, params);
+            function navigateToNotification(notification){
+                if (notification.post){
+                    $state.go('user.post', {postID: notification.post});
+                }
             }
         }
     }
-
 })();
