@@ -20,6 +20,11 @@
   "userObjects": {
     "$userID": {
       ".write": "$userID === auth.uid",
+      "feeds": {
+        "$postID": {
+          ".write": "root.child('posts').child($postID).child('author').val() === auth.uid && root.child('userObjects').child($userID).child('following').hasChild(auth.uid)"
+        }
+      },
       "followers": {
         "$userID": {
           ".write": "$userID === auth.uid"
@@ -30,15 +35,15 @@
           ".validate": "root.child('users').hasChild($userID)"
         }
       },
-      "posts": {
-        "$postID": {
-          ".write": "root.child('posts/' + $postID + '/author').val() === auth.uid"
-        }
-      },
       "notifications": {
         "$notificationID": {
           ".write": "newData.child('sender').val() === auth.uid",
           ".validate": "newData.child('sender').val() !== $userID"
+        }
+      },
+      "posts": {
+        "$postID": {
+          ".write": "root.child('posts/' + $postID + '/author').val() === auth.uid"
         }
       }
     }

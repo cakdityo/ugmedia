@@ -1,4 +1,6 @@
 <md-card class="post-card">
+
+    <!-- Post header section -->
     <md-card-header>
         <md-card-avatar>
             <img ui-sref="user.profile({username: pd.author.username})" class="md-user-avatar"
@@ -13,7 +15,7 @@
                         <md-icon md-menu-origin>more_horiz</md-icon>
                     </md-button>
                     <md-menu-content width="3">
-                        <md-menu-item ng-repeat="menu in pd.menuItems">
+                        <md-menu-item ng-repeat="menu in pd.menuItems" ng-if="menu.name !== 'Copy URL' ? pd.author.$id === pd.user.profile.$id : true">
                             <md-button ng-click="pd.menuAction(menu.name)">
                                 <div layout="row">
                                     <p flex>{{ menu.name }}</p>
@@ -27,8 +29,11 @@
             <span class="md-subhead">{{ pd.author.name }}</span>
         </md-card-header-text>
     </md-card-header>
+
+    <!-- Post picture section -->
     <img ng-show="pd.post.picture" ng-src="{{ pd.post.picture }}" alt="">
     <br>
+
     <!-- Post content section -->
     <md-card-content>
         {{ pd.post.caption }}
@@ -42,15 +47,17 @@
         </div>
     </md-card-content>
 
+    <!-- Post like button section -->
     <md-card-actions layout="row" layout-align="center center">
-        <md-button ng-if="pd.likes.$indexFor(pd.user.$id) < 0" class="md-icon-button" ng-click="pd.likePost(true)">
+        <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) < 0" class="md-icon-button" ng-click="pd.likePost(true)">
             <md-icon>favorite</md-icon>
         </md-button>
-        <md-button ng-if="pd.likes.$indexFor(pd.user.$id) >= 0" class="md-icon-button md-primary" ng-click="pd.likePost(null)">
+        <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) >= 0" class="md-icon-button md-primary" ng-click="pd.likePost(null)">
             <md-icon>favorite</md-icon>
         </md-button>
     </md-card-actions>
 
+    <!-- Post meta detail section -->
     <md-card-content layout="column">
         <div layout="column" layout-gt-xs="row">
             <span class="timestamp">
@@ -68,14 +75,14 @@
     <!-- Comment section -->
     <md-card-content ng-if="pd.comments.length > 0">
         <ug-post-comment-list comments="pd.comments"
-                              id="{user: pd.user.$id, postAuthor: pd.post.author}"></ug-post-comment-list>
+                              id="{user: pd.user.profile.$id, postAuthor: pd.post.author}"></ug-post-comment-list>
         <md-divider></md-divider>
     </md-card-content>
 
     <!-- Comment bar section -->
     <md-card-header class="post-bar" layout="row" layout-align="start center">
         <md-card-avatar>
-            <img class="md-user-avatar" ng-src="{{ pd.user.avatar }}" alt="{{ pd.user.username }}">
+            <img class="md-user-avatar" ng-src="{{ pd.user.profile.avatar }}" alt="{{ pd.user.profile.username }}">
         </md-card-avatar>
         <md-input-container flex layout="column">
             <label>Enter a comment</label>

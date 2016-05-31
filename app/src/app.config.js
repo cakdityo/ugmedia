@@ -25,7 +25,7 @@
                     resolve: {
                         requireNoAuth: function ($state, $firebaseAuthService) {
                             return $firebaseAuthService.$requireAuth().then(function (auth) {
-                                $state.go('user.home');
+                                $state.go('user');
                             }, function (error) {
                                 return;
                             });
@@ -33,6 +33,7 @@
                     }
                 })
                 .state('user', {
+                    url: '/',
                     templateUrl: 'src/users/user.html',
                     controller: 'UserController as U',
                     resolve: {
@@ -46,10 +47,11 @@
                                         auth: auth,
                                         profile: DataService.getUser(auth.uid),
                                         objects: {
+                                            feeds: DataService.getUserObjectFeeds(auth.uid),
                                             followers: DataService.getUserObjectFollowers(auth.uid),
                                             following: DataService.getUserObjectFollowing(auth.uid),
-                                            posts: DataService.getUserObjectPosts(auth.uid),
-                                            notifications: DataService.getUserObjectNotifications(auth.uid)
+                                            notifications: DataService.getUserObjectNotifications(auth.uid),
+                                            posts: DataService.getUserObjectPosts(auth.uid)
                                         }
                                     };
                                 }).catch(function () {
@@ -58,13 +60,8 @@
                         }
                     }
                 })
-                .state('user.home', {
-                    url: '/',
-                    templateUrl: 'src/users/userHome.html',
-                    controller: 'UserHomeController as UH'
-                })
                 .state('user.post', {
-                    url: '/p/{postID}',
+                    url: 'p/{postID}',
                     templateUrl: 'src/users/userPost.html',
                     controller: 'UserPostController as UPO',
                     resolve: {
@@ -74,7 +71,7 @@
                     }
                 })
                 .state('user.settings', {
-                    url: '/settings/{token}',
+                    url: 'settings/{token}',
                     templateUrl: 'src/users/userSettings.html',
                     controller: 'UserSettingsController as US',
                     onEnter: function ($state, $stateParams, user) {
@@ -84,7 +81,7 @@
                     }
                 })
                 .state('user.profile', {
-                    url: '/{username}',
+                    url: '{username}',
                     templateUrl: 'src/users/userProfile.html',
                     controller: 'UserProfileController as UP',
                     resolve: {

@@ -19,6 +19,7 @@
             getPostTaggedUsers: getPostTaggedUsers,
             getUser: getUser,
             getUserByUsername: getUserByUsername,
+            getUserObjectFeeds: getUserObjectFeeds,
             getUserObjectFollowers: getUserObjectFollowers,
             getUserObjectFollowing: getUserObjectFollowing,
             getUserObjectNotifications: getUserObjectNotifications,
@@ -26,6 +27,7 @@
             getUsers: getUsers,
             setPostLike: setPostLike,
             setPostTaggedUser: setPostTaggedUser,
+            setUserFeed: setUserFeed,
             setUserFollower: setUserFollower,
             setUserFollowing: setUserFollowing,
             setUserNotification: setUserNotification,
@@ -62,11 +64,13 @@
         /*
          Delete single post from list of posts.
          */
-        function deletePost(post) {
-            // Delete all objects associated with given post.
-            // These have to be deleted first when author property in post data still exist.
+        function deletePost(post, followers) {
+            setUserFeed(post.author, post.$id, null);
+            angular.forEach(followers, function(follower){
+                setUserFeed(follower.$id, post.$id, null);
+            });
             $firebaseRef.postObjects.child(post.$id).set(null);
-            $firebaseRef.userObjects.child(post.author).child('posts').child(post.$id).set(null);
+            setUserPost(post.author, post.$id, null);
             $firebaseRef.posts.child(post.$id).set(null);
         }
 
@@ -119,6 +123,11 @@
             return user;
         }
 
+        function getUserObjectFeeds(userID) {
+            var feeds = $firebaseArray($firebaseRef.userObjects.child(userID).child('feeds'));
+            return feeds;
+        }
+
         function getUserObjectFollowers(userID) {
             var followers = $firebaseArray($firebaseRef.userObjects.child(userID).child('followers'));
             return followers;
@@ -158,6 +167,10 @@
             $firebaseRef.postObjects.child(postID).child('taggedUsers').child(userID).set(true);
         }
 
+        function setUserFeed(userID, postID, state) {
+            $firebaseRef.userObjects.child(userID).child('feeds').child(postID).set(state);
+        }
+
         /*
          Set or unset a given user's follower object with ID of authenticated user.
          followState param could be true or false.
@@ -182,8 +195,8 @@
         /*
          Set user's post object from existing post object
          */
-        function setUserPost(userID, postID) {
-            $firebaseRef.userObjects.child(userID + '/posts/' + postID).set(true);
+        function setUserPost(userID, postID, state) {
+            $firebaseRef.userObjects.child(userID + '/posts/' + postID).set(state);
         }
 
         /*

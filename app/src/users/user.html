@@ -3,7 +3,17 @@
     <div layout="column" flex>
         <ug-toolbar></ug-toolbar>
         <md-content ui-view layout-margin>
-
+            <div layout-xs="column" layout-gt-xs="row" layout-align-gt-xs="center center">
+                <div flex-gt-xs="50">
+                    <ug-post-bar user="U.user" users="U.users"></ug-post-bar>
+                    <br />
+                    <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->
+                    <div>
+                        <div ng-if="U.user.objects.feeds.length == 0"> No post yet</div>
+                        <ug-post-list ng-if="U.user.objects.feeds.length > 0" user="U.user" posts="U.user.objects.feeds"></ug-post-list>
+                    </div>
+                </div>
+            </div>
         </md-content>
     </div>
     <ug-sidenav-notifications layout="vertical"></ug-sidenav-notifications>

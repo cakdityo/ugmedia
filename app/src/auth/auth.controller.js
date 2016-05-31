@@ -45,7 +45,7 @@
 
         function login(){
             $firebaseAuthService.$authWithPassword(vm.user).then(function (auth) {
-                $state.go('user.home');
+                $state.go('user');
             }, function (error) {
                 vm.error = error;
             });

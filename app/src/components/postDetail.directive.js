@@ -41,8 +41,8 @@
             vm.user = $scope.user;
 
             function addComment(text) {
-                if (text && $scope.user.$id) {
-                    var comment = {text: text, author: $scope.user.$id};
+                if (text && vm.user.profile.$id) {
+                    var comment = {text: text, author: vm.user.profile.$id};
                     DataService.addComment(vm.comments, comment);
                     DataService.setUserNotification(vm.post.author, {
                         comment: text,
@@ -53,18 +53,19 @@
                 }
             }
 
-            function deletePost(post) {
-                DataService.deletePost(post);
-                $state.go('user.profile', {username: vm.user.username})
+            function deletePost() {
+                if (vm.user.profile.$id === vm.author.$id) {
+                    DataService.deletePost(vm.post, vm.user.objects.followers);
+                }
             }
 
             function likePost(state) {
-                DataService.setPostLike(vm.post.$id, vm.user.$id, state);
+                DataService.setPostLike(vm.post.$id, vm.user.profile.$id, state);
                 if (state) {
                     DataService.setUserNotification(vm.post.author, {
                         liked: true,
                         post: vm.post.$id,
-                        sender: vm.user.$id
+                        sender: vm.user.profile.$id
                     });
                 }
             }
@@ -75,7 +76,7 @@
                 } else if (menuName === 'Edit') {
 
                 } else if (menuName === 'Delete') {
-                    vm.deletePost(vm.post);
+                    vm.deletePost();
                 }
             }
 

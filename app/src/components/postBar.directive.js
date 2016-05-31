@@ -24,16 +24,17 @@
             vm.setPost = setPost;
             vm.user = $scope.user;
             vm.users = $scope.users;
-            vm.users.splice(vm.users.$indexFor($scope.user.$id), 1);
+            vm.users.splice(vm.users.$indexFor(vm.user.profile.$id), 1);
             vm.querySearch = querySearch;
 
             function setPost(post) {
-                post.author = $scope.user.$id;
+                post.author = vm.user.profile.$id;
                 if (post.author && post.caption) {
-                    //Add new post.
+                    //--------------->Add new post.
                     var newPost = DataService.setPost(post);
-                    //Add reference of this post to author's user post object.
-                    DataService.setUserPost(post.author, newPost.key());
+                    //Add reference of this post to author's user feed & post object.
+                    DataService.setUserFeed(post.author, newPost.key(), true);
+                    DataService.setUserPost(post.author, newPost.key(), true);
                     if (vm.taggedUsers.length > 0) {
                         //if there is at least one user tagged,
                         angular.forEach(vm.taggedUsers, function (user) {
@@ -43,7 +44,13 @@
                             DataService.setUserNotification(user.$id, {sender: post.author, post: newPost.key(), tagged: true})
                         });
                     }
-                    //clean up variables.
+                    //-------------->Set the given post to author's followers feeds
+                    if (vm.user.objects.followers.length > 0) {
+                        angular.forEach(vm.user.objects.followers, function (follower){
+                           DataService.setUserFeed(follower.$id, newPost.key(), true);
+                        });
+                    }
+                    //-------------->Clean up variables.
                     vm.post = {};
                     vm.taggedUsers = [];
                 }

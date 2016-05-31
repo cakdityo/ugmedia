@@ -62,12 +62,12 @@
 
     <!-- User object section -->
     <div flex-gt-xs="50" layout="column" ui-view>
-        <ug-post-bar user="U.user.profile" users="U.users"></ug-post-bar>
+        <ug-post-bar user="U.user" users="U.users"></ug-post-bar>
         <br/>
          <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->
         <div>
             <div ng-if="UP.user.objects.posts.length == 0"> No post yet</div>
-            <ug-post-list ng-if="UP.user.objects.posts.length > 0" user="U.user.profile" posts="UP.user.objects.posts"></ug-post-list>
+            <ug-post-list ng-if="UP.user.objects.posts.length > 0" user="U.user" posts="UP.user.objects.posts"></ug-post-list>
         </div>
     </div>
 
