@@ -38,6 +38,8 @@
                 {name: 'Edit', icon: 'edit'},
                 {name: 'Delete', icon: 'clear'}
             ];
+            vm.postObject = 'comments';
+            vm.showPostObject = showPostObject;
             vm.user = $scope.user;
 
             function addComment(text) {
@@ -78,6 +80,10 @@
                 } else if (menuName === 'Delete') {
                     vm.deletePost();
                 }
+            }
+
+            function showPostObject(object) {
+                vm.postObject = object;
             }
 
         }

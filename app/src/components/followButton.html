@@ -1,0 +1,8 @@
+<md-button ng-if="authUser.objects.following.$indexFor(user.$id) < 0"
+           ng-click="followUser(authUser.profile.$id, user.$id)" class="md-accent md-raised">
+    Follow
+</md-button>
+<md-button ng-if="authUser.objects.following.$indexFor(user.$id) >= 0"
+           ng-click="unfollowUser(authUser.profile.$id, user.$id)" class="md-primary md-raised">
+    Following
+</md-button>

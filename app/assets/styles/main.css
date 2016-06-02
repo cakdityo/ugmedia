@@ -70,8 +70,9 @@ body {
 .post-bar + md-card-actions {
   margin-top: 0; }
 
-md-list-item.comment {
-  margin: 0 0 0 0 !important; }
+md-list-item.list-object {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important; }
 
 .md-avatar, .md-user-avatar {
   cursor: pointer; }
@@ -89,3 +90,9 @@ md-list-item.comment {
 
 md-list-item.notification > button {
   line-height: 25px !important; }
+
+span.user-search > .user-search-avatar {
+  display: inline-block;
+  height: 100%;
+  width: auto;
+  border-radius: 50%; }

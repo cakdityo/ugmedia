@@ -1,4 +1,4 @@
-<div layout="column" layout-gt-xs="row">
+<div layout-xs="column" layout-gt-xs="row" layout-align-gt-xs="center start">
 
     <!-- User profile section -->
     <div flex-gt-xs="30" layout="column">
@@ -39,16 +39,8 @@
         </div>
 
         <!-- Follow button section -->
-        <div ng-if="U.auth.uid !== UP.user.profile.$id" layout="column">
-            <md-button ng-if="UP.user.objects.followers.$indexFor(U.auth.uid) < 0"
-                       ng-click="UP.followUser(U.auth.uid, UP.user.profile.$id)" class="md-accent md-raised">
-                Follow
-            </md-button>
-            <md-button ng-if="UP.user.objects.followers.$indexFor(U.auth.uid) >= 0"
-                       ng-click="UP.unFollowUser(U.auth.uid, UP.user.profile.$id)" class="md-primary md-raised">
-                Following
-            </md-button>
-        </div>
+        <ug-follow-button auth-user="U.user" user="UP.user.profile" ng-if="U.user.profile.$id !== UP.user.profile.$id" layout="column">
+        </ug-follow-button>
 
         <!-- User meta section -->
         <md-card>
@@ -61,7 +53,7 @@
     </div>
 
     <!-- User object section -->
-    <div flex-gt-xs="50" layout="column" ui-view>
+    <div flex-offset-gt-xs="5" flex-gt-xs="50" layout="column" ui-view>
         <ug-post-bar user="U.user" users="U.users"></ug-post-bar>
         <br/>
          <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->

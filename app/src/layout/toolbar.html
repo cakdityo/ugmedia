@@ -6,8 +6,13 @@
         <h2 hide-gt-sm>
             <span>UG MEDIA</span>
         </h2>
+        <span ng-hide="tb.search" flex></span>
+        <md-button class="md-icon-button" ng-click="tb.search = !tb.search">
+            <md-icon>search</md-icon>
+        </md-button>
         <md-autocomplete
-                hide-xs
+                flex
+                ng-show="tb.search"
                 md-selected-item="tb.selectedUser"
                 md-search-text="tb.searchText"
                 md-items="user in U.users | filter: tb.searchText"
@@ -17,15 +22,23 @@
                 md-min-length="2"
                 placeholder="Search users">
             <md-item-template>
-                <span md-highlight-text="tb.searchText" md-highlight-flags="^i">
-                    {{ user.username }}
+                <span class="user-search">
+                    <img class="user-search-avatar" ng-src="{{ user.avatar }}" alt="user.username">
+                    <span> {{user.username}} </span>
                 </span>
+                <!--<span class="item-metadata">-->
+                    <!--<span class="item-metastat">-->
+                        <!--<strong>{{item.watchers}}</strong> watchers-->
+                    <!--</span>-->
+                    <!--<span class="item-metastat">-->
+                        <!--<strong>{{item.forks}}</strong> forks-->
+                    <!--</span>-->
+                <!--</span>-->
             </md-item-template>
             <md-not-found>
                 No matches found
             </md-not-found>
         </md-autocomplete>
-        <span flex></span>
         <md-button class="md-icon-button" ng-click="tb.toggleSidenavNotifications()">
             <md-icon>notifications</md-icon>
         </md-button>

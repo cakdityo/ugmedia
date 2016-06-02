@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .constant('FirebaseUrl', 'http://ug-media.firebaseio.com/')
+        .constant('FirebaseUrl', 'https://ug-media.firebaseio.com/')
         .config(function ($firebaseRefProvider, FirebaseUrl, $stateProvider, $locationProvider) {
 
             //$locationProvider.html5Mode(true);
@@ -108,12 +108,8 @@
                     templateUrl: 'src/users/userFollow.html',
                     controller: 'UserFollowController as UF',
                     resolve: {
-                        friends: function (person, DataService) {
-                            var friends = person.objects.followers;
-                            angular.forEach(friends, function(friend, index){
-                                friends[index] = DataService.getUser(friend.$id);
-                            });
-                            return friends;
+                        friends: function (person) {
+                            return person.objects.followers;
                         }
                     }
                 })
@@ -122,12 +118,8 @@
                     templateUrl: 'src/users/userFollow.html',
                     controller: 'UserFollowController as UF',
                     resolve: {
-                        friends: function (person, DataService) {
-                            var friends = person.objects.following;
-                            angular.forEach(friends, function(friend, index){
-                                friends[index] = DataService.getUser(friend.$id);
-                            });
-                            return friends;
+                        friends: function (person) {
+                            return person.objects.following;
                         }
                     }
                 });

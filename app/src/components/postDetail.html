@@ -15,7 +15,8 @@
                         <md-icon md-menu-origin>more_horiz</md-icon>
                     </md-button>
                     <md-menu-content width="3">
-                        <md-menu-item ng-repeat="menu in pd.menuItems" ng-if="menu.name !== 'Copy URL' ? pd.author.$id === pd.user.profile.$id : true">
+                        <md-menu-item ng-repeat="menu in pd.menuItems"
+                                      ng-if="menu.name !== 'Copy URL' ? pd.author.$id === pd.user.profile.$id : true">
                             <md-button ng-click="pd.menuAction(menu.name)">
                                 <div layout="row">
                                     <p flex>{{ menu.name }}</p>
@@ -41,7 +42,8 @@
             <md-icon>assignment_ind</md-icon>
             :
             <span ng-repeat="user in pd.taggedUsers">
-                <a class="simple-link md-primary" ui-sref="user.profile({username: user.username})">{{ user.username }}</a>
+                <a class="simple-link md-primary" ui-sref="user.profile({username: user.username})">{{ user.username
+                    }}</a>
                 <span ng-show="!$last">,</span>
             </span>
         </div>
@@ -49,19 +51,23 @@
 
     <!-- Post like button section -->
     <md-card-actions layout="row" layout-align="center center">
-        <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) < 0" class="md-icon-button" ng-click="pd.likePost(true)">
+        <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) < 0" class="md-icon-button"
+                   ng-click="pd.likePost(true)">
             <md-icon>favorite</md-icon>
         </md-button>
-        <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) >= 0" class="md-icon-button md-primary" ng-click="pd.likePost(null)">
+        <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) >= 0" class="md-icon-button md-primary"
+                   ng-click="pd.likePost(null)">
             <md-icon>favorite</md-icon>
         </md-button>
     </md-card-actions>
 
-    <!-- Post meta detail section -->
+    <!-- Post objects detail section -->
     <md-card-content layout="column">
         <div layout="column" layout-gt-xs="row">
             <span class="timestamp">
-                {{ pd.likes.length }} likes, {{ pd.comments.length }} comments
+                <a href="" class="simple-link" ng-click="pd.showPostObject('likes')">{{ pd.likes.length }} likes</a>, <a
+                    href="" class="simple-link" ng-click="pd.showPostObject('comments')">{{ pd.comments.length }}
+                comments</a>
             </span>
             <span flex></span>
             <span class="timestamp">
@@ -72,12 +78,22 @@
         <md-divider></md-divider>
     </md-card-content>
 
-    <!-- Comment section -->
-    <md-card-content ng-if="pd.comments.length > 0">
+    <!-- Comments section -->
+    <div ng-if="pd.comments.length > 0 && pd.postObject === 'comments'">
         <ug-post-comment-list comments="pd.comments"
                               id="{user: pd.user.profile.$id, postAuthor: pd.post.author}"></ug-post-comment-list>
         <md-divider></md-divider>
-    </md-card-content>
+    </div>
+
+    <!-- Likes section -->
+    <div ng-if="pd.likes.length > 0 && pd.postObject === 'likes'">
+        <md-list>
+            <ug-user-list-detail ng-repeat="user in pd.likes" auth-user="pd.user" user="user">
+            </ug-user-list-detail>
+        </md-list>
+        <md-divider></md-divider>
+    </div>
+
 
     <!-- Comment bar section -->
     <md-card-header class="post-bar" layout="row" layout-align="start center">
@@ -88,7 +104,7 @@
             <label>Enter a comment</label>
             <textarea rows="2" ng-model="pd.commentText"></textarea>
         </md-input-container>
-        <md-button class="md-icon-button" ng-click="pd.addComment(pd.commentText)">
+        <md-button class="md-raised md-primary md-icon-button" ng-click="pd.addComment(pd.commentText)">
             <md-icon>send</md-icon>
         </md-button>
     </md-card-header>
