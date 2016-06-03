@@ -16,7 +16,7 @@
             'app.auth',
             'app.component',
             'app.layout',
-            'app.service',
+            'app.services',
             'app.user'
         ]);
 })();

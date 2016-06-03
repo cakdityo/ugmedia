@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.service')
+        .module('app.services')
         .factory('StorageService', StorageService);
 
     function StorageService(Upload){

@@ -30,7 +30,7 @@
             <md-icon class="material-icons">home</md-icon>
             <p>Home</p>
         </md-list-item>
-        <md-list-item ng-click="su.navigateTo('user.settings',{token: U.auth.token}); tb.toggleSidenavUser()">
+        <md-list-item ng-click="su.navigateTo('user.settings',{token: U.auth.refreshToken}); tb.toggleSidenavUser()">
             <md-icon class="material-icons">settings</md-icon>
             <p>Setting Account</p>
         </md-list-item>

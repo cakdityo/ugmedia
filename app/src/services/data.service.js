@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.service')
+        .module('app.services')
         .factory('DataService', DataService);
 
     function DataService($firebaseRef, $firebaseArray, $firebaseObject) {

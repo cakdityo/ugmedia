@@ -5,13 +5,15 @@
         .module('app.auth')
         .controller('AuthController', AuthController);
 
-    function AuthController($firebaseAuthService, $firebaseRef, $state){
+    AuthController.$inject = ['Auth', '$firebaseRef', '$state'];
+
+    function AuthController(Auth, $firebaseRef, $state){
         var vm = this;
         var isNewUser = false;
 
-        $firebaseAuthService.$onAuth(function (authData) {
-            if (authData && isNewUser){
-                vm.initUser(authData);
+        Auth.$onAuthStateChanged(function (user) {
+            if (user && isNewUser){
+                vm.initUser(user);
                 isNewUser = false;
             }
         });
@@ -23,7 +25,7 @@
         vm.user = {email: '', password: ''};
 
         function activation(){
-            $firebaseAuthService.$createUser(vm.user).then(function () {
+            Auth.$createUserWithEmailAndPassword(vm.user.email, vm.user.password).then(function () {
                 vm.login();
                 isNewUser = true;
             }, function (error) {
@@ -44,7 +46,7 @@
         }
 
         function login(){
-            $firebaseAuthService.$authWithPassword(vm.user).then(function (auth) {
+            Auth.$signInWithEmailAndPassword(vm.user.email, vm.user.password).then(function (auth) {
                 $state.go('user');
             }, function (error) {
                 vm.error = error;

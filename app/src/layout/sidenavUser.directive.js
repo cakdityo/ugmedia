@@ -12,14 +12,14 @@
             controllerAs: 'su'
         };
 
-        function SidenavUserController($firebaseAuthService, $state){
+        function SidenavUserController(Auth, $state){
             var vm = this;
 
             vm.logout = logout;
             vm.navigateTo = navigateTo;
 
             function logout(){
-                $firebaseAuthService.$unauth();
+                Auth.$signOut();
                 $state.go('auth');
             }
 

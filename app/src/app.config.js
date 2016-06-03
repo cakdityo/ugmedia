@@ -23,8 +23,8 @@
                     templateUrl: 'src/auth/auth.html',
                     controller: 'AuthController as vm',
                     resolve: {
-                        requireNoAuth: function ($state, $firebaseAuthService) {
-                            return $firebaseAuthService.$requireAuth().then(function (auth) {
+                        requireNoAuth: function (Auth, $state) {
+                            return Auth.$requireSignIn().then(function (auth) {
                                 $state.go('user');
                             }, function (error) {
                                 return;
@@ -40,9 +40,10 @@
                         users: function(DataService){
                             return DataService.getUsers();
                         },
-                        user: function (DataService, $firebaseAuthService, $state) {
-                            return $firebaseAuthService.$requireAuth()
+                        user: function (Auth, DataService, $state) {
+                            return Auth.$requireSignIn()
                                 .then(function (auth) {
+                                    console.log(auth);
                                     return {
                                         auth: auth,
                                         profile: DataService.getUser(auth.uid),
@@ -75,8 +76,8 @@
                     templateUrl: 'src/users/userSettings.html',
                     controller: 'UserSettingsController as US',
                     onEnter: function ($state, $stateParams, user) {
-                        if ($stateParams.token !== user.auth.token) {
-                            $state.go('user.home');
+                        if ($stateParams.token !== user.auth.refreshToken) {
+                            $state.go('user');
                         }
                     }
                 })
