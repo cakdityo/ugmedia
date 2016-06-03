@@ -17,34 +17,44 @@
       }
     }
   },
-  "userObjects": {
+  "user-feeds": {
     "$userID": {
       ".write": "$userID === auth.uid",
-      "feeds": {
-        "$postID": {
-          ".write": "root.child('posts').child($postID).child('author').val() === auth.uid && root.child('userObjects').child($userID).child('following').hasChild(auth.uid)"
-        }
-      },
-      "followers": {
-        "$userID": {
-          ".write": "$userID === auth.uid"
-        }
-      },
-      "following": {
-        "$userID": {
-          ".validate": "root.child('users').hasChild($userID)"
-        }
-      },
-      "notifications": {
-        "$notificationID": {
-          ".write": "newData.child('sender').val() === auth.uid",
-          ".validate": "newData.child('sender').val() !== $userID"
-        }
-      },
-      "posts": {
-        "$postID": {
-          ".write": "root.child('posts/' + $postID + '/author').val() === auth.uid"
-        }
+      "$postID": {
+        ".write": "root.child('posts').child($postID).child('author').val() === auth.uid && root.child('user-following').child($userID).hasChild(auth.uid)"
+      }
+    }
+  },
+  "user-followers": {
+    "$userID": {
+      ".write": "$userID === auth.uid",
+      "$userID": {
+        ".write": "$userID === auth.uid"
+      }
+    }
+  },
+  "user-following": {
+    "$userID": {
+      ".write": "$userID === auth.uid",
+      "$userID": {
+        ".validate": "root.child('users').hasChild($userID)"
+      }
+    }
+  },
+  "user-notifications": {
+    "$userID": {
+      ".write": "$userID === auth.uid",
+      "$notificationID": {
+        ".write": "newData.child('sender').val() === auth.uid",
+        ".validate": "newData.child('sender').val() !== $userID"
+      }
+    }
+  },
+  "user-posts": {
+    "$userID": {
+      ".write": "$userID === auth.uid",
+      "$postID": {
+        ".write": "root.child('posts').child($postID).child('author').val() === auth.uid"
       }
     }
   },
@@ -64,33 +74,37 @@
       }
     }
   },
-  "postObjects": {
+  "post-comments": {
     "$postID": {
-      ".write": "root.child('posts/' + $postID + '/author').val() === auth.uid",
-      "comments": {
-        "$commentID": {
-          ".write": "newData.child('author').val() === auth.uid || data.child('author').val() === auth.uid",
-          ".validate": "newData.hasChildren(['text','author'])",
-          "author": {
-            ".validate": "newData.val() === auth.uid"
-          },
-          "text": {
-            ".validate": "newData.isString()"
-          },
-          "createdAt": {
-            ".validate": "newData.val() <= now"
-          }
+      ".write": "root.child('posts').child($postID).child('author').val() === auth.uid",
+      "$commentID": {
+        ".write": "newData.child('author').val() === auth.uid || data.child('author').val() === auth.uid",
+        ".validate": "newData.hasChildren(['text','author'])",
+        "author": {
+          ".validate": "newData.val() === auth.uid"
+        },
+        "text": {
+          ".validate": "newData.isString()"
+        },
+        "createdAt": {
+          ".validate": "newData.val() <= now"
         }
-      },
-      "likes": {
-        "$userID": {
-          ".write": "$userID === auth.uid"
-        }
-      },
-      "taggedUsers": {
-        "$userID": {
-          ".validate": "$userID !== auth.uid"
-        }
+      }
+    }
+  },
+  "post-likes": {
+    "$postID": {
+      ".write": "root.child('posts').child($postID).child('author').val() === auth.uid",
+      "$userID": {
+        ".write": "$userID === auth.uid"
+      }
+    }
+  },
+  "post-tagged-users": {
+    "$postID": {
+      ".write": "root.child('posts').child($postID).child('author').val() === auth.uid",
+      "$userID": {
+        ".validate": "$userID !== auth.uid"
       }
     }
   }

@@ -6,15 +6,29 @@
         .constant('FirebaseUrl', 'https://ug-media.firebaseio.com/')
         .config(function ($firebaseRefProvider, FirebaseUrl, $stateProvider, $locationProvider) {
 
+            var config = {
+                apiKey: 'AIzaSyBad5b5cAI6AJb6B3EtkW9DN0JIC4CZ08Q',
+                authDomain: 'ug-media.firebaseapp.com',
+                databaseURL: 'https://ug-media.firebaseio.com',
+                storageBucket: 'ug-media.appspot.com'
+            };
+            firebase.initializeApp(config);
+
             //$locationProvider.html5Mode(true);
 
             $firebaseRefProvider.registerUrl({
                 default: FirebaseUrl,
-                userIDs: FirebaseUrl + 'userIDs',
-                users: FirebaseUrl + 'users',
-                userObjects: FirebaseUrl + 'userObjects',
                 posts: FirebaseUrl + 'posts',
-                postObjects: FirebaseUrl + 'postObjects'
+                postComments: FirebaseUrl + 'post-comments',
+                postLikes: FirebaseUrl + 'post-likes',
+                postTaggedUsers: FirebaseUrl + 'post-tagged-users',
+                userFeeds: FirebaseUrl + 'user-feeds',
+                userFollowers: FirebaseUrl + 'user-followers',
+                userFollowing: FirebaseUrl + 'user-following',
+                userNotifications: FirebaseUrl + 'user-notifications',
+                userPosts: FirebaseUrl + 'user-posts',
+                userIDs: FirebaseUrl + 'userIDs',
+                users: FirebaseUrl + 'users'
             });
 
             $stateProvider
@@ -37,24 +51,13 @@
                     templateUrl: 'src/users/user.html',
                     controller: 'UserController as U',
                     resolve: {
-                        users: function(DataService){
+                        users: function (DataService) {
                             return DataService.getUsers();
                         },
-                        user: function (Auth, DataService, $state) {
+                        user: function (Auth, User, $state) {
                             return Auth.$requireSignIn()
                                 .then(function (auth) {
-                                    console.log(auth);
-                                    return {
-                                        auth: auth,
-                                        profile: DataService.getUser(auth.uid),
-                                        objects: {
-                                            feeds: DataService.getUserObjectFeeds(auth.uid),
-                                            followers: DataService.getUserObjectFollowers(auth.uid),
-                                            following: DataService.getUserObjectFollowing(auth.uid),
-                                            notifications: DataService.getUserObjectNotifications(auth.uid),
-                                            posts: DataService.getUserObjectPosts(auth.uid)
-                                        }
-                                    };
+                                    return User(auth.uid)
                                 }).catch(function () {
                                     $state.go('auth');
                                 });
@@ -66,17 +69,17 @@
                     templateUrl: 'src/users/userPost.html',
                     controller: 'UserPostController as UPO',
                     resolve: {
-                        post: function($stateParams, DataService){
+                        post: function ($stateParams, DataService) {
                             return DataService.getPost($stateParams.postID);
                         }
                     }
                 })
-                .state('user.settings', {
-                    url: 'settings/{token}',
-                    templateUrl: 'src/users/userSettings.html',
-                    controller: 'UserSettingsController as US',
-                    onEnter: function ($state, $stateParams, user) {
-                        if ($stateParams.token !== user.auth.refreshToken) {
+                .state('user.setting', {
+                    url: 's/{username}',
+                    templateUrl: 'src/users/userSetting.html',
+                    controller: 'UserSettingController as US',
+                    onEnter: function (user, $stateParams, $state) {
+                        if (user.username !== $stateParams.username) {
                             $state.go('user');
                         }
                     }
@@ -86,17 +89,11 @@
                     templateUrl: 'src/users/userProfile.html',
                     controller: 'UserProfileController as UP',
                     resolve: {
-                        person: function (user, $stateParams, DataService) {
-                            if (user.profile.username !== $stateParams.username) {
-                                return DataService.getUserByUsername($stateParams.username).$loaded().then(function (profile) {
-                                    return {
-                                        profile: profile[0],
-                                        objects: {
-                                            followers: DataService.getUserObjectFollowers(profile[0].$id),
-                                            following: DataService.getUserObjectFollowing(profile[0].$id),
-                                            posts: DataService.getUserObjectPosts(profile[0].$id)
-                                        }
-                                    };
+                        person: function (DataService, User, user, $stateParams) {
+                            if (user.username !== $stateParams.username) {
+                                var person = DataService.getUserByUsername($stateParams.username);
+                                return person.$loaded().then(function(){
+                                    return User(person.$value);
                                 });
                             } else {
                                 return user;
@@ -110,7 +107,7 @@
                     controller: 'UserFollowController as UF',
                     resolve: {
                         friends: function (person) {
-                            return person.objects.followers;
+                            return person.getFollowers();
                         }
                     }
                 })
@@ -120,7 +117,7 @@
                     controller: 'UserFollowController as UF',
                     resolve: {
                         friends: function (person) {
-                            return person.objects.following;
+                            return person.getFollowing();
                         }
                     }
                 });

@@ -11,8 +11,10 @@
         var vm = this;
 
         vm.user = {};
-        vm.user.profile = person.profile;
-        vm.user.objects = person.objects;
+        vm.user.followers = person.getFollowers();
+        vm.user.following = person.getFollowing();
+        vm.user.posts = person.getPosts();
+        vm.user.profile = person;
 
     }
 })();

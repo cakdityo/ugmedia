@@ -17,7 +17,7 @@
             controllerAs: 'pd'
         };
 
-        function PostDetailController($scope, DataService, $state) {
+        function PostDetailController($scope, DataService) {
             var vm = this;
 
             $scope.post.$loaded().then(function () {
@@ -57,7 +57,7 @@
 
             function deletePost() {
                 if (vm.user.profile.$id === vm.author.$id) {
-                    DataService.deletePost(vm.post, vm.user.objects.followers);
+                    DataService.deletePost(vm.post, vm.user.followers);
                 }
             }
 

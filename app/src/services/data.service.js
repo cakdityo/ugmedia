@@ -14,16 +14,10 @@
             deletePost: deletePost,
             getPost: getPost,
             getPostComments: getPostComments,
-            getPostComment: getPostComment,
             getPostLikes: getPostLikes,
             getPostTaggedUsers: getPostTaggedUsers,
             getUser: getUser,
             getUserByUsername: getUserByUsername,
-            getUserObjectFeeds: getUserObjectFeeds,
-            getUserObjectFollowers: getUserObjectFollowers,
-            getUserObjectFollowing: getUserObjectFollowing,
-            getUserObjectNotifications: getUserObjectNotifications,
-            getUserObjectPosts: getUserObjectPosts,
             getUsers: getUsers,
             setPostLike: setPostLike,
             setPostTaggedUser: setPostTaggedUser,
@@ -38,7 +32,7 @@
         return DataService;
 
         function addComment(comments, comment) {
-            comment.createdAt = Firebase.ServerValue.TIMESTAMP;
+            comment.createdAt = firebase.database.ServerValue.TIMESTAMP;
             var promise = comments.$add(comment);
             return promise;
         }
@@ -47,7 +41,7 @@
          Set a post authored by a user then reference it on user's post object
          */
         function setPost(post) {
-            post.createdAt = Firebase.ServerValue.TIMESTAMP;
+            post.createdAt = firebase.database.ServerValue.TIMESTAMP;
             var newPost = $firebaseRef.posts.push(post);
             return newPost;
         }
@@ -69,7 +63,9 @@
             angular.forEach(followers, function(follower){
                 setUserFeed(follower.$id, post.$id, null);
             });
-            $firebaseRef.postObjects.child(post.$id).set(null);
+            $firebaseRef.postComments.child(post.$id).set(null);
+            $firebaseRef.postLikes.child(post.$id).set(null);
+            $firebaseRef.postTaggedUsers.child(post.$id).set(null);
             setUserPost(post.author, post.$id, null);
             $firebaseRef.posts.child(post.$id).set(null);
         }
@@ -78,24 +74,19 @@
          Get all comments from the given post.
          */
         function getPostComments(postID) {
-            var ref = $firebaseRef.postObjects.child(postID).child('comments');
-            var comments = $firebaseArray(ref.limitToLast(5));
+            var ref = $firebaseRef.postComments.child(postID);
+            var comments = $firebaseArray(ref);
             return comments;
         }
 
-        function getPostComment(postID, commentID) {
-            var comment = $firebaseObject($firebaseRef.postObjects.child(postID).child('comments').child(commentID));
-            return comment;
-        }
-
         function getPostLikes(postID){
-            var ref = $firebaseRef.postObjects.child(postID).child('likes');
+            var ref = $firebaseRef.postLikes.child(postID);
             var likes = $firebaseArray(ref);
             return likes;
         }
 
         function getPostTaggedUsers(postID) {
-            var ref = $firebaseRef.postObjects.child(postID).child('taggedUsers');
+            var ref = $firebaseRef.postTaggedUsers.child(postID);
             var users = $firebaseArray(ref);
             users.$loaded().then(function () {
                 angular.forEach(users, function (user, key) {
@@ -119,33 +110,8 @@
          Need to invoke it via $firebaseArray then access it by users[0].
          */
         function getUserByUsername(username) {
-            var user = $firebaseArray($firebaseRef.users.orderByChild('username').equalTo(username));
+            var user = $firebaseObject($firebaseRef.userIDs.child(username));
             return user;
-        }
-
-        function getUserObjectFeeds(userID) {
-            var feeds = $firebaseArray($firebaseRef.userObjects.child(userID).child('feeds'));
-            return feeds;
-        }
-
-        function getUserObjectFollowers(userID) {
-            var followers = $firebaseArray($firebaseRef.userObjects.child(userID).child('followers'));
-            return followers;
-        }
-
-        function getUserObjectFollowing(userID) {
-            var following = $firebaseArray($firebaseRef.userObjects.child(userID).child('following'));
-            return following;
-        }
-
-        function getUserObjectNotifications(userID) {
-            var notifications = $firebaseArray($firebaseRef.userObjects.child(userID).child('notifications'));
-            return notifications;
-        }
-
-        function getUserObjectPosts(userID) {
-            var posts = $firebaseArray($firebaseRef.userObjects.child(userID).child('posts'));
-            return posts;
         }
 
         /*
@@ -159,16 +125,15 @@
         }
 
         function setPostLike(postID, userID, state) {
-            $firebaseRef.postObjects.child(postID).child('likes').child(userID).set(state);
+            $firebaseRef.postLikes.child(postID).child(userID).set(state);
         }
 
-
         function setPostTaggedUser(postID, userID) {
-            $firebaseRef.postObjects.child(postID).child('taggedUsers').child(userID).set(true);
+            $firebaseRef.postTaggedUsers.child(postID).child(userID).set(true);
         }
 
         function setUserFeed(userID, postID, state) {
-            $firebaseRef.userObjects.child(userID).child('feeds').child(postID).set(state);
+            $firebaseRef.userFeeds.child(userID).child(postID).set(state);
         }
 
         /*
@@ -176,7 +141,7 @@
          followState param could be true or false.
          */
         function setUserFollower(userID, authUserID, state) {
-            $firebaseRef.userObjects.child(userID + '/followers/' + authUserID).set(state);
+            $firebaseRef.userFollowers.child(userID).child(authUserID).set(state);
         }
 
         /*
@@ -184,19 +149,19 @@
          followState param could be true or false.
          */
         function setUserFollowing(authUserID, userID, state) {
-            $firebaseRef.userObjects.child(authUserID + '/following/' + userID).set(state);
+            $firebaseRef.userFollowing.child(authUserID).child(userID).set(state);
         }
 
         function setUserNotification(userID, notification) {
-            notification.createdAt = Firebase.ServerValue.TIMESTAMP;
-            $firebaseRef.userObjects.child(userID).child('notifications').push().set(notification);
+            notification.createdAt = firebase.database.ServerValue.TIMESTAMP;
+            $firebaseRef.userNotifications.child(userID).push().set(notification);
         }
 
         /*
          Set user's post object from existing post object
          */
         function setUserPost(userID, postID, state) {
-            $firebaseRef.userObjects.child(userID + '/posts/' + postID).set(state);
+            $firebaseRef.userPosts.child(userID).child(postID).set(state);
         }
 
         /*

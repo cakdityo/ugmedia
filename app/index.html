@@ -43,25 +43,19 @@
 <script src="bower_components/firebase/firebase.js"></script>
 <script src="bower_components/angularfire/dist/angularfire.js"></script>
 <!-- endbower -->
-<script>
-    // Initialize Firebase
-    var config = {
-        apiKey: 'AIzaSyBad5b5cAI6AJb6B3EtkW9DN0JIC4CZ08Q',
-        authDomain: 'ug-media.firebaseapp.com',
-        databaseURL: 'https://ug-media.firebaseio.com',
-        storageBucket: 'ug-media.appspot.com'
-    };
-    firebase.initializeApp(config);
-</script>
+
 <!-- inject:js -->
 <script src="src/app.module.js"></script>
 <script src="src/auth/auth.module.js"></script>
-<script src="src/components/component.module.js"></script>
 <script src="src/layout/layout.module.js"></script>
-<script src="src/users/user.module.js"></script>
+<script src="src/components/component.module.js"></script>
 <script src="src/services/service.module.js"></script>
+<script src="src/users/user.module.js"></script>
 <script src="src/app.config.js"></script>
 <script src="src/auth/auth.controller.js"></script>
+<script src="src/layout/sidenavNotifications.directive.js"></script>
+<script src="src/layout/sidenavUser.directive.js"></script>
+<script src="src/layout/toolbar.directive.js"></script>
 <script src="src/components/followButton.directive.js"></script>
 <script src="src/components/notificationDetail.directive.js"></script>
 <script src="src/components/postBar.directive.js"></script>
@@ -70,17 +64,15 @@
 <script src="src/components/postDetail.directive.js"></script>
 <script src="src/components/postList.directive.js"></script>
 <script src="src/components/userListDetail.directive.js"></script>
-<script src="src/layout/sidenavNotifications.directive.js"></script>
-<script src="src/layout/sidenavUser.directive.js"></script>
-<script src="src/layout/toolbar.directive.js"></script>
+<script src="src/services/auth.service.js"></script>
+<script src="src/services/data.service.js"></script>
+<script src="src/services/storage.service.js"></script>
+<script src="src/services/user.service.js"></script>
 <script src="src/users/user.controller.js"></script>
 <script src="src/users/UserFollow.controller.js"></script>
 <script src="src/users/userPost.controller.js"></script>
 <script src="src/users/userProfile.controller.js"></script>
-<script src="src/users/userSettings.controller.js"></script>
-<script src="src/services/auth.service.js"></script>
-<script src="src/services/data.service.js"></script>
-<script src="src/services/storage.service.js"></script>
+<script src="src/users/userSetting.controller.js"></script>
 <!-- endinject -->
 </body>
 

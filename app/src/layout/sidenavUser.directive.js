@@ -20,7 +20,6 @@
 
             function logout(){
                 Auth.$signOut();
-                $state.go('auth');
             }
 
             function navigateTo(state, params){

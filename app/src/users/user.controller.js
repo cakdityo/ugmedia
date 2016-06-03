@@ -5,16 +5,25 @@
         .module('app.user')
         .controller('UserController', UserController);
 
-    UserController.$inject = ['user','users'];
+    UserController.$inject = ['Auth', 'user','users','$state'];
 
-    function UserController(user, users){
+    function UserController(Auth, user, users, $state){
         var vm = this;
 
         //Initialize the authenticated users data
-        vm.auth = user.auth;
+        Auth.$onAuthStateChanged(function(auth){
+            if (!auth) {
+                $state.go('auth');
+            }
+        });
+
         vm.user = {};
-        vm.user.objects = user.objects;
-        vm.user.profile = user.profile;
+        vm.user.feeds = user.getFeeds();
+        vm.user.followers = user.getFollowers();
+        vm.user.following = user.getFollowing();
+        vm.user.notifications = user.getNotifications();
+        vm.user.posts = user.getPosts();
+        vm.user.profile = user;
         vm.users = users;
 
     }

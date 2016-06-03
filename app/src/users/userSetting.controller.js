@@ -3,10 +3,10 @@
 
     angular
         .module('app.user')
-        .controller('UserSettingsController', UserSettingsController);
+        .controller('UserSettingController', UserSettingController);
 
-    UserSettingsController.$inject = ['$state', 'StorageService', 'DataService'];
-    function UserSettingsController($state, StorageService, DataService) {
+    UserSettingController.$inject = ['$state', 'StorageService', 'DataService'];
+    function UserSettingController($state, StorageService, DataService) {
         var vm = this;
 
         vm.croppedAvatar = null;

@@ -9,8 +9,8 @@
                     <br />
                     <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->
                     <div>
-                        <div ng-if="U.user.objects.feeds.length == 0"> No post yet</div>
-                        <ug-post-list ng-if="U.user.objects.feeds.length > 0" user="U.user" posts="U.user.objects.feeds"></ug-post-list>
+                        <div ng-if="U.user.feeds.length == 0"> No post yet</div>
+                        <ug-post-list ng-if="U.user.feeds.length > 0" user="U.user" posts="U.user.feeds"></ug-post-list>
                     </div>
                 </div>
             </div>

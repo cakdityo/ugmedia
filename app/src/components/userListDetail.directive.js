@@ -20,13 +20,13 @@
         function UserListDetailController($scope, DataService){
             $scope.user = DataService.getUser($scope.user.$id);
 
-            $scope.authUser.objects.followers.$watch(function(snap){
+            $scope.authUser.followers.$watch(function(snap){
                 if (snap){
                     $scope.user = DataService.getUser($scope.user.$id);
                 }
             });
 
-            $scope.authUser.objects.following.$watch(function(snap){
+            $scope.authUser.following.$watch(function(snap){
                 if (snap){
                     $scope.user = DataService.getUser($scope.user.$id);
                 }

@@ -33,21 +33,21 @@
                     //--------------->Add new post.
                     var newPost = DataService.setPost(post);
                     //Add reference of this post to author's user feed & post object.
-                    DataService.setUserFeed(post.author, newPost.key(), true);
-                    DataService.setUserPost(post.author, newPost.key(), true);
+                    DataService.setUserFeed(post.author, newPost.key, true);
+                    DataService.setUserPost(post.author, newPost.key, true);
                     if (vm.taggedUsers.length > 0) {
                         //if there is at least one user tagged,
                         angular.forEach(vm.taggedUsers, function (user) {
                             //Set post taggedUsersObject,
-                            DataService.setPostTaggedUser(newPost.key(), user.$id);
+                            DataService.setPostTaggedUser(newPost.key, user.$id);
                             //Notice the tagged user.
-                            DataService.setUserNotification(user.$id, {sender: post.author, post: newPost.key(), tagged: true})
+                            DataService.setUserNotification(user.$id, {sender: post.author, post: newPost.key, tagged: true})
                         });
                     }
                     //-------------->Set the given post to author's followers feeds
-                    if (vm.user.objects.followers.length > 0) {
-                        angular.forEach(vm.user.objects.followers, function (follower){
-                           DataService.setUserFeed(follower.$id, newPost.key(), true);
+                    if (vm.user.followers.length > 0) {
+                        angular.forEach(vm.user.followers, function (follower){
+                           DataService.setUserFeed(follower.$id, newPost.key, true);
                         });
                     }
                     //-------------->Clean up variables.

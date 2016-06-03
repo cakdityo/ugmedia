@@ -25,15 +25,15 @@
         <!-- User objects section -->
         <div layout="row" layout-align="center center">
             <md-button ui-sref="user.profile.followers" class="user-object-button">
-                <div class="user-object-length">{{ UP.user.objects.followers.length }}</div>
+                <div class="user-object-length">{{ UP.user.followers.length }}</div>
                 Followers
             </md-button>
             <md-button ui-sref="user.profile.following" class="user-object-button">
-                <div class="user-object-length">{{ UP.user.objects.following.length }}</div>
+                <div class="user-object-length">{{ UP.user.following.length }}</div>
                 Following
             </md-button>
             <md-button ui-sref="user.profile({username: UP.user.profile.username})" class="user-object-button">
-                <div class="user-object-length">{{ UP.user.objects.posts.length }}</div>
+                <div class="user-object-length">{{ UP.user.posts.length }}</div>
                 Posts
             </md-button>
         </div>
@@ -58,8 +58,8 @@
         <br/>
          <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->
         <div>
-            <div ng-if="UP.user.objects.posts.length == 0"> No post yet</div>
-            <ug-post-list ng-if="UP.user.objects.posts.length > 0" user="U.user" posts="UP.user.objects.posts"></ug-post-list>
+            <div ng-if="UP.user.posts.length == 0"> No post yet</div>
+            <ug-post-list ng-if="UP.user.posts.length > 0" user="U.user" posts="UP.user.posts"></ug-post-list>
         </div>
     </div>
 

@@ -42,8 +42,9 @@
             <md-icon>assignment_ind</md-icon>
             :
             <span ng-repeat="user in pd.taggedUsers">
-                <a class="simple-link md-primary" ui-sref="user.profile({username: user.username})">{{ user.username
-                    }}</a>
+                <a class="simple-link md-primary" ui-sref="user.profile({username: user.username})">
+                    {{ user.username}}
+                </a>
                 <span ng-show="!$last">,</span>
             </span>
         </div>
