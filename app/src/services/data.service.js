@@ -11,9 +11,6 @@
             addComment: addComment,
             deleteComment: deleteComment,
             deletePost: deletePost,
-            getUser: getUser,
-            getUserByUsername: getUserByUsername,
-            getUsers: getUsers,
             updateUser: updateUser
         };
 
@@ -42,34 +39,6 @@
             $firebaseRef.postTaggedUsers.child(post.$id).set(null);
             setUserPost(post.author, post.$id, null);
             $firebaseRef.posts.child(post.$id).set(null);
-        }
-
-        /*
-         Get single users by ID.
-         */
-        function getUser(userID) {
-            var user = $firebaseObject($firebaseRef.users.child(userID));
-            return user;
-        }
-
-        /*
-         Get single users by Username.
-         Index has already set to username in Firebase rules.
-         Need to invoke it via $firebaseArray then access it by users[0].
-         */
-        function getUserByUsername(username) {
-            var user = $firebaseObject($firebaseRef.userIDs.child(username));
-            return user;
-        }
-
-        /*
-         Get all registered users.
-         Recently used to populate the search users box.
-         ==== STILL WRONG === need future attention ===.
-         */
-        function getUsers() {
-            var users = $firebaseArray($firebaseRef.users);
-            return users;
         }
 
         /*

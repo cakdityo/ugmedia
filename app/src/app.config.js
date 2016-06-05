@@ -51,8 +51,8 @@
                     templateUrl: 'src/users/user.html',
                     controller: 'UserController as U',
                     resolve: {
-                        users: function (DataService) {
-                            return DataService.getUsers();
+                        users: function (User) {
+                            return User.getAll();
                         },
                         user: function (Auth, User, $state) {
                             return Auth.$requireSignIn()
@@ -91,7 +91,7 @@
                     resolve: {
                         person: function (DataService, User, user, $stateParams) {
                             if (user.username !== $stateParams.username) {
-                                var person = DataService.getUserByUsername($stateParams.username);
+                                var person = User.getByUsername($stateParams.username);
                                 return person.$loaded().then(function(){
                                     return User.get(person.$value);
                                 });

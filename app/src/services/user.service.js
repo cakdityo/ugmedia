@@ -67,23 +67,26 @@
 
         //===============================================================================
         return {
+            getAll: getAll,
             get: get,
             getByUsername: getByUsername,
             setFeed: setFeed,
             setNotification: setNotification
         };
 
+        function getAll() {
+            var users = $firebaseArray($firebaseRef.users);
+            return users;
+        }
+
         function get(userID){
             var userRef = $firebaseRef.users.child(userID);
             return new user(userRef);
         }
 
-        //Not working.
         function getByUsername(username){
             var user = $firebaseObject($firebaseRef.userIDs.child(username));
-            user.$loaded().then(function(){
-                get(user.$value);
-            });
+            return user;
         }
 
         function setFeed(userID, postID) {
