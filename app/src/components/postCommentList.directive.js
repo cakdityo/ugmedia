@@ -18,7 +18,7 @@
             controllerAs: 'pcl'
         };
 
-        function PostCommentListController($scope, DataService){
+        function PostCommentListController($scope){
             var vm = this;
 
             vm.comments = $scope.comments;
@@ -26,7 +26,7 @@
 
             function deleteComment(comment){
                 if (comment){
-                    DataService.deleteComment(vm.comments, comment);
+                    vm.comments.$remove(comment);
                 }
             }
         }

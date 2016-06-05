@@ -11,6 +11,7 @@
     function Post(User, $firebaseArray, $firebaseObject, $firebaseRef) {
 
         var post = $firebaseObject.$extend({
+            destroy: destroy,
             getAuthor: getAuthor,
             getComments: getComments,
             getLikes: getLikes,
@@ -18,6 +19,19 @@
             setLike: setLike,
             setUnlike: setUnlike
         });
+
+        function destroy(authorFollowers) {
+            var post = this;
+            $firebaseRef.userFeeds.child(post.author).child(post.$id).set(null);
+            angular.forEach(authorFollowers, function(follower){
+                $firebaseRef.userFeeds.child(follower.$id).child(post.$id).set(null);
+            });
+            $firebaseRef.userPosts.child(post.author).child(post.$id).set(null);
+            $firebaseRef.postComments.child(post.$id).set(null);
+            $firebaseRef.postLikes.child(post.$id).set(null);
+            $firebaseRef.postTaggedUsers.child(post.$id).set(null);
+            $firebaseRef.posts.child(post.$id).set(null);
+        }
 
         function getAuthor() {
             var author = User.get(this.author);

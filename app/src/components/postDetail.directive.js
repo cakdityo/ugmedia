@@ -17,7 +17,7 @@
             controllerAs: 'pd'
         };
 
-        function PostDetailController($scope, DataService, User) {
+        function PostDetailController($scope, User) {
             var vm = this;
 
             $scope.post.$loaded().then(function () {
@@ -45,20 +45,24 @@
 
             function addComment(text) {
                 if (text && vm.user.profile.$id) {
-                    var comment = {text: text, author: vm.user.profile.$id};
-                    DataService.addComment(vm.comments, comment);
-                    User.setNotification(vm.post.author, {
-                        comment: text,
-                        post: vm.post.$id,
-                        sender: comment.author
+                    vm.comments.$add({
+                        text: text,
+                        author: vm.user.profile.$id,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                    }).then(function(){
+                        User.setNotification(vm.post.author, {
+                            comment: text,
+                            post: vm.post.$id,
+                            sender: vm.user.profile.$id
+                        });
+                        vm.commentText = '';
                     });
-                    vm.commentText = '';
                 }
             }
 
             function deletePost() {
                 if (vm.user.profile.$id === vm.author.$id) {
-                    DataService.deletePost(vm.post, vm.user.followers);
+                    vm.post.destroy(vm.user.followers);
                 }
             }
 

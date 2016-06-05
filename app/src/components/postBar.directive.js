@@ -16,7 +16,7 @@
             controllerAs: 'pb'
         };
 
-        function postBarController(DataService, Post, User, $scope) {
+        function postBarController(Post, User, $scope) {
             var vm = this;
 
             vm.post = {};

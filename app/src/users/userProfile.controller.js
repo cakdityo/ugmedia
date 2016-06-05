@@ -5,7 +5,7 @@
         .module('app.user')
         .controller('UserProfileController', UserProfileController);
 
-    UserProfileController.$inject = ['person','DataService'];
+    UserProfileController.$inject = ['person'];
 
     function UserProfileController(person){
         var vm = this;

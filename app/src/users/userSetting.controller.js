@@ -20,7 +20,7 @@
                 upload.then(
                     function (success) {
                         user.avatar = success.config.url + success.config.data.key;
-                        DataService.updateUser(user);
+                        user.$save();
                         $state.go('user.profile', {username: user.username});
                     }, function (error) {
                         alert('Error: ' + error);
@@ -28,7 +28,7 @@
                         vm.progress = parseInt(100.0 * progress.loaded / progress.total);
                     });
             } else {
-                DataService.updateUser(user);
+                user.$save();
                 $state.go('user.profile', {username: user.username});
             }
         }

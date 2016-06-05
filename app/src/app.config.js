@@ -89,7 +89,7 @@
                     templateUrl: 'src/users/userProfile.html',
                     controller: 'UserProfileController as UP',
                     resolve: {
-                        person: function (DataService, User, user, $stateParams) {
+                        person: function (User, user, $stateParams) {
                             if (user.username !== $stateParams.username) {
                                 var person = User.getByUsername($stateParams.username);
                                 return person.$loaded().then(function(){
