@@ -53,11 +53,11 @@
     <!-- Post like button section -->
     <md-card-actions layout="row" layout-align="center center">
         <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) < 0" class="md-icon-button"
-                   ng-click="pd.likePost(true)">
+                   ng-click="pd.setLikePost()">
             <md-icon>favorite</md-icon>
         </md-button>
         <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) >= 0" class="md-icon-button md-primary"
-                   ng-click="pd.likePost(null)">
+                   ng-click="pd.setUnlikePost()">
             <md-icon>favorite</md-icon>
         </md-button>
     </md-card-actions>

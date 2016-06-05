@@ -57,7 +57,7 @@
                         user: function (Auth, User, $state) {
                             return Auth.$requireSignIn()
                                 .then(function (auth) {
-                                    return User(auth.uid)
+                                    return User.get(auth.uid)
                                 }).catch(function () {
                                     $state.go('auth');
                                 });
@@ -69,8 +69,8 @@
                     templateUrl: 'src/users/userPost.html',
                     controller: 'UserPostController as UPO',
                     resolve: {
-                        post: function ($stateParams, DataService) {
-                            return DataService.getPost($stateParams.postID);
+                        post: function ($stateParams, Post) {
+                            return Post.get($stateParams.postID);
                         }
                     }
                 })
@@ -93,7 +93,7 @@
                             if (user.username !== $stateParams.username) {
                                 var person = DataService.getUserByUsername($stateParams.username);
                                 return person.$loaded().then(function(){
-                                    return User(person.$value);
+                                    return User.get(person.$value);
                                 });
                             } else {
                                 return user;

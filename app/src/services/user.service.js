@@ -5,14 +5,19 @@
         .module('app.services')
         .factory('User', User);
 
-    function User($firebaseRef, $firebaseObject, $firebaseArray){
+    User.$inject = ['$firebaseArray', '$firebaseObject', '$firebaseRef'];
+
+    function User($firebaseArray, $firebaseObject, $firebaseRef){
 
         var user = $firebaseObject.$extend({
             getFeeds: getFeeds,
             getFollowers: getFollowers,
             getFollowing: getFollowing,
             getNotifications: getNotifications,
-            getPosts: getPosts
+            getPosts: getPosts,
+            setFollow: setFollow,
+            setPost: setPost,
+            setUnfollow: setUnfollow
         });
 
         //Public function================================================================
@@ -46,10 +51,48 @@
             return posts;
         }
 
-        return function(userID){
+        function setFollow(userID){
+            $firebaseRef.userFollowers.child(userID).child(this.$id).set(true);
+            $firebaseRef.userFollowing.child(this.$id).child(userID).set(true);
+        }
+
+        function setPost(postID){
+            $firebaseRef.userPosts.child(this.$id).child(postID).set(true);
+        }
+
+        function setUnfollow(userID){
+            $firebaseRef.userFollowers.child(userID).child(this.$id).set(null);
+            $firebaseRef.userFollowing.child(this.$id).child(userID).set(null);
+        }
+
+        //===============================================================================
+        return {
+            get: get,
+            getByUsername: getByUsername,
+            setFeed: setFeed,
+            setNotification: setNotification
+        };
+
+        function get(userID){
             var userRef = $firebaseRef.users.child(userID);
             return new user(userRef);
-        };
+        }
+
+        //Not working.
+        function getByUsername(username){
+            var user = $firebaseObject($firebaseRef.userIDs.child(username));
+            user.$loaded().then(function(){
+                get(user.$value);
+            });
+        }
+
+        function setFeed(userID, postID) {
+            $firebaseRef.userFeeds.child(userID).child(postID).set(true);
+        }
+
+        function setNotification(userID, notification) {
+            $firebaseRef.userNotifications.child(userID).push(notification);
+        }
     }
 
 })();

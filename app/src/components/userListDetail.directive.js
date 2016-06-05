@@ -17,20 +17,8 @@
             controller: UserListDetailController
         };
 
-        function UserListDetailController($scope, DataService){
-            $scope.user = DataService.getUser($scope.user.$id);
-
-            $scope.authUser.followers.$watch(function(snap){
-                if (snap){
-                    $scope.user = DataService.getUser($scope.user.$id);
-                }
-            });
-
-            $scope.authUser.following.$watch(function(snap){
-                if (snap){
-                    $scope.user = DataService.getUser($scope.user.$id);
-                }
-            });
+        function UserListDetailController($scope, User){
+            $scope.user = User.get($scope.user.$id);
         }
     }
 

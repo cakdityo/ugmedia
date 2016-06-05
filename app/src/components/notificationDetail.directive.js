@@ -15,10 +15,10 @@
             controller: NotificationDetailController
         };
 
-        function NotificationDetailController($scope, DataService, $state){
+        function NotificationDetailController(User, $state, $scope){
 
             $scope.navigateToNotification = navigateToNotification;
-            $scope.sender = DataService.getUser($scope.notification.sender);
+            $scope.sender = User.get($scope.notification.sender);
 
             function navigateToNotification(notification){
                 if (notification.post){

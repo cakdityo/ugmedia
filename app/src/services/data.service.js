@@ -9,23 +9,11 @@
 
         var DataService = {
             addComment: addComment,
-            setPost: setPost,
             deleteComment: deleteComment,
             deletePost: deletePost,
-            getPost: getPost,
-            getPostComments: getPostComments,
-            getPostLikes: getPostLikes,
-            getPostTaggedUsers: getPostTaggedUsers,
             getUser: getUser,
             getUserByUsername: getUserByUsername,
             getUsers: getUsers,
-            setPostLike: setPostLike,
-            setPostTaggedUser: setPostTaggedUser,
-            setUserFeed: setUserFeed,
-            setUserFollower: setUserFollower,
-            setUserFollowing: setUserFollowing,
-            setUserNotification: setUserNotification,
-            setUserPost: setUserPost,
             updateUser: updateUser
         };
 
@@ -37,22 +25,8 @@
             return promise;
         }
 
-        /*
-         Set a post authored by a user then reference it on user's post object
-         */
-        function setPost(post) {
-            post.createdAt = firebase.database.ServerValue.TIMESTAMP;
-            var newPost = $firebaseRef.posts.push(post);
-            return newPost;
-        }
-
         function deleteComment(comments, comment) {
             var promise = comments.$remove(comment);
-        }
-
-        function getPost(postID) {
-            var post = $firebaseObject($firebaseRef.posts.child(postID));
-            return post;
         }
 
         /*
@@ -68,32 +42,6 @@
             $firebaseRef.postTaggedUsers.child(post.$id).set(null);
             setUserPost(post.author, post.$id, null);
             $firebaseRef.posts.child(post.$id).set(null);
-        }
-
-        /*
-         Get all comments from the given post.
-         */
-        function getPostComments(postID) {
-            var ref = $firebaseRef.postComments.child(postID);
-            var comments = $firebaseArray(ref);
-            return comments;
-        }
-
-        function getPostLikes(postID){
-            var ref = $firebaseRef.postLikes.child(postID);
-            var likes = $firebaseArray(ref);
-            return likes;
-        }
-
-        function getPostTaggedUsers(postID) {
-            var ref = $firebaseRef.postTaggedUsers.child(postID);
-            var users = $firebaseArray(ref);
-            users.$loaded().then(function () {
-                angular.forEach(users, function (user, key) {
-                    users[key] = getUser(user.$id);
-                });
-            });
-            return users;
         }
 
         /*
@@ -122,39 +70,6 @@
         function getUsers() {
             var users = $firebaseArray($firebaseRef.users);
             return users;
-        }
-
-        function setPostLike(postID, userID, state) {
-            $firebaseRef.postLikes.child(postID).child(userID).set(state);
-        }
-
-        function setPostTaggedUser(postID, userID) {
-            $firebaseRef.postTaggedUsers.child(postID).child(userID).set(true);
-        }
-
-        function setUserFeed(userID, postID, state) {
-            $firebaseRef.userFeeds.child(userID).child(postID).set(state);
-        }
-
-        /*
-         Set or unset a given user's follower object with ID of authenticated user.
-         followState param could be true or false.
-         */
-        function setUserFollower(userID, authUserID, state) {
-            $firebaseRef.userFollowers.child(userID).child(authUserID).set(state);
-        }
-
-        /*
-         Set or unset an authenticated user's following object with ID of given user.
-         followState param could be true or false.
-         */
-        function setUserFollowing(authUserID, userID, state) {
-            $firebaseRef.userFollowing.child(authUserID).child(userID).set(state);
-        }
-
-        function setUserNotification(userID, notification) {
-            notification.createdAt = firebase.database.ServerValue.TIMESTAMP;
-            $firebaseRef.userNotifications.child(userID).push().set(notification);
         }
 
         /*

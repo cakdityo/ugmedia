@@ -16,23 +16,17 @@
             controller: FollowButtonController
         };
 
-        function FollowButtonController($scope, DataService){
+        function FollowButtonController($scope){
 
             $scope.followUser = followUser;
             $scope.unfollowUser = unfollowUser;
 
-            function followUser(authUserID, userID){
-                var state = true;
-
-                DataService.setUserFollower(userID, authUserID, state);
-                DataService.setUserFollowing(authUserID, userID, state);
+            function followUser(){
+                $scope.authUser.profile.setFollow($scope.user.$id);
             }
 
-            function unfollowUser(authUserID, userID){
-                var state = null;
-
-                DataService.setUserFollower(userID, authUserID, state);
-                DataService.setUserFollowing(authUserID, userID, state);
+            function unfollowUser(){
+                $scope.authUser.profile.setUnfollow($scope.user.$id)
             }
         }
     }

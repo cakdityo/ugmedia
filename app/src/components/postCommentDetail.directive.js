@@ -18,10 +18,10 @@
             controllerAs: 'pcd'
         };
 
-        function PostCommentDetailController($scope, DataService){
+        function PostCommentDetailController($scope, User){
             var vm = this;
 
-            vm.author = DataService.getUser($scope.comment.author);
+            vm.author = User.get($scope.comment.author);
             vm.comment = $scope.comment;
             vm.deleteComment = $scope.deleteComment;
 

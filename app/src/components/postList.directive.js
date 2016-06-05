@@ -17,14 +17,14 @@
             controllerAs: 'pl'
         };
 
-        function PostListController($scope, DataService){
+        function PostListController($scope, Post){
             var vm = this;
 
             vm.posts = [];
             vm.user = $scope.user;
 
             angular.forEach($scope.posts, function(post){
-                var post = DataService.getPost(post.$id);
+                var post = Post.get(post.$id);
                 post.$loaded().then(function(){
                     vm.posts.push(post);
                 });
@@ -32,7 +32,7 @@
 
             $scope.posts.$watch(function(snap){
                 if (snap.event === 'child_added'){
-                    var post = DataService.getPost(snap.key);
+                    var post = Post.get(snap.key);
                     post.$loaded().then(function(){
                         vm.posts.push(post);
                     });
