@@ -5,8 +5,9 @@
         .module('app.user')
         .controller('UserSettingController', UserSettingController);
 
-    UserSettingController.$inject = ['$state', 'StorageService', 'DataService'];
-    function UserSettingController($state, StorageService, DataService) {
+    UserSettingController.$inject = ['Storage', '$scope', '$state'];
+
+    function UserSettingController(Storage, $scope, $state) {
         var vm = this;
 
         vm.croppedAvatar = null;
@@ -16,17 +17,22 @@
 
         function updateUser(user) {
             if (vm.originalAvatar) {
-                var upload = StorageService.uploadAvatar(user, vm.originalAvatar, vm.croppedAvatar);
-                upload.then(
-                    function (success) {
-                        user.avatar = success.config.url + success.config.data.key;
+                vm.croppedAvatar = window.dataURLtoBlob(vm.croppedAvatar);
+                var storageRef = Storage.ref();
+                var upload = storageRef.child('users').child(user.$id).child('500').put(vm.croppedAvatar);
+                upload.on('state_changed', function (snapshot) {
+                    $scope.$apply(function () {
+                        vm.progress = parseInt(100.0 * snapshot.bytesTransferred / snapshot.totalBytes);
+                    });
+                }, function (error) {
+
+                }, function () {
+                    $scope.$apply(function () {
+                        user.avatar = upload.snapshot.downloadURL;
                         user.$save();
                         $state.go('user.profile', {username: user.username});
-                    }, function (error) {
-                        alert('Error: ' + error);
-                    }, function (progress) {
-                        vm.progress = parseInt(100.0 * progress.loaded / progress.total);
                     });
+                });
             } else {
                 user.$save();
                 $state.go('user.profile', {username: user.username});
