@@ -6,9 +6,9 @@
         .module('app.services')
         .factory('Post', Post);
 
-    Post.$inject = ['User', '$firebaseArray', '$firebaseObject', '$firebaseRef'];
+    Post.$inject = ['Storage', 'User', '$firebaseArray', '$firebaseObject', '$firebaseRef'];
 
-    function Post(User, $firebaseArray, $firebaseObject, $firebaseRef) {
+    function Post(Storage, User, $firebaseArray, $firebaseObject, $firebaseRef) {
 
         var post = $firebaseObject.$extend({
             destroy: destroy,
@@ -71,6 +71,7 @@
 
         return {
             get: get,
+            push: push,
             set: set,
             setTaggedUser: setTaggedUser
         };
@@ -80,9 +81,13 @@
             return new post(postRef);
         }
 
-        function set(post) {
+        function push() {
+            return $firebaseRef.posts.push();
+        }
+
+        function set(key, post) {
             post.createdAt = firebase.database.ServerValue.TIMESTAMP;
-            return $firebaseRef.posts.push(post);
+            $firebaseRef.posts.child(key).set(post);
         }
 
         function setTaggedUser(postID, userID) {

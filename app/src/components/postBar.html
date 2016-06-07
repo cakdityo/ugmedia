@@ -1,14 +1,16 @@
 <md-card>
+    <img ng-if="pb.image" ngf-src="pb.image" alt="">
     <md-card-header class="post-bar" layout="row" layout-align="start center">
         <md-card-avatar>
-            <img ui-sref="user.profile({username: pb.user.profile.username})" class="md-user-avatar" ng-src="{{ pb.user.profile.avatar }}" alt="{{ pb.user.profile.username }}">
+            <img ui-sref="user.profile({username: pb.user.profile.username})" class="md-user-avatar"
+                 ng-src="{{ pb.user.profile.avatar }}" alt="{{ pb.user.profile.username }}">
         </md-card-avatar>
         <md-input-container flex layout="column">
             <label>Write something</label>
             <textarea rows="2" ng-model="pb.post.caption" md-maxlength="500"></textarea>
         </md-input-container>
     </md-card-header>
-    <md-card-content ng-show="pb.mention">
+    <md-card-content ng-show="pb.tagTo">
         <md-contact-chips
                 ng-model="pb.taggedUsers"
                 md-contacts="pb.querySearch($query)"
@@ -23,17 +25,17 @@
         </md-contact-chips>
     </md-card-content>
     <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-icon-button" aria-label="Image">
+        <md-button class="md-icon-button" aria-label="Attach" ngf-select="" ng-model="pb.image"
+                   ng-class="{'md-primary': pb.image}" ngf-resize="pb.resizeImage($width, $height)" >
             <md-icon>image</md-icon>
         </md-button>
-        <md-button class="md-icon-button" aria-label="File">
-            <md-icon>attach_file</md-icon>
-        </md-button>
-        <md-button class="md-primary" aria-label="Mention" ng-click="pb.mention = pb.mention ? false : true;">
-            Tag People
+        <md-button class="md-icon-button" aria-label="Tag to" ng-click="pb.tagTo = pb.tagTo ? false : true;"
+                   ng-class="{'md-primary': pb.tagTo || pb.taggedUsers.length > 0}">
+            <md-icon>assignment_ind</md-icon>
         </md-button>
         <md-button class="md-raised md-primary" aria-label="Share" ng-click="pb.setPost(pb.post)">
             Share
         </md-button>
     </md-card-actions>
+    <md-progress-linear ng-if="pb.progress" md-mode="determinate" value="{{ pb.progress }}"></md-progress-linear>
 </md-card>

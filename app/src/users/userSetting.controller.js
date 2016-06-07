@@ -19,7 +19,7 @@
             if (vm.originalAvatar) {
                 vm.croppedAvatar = window.dataURLtoBlob(vm.croppedAvatar);
                 var storageRef = Storage.ref();
-                var upload = storageRef.child('users').child(user.$id).child('500').put(vm.croppedAvatar);
+                var upload = storageRef.child('avatars').child(user.$id).put(vm.croppedAvatar);
                 upload.on('state_changed', function (snapshot) {
                     $scope.$apply(function () {
                         vm.progress = parseInt(100.0 * snapshot.bytesTransferred / snapshot.totalBytes);

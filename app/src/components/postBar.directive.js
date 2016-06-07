@@ -16,10 +16,13 @@
             controllerAs: 'pb'
         };
 
-        function postBarController(Post, User, $scope) {
+        function postBarController(Post, Storage, User, $scope) {
             var vm = this;
 
+            vm.fileValidation = {size: {max: '15MB'}, pattern: '.jpg, .png, .doc, .docx, .pdf'};
+            vm.image = null;
             vm.post = {};
+            vm.resizeImage = resizeImage;
             vm.taggedUsers = [];
             vm.setPost = setPost;
             vm.user = $scope.user;
@@ -27,32 +30,58 @@
             vm.users.splice(vm.users.$indexFor(vm.user.profile.$id), 1);
             vm.querySearch = querySearch;
 
+            function resizeImage(width, height) {
+                var w = width - 10;
+                var h = height - 10;
+                return {width: w, height: h, quality: 1.0};
+            }
+
             function setPost(post) {
                 post.author = vm.user.profile.$id;
                 if (post.author && post.caption) {
-                    //--------------->Add new post.
-                    var newPost = Post.set(post);
-                    //Add reference of this post to author's user feed & post object.
-                    vm.user.profile.setPost(newPost.key);
-                    User.setFeed(post.author, newPost.key);
-                    if (vm.taggedUsers.length > 0) {
-                        //if there is at least one user tagged,
-                        angular.forEach(vm.taggedUsers, function (user) {
-                            //Set post taggedUsersObject,
-                            Post.setTaggedUser(newPost.key, user.$id);
-                            //Notice the tagged user.
-                            User.setNotification(user.$id, {sender: post.author, post: newPost.key, tagged: true})
+                    var newPost = Post.push();
+
+                    if (vm.image) {
+                        var upload = Storage.ref().child('posts').child(newPost.key).put(vm.image);
+                        upload.on('state_changed', function (snapshot) {
+                            $scope.$apply(function () {
+                                vm.progress = parseInt(100.0 * snapshot.bytesTransferred / snapshot.totalBytes);
+                            });
+                        }, function (error) {
+
+                        }, function () {
+                            post.image = upload.snapshot.downloadURL;
+                            Post.set(newPost.key, post);
+
+                            vm.user.profile.setPost(newPost.key);
+                            User.setFeed(post.author, newPost.key);
+
+                            if (vm.taggedUsers.length > 0) {
+                                angular.forEach(vm.taggedUsers, function (user) {
+                                    Post.setTaggedUser(newPost.key, user.key);
+                                    User.setNotification(user.key, {
+                                        sender: post.author,
+                                        post: newPost.key,
+                                        tagged: true
+                                    })
+                                });
+                            }
+
+                            if (vm.user.followers.length > 0) {
+                                angular.forEach(vm.user.followers, function (follower) {
+                                    User.setFeed(follower.$id, newPost.key);
+                                });
+                            }
+
+                            //-------------->Clean up variables.
+                            vm.image = null;
+                            vm.post = {};
+                            vm.progress = null;
+                            vm.taggedUsers = [];
                         });
+                    } else {
+                        Post.set(newPost.key, post);
                     }
-                    //-------------->Set the given post to author's followers feeds
-                    if (vm.user.followers.length > 0) {
-                        angular.forEach(vm.user.followers, function (follower){
-                           User.setFeed(follower.$id, newPost.key);
-                        });
-                    }
-                    //-------------->Clean up variables.
-                    vm.post = {};
-                    vm.taggedUsers = [];
                 }
             }
 
