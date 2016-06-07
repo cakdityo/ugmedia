@@ -23,9 +23,8 @@
     "angular-material": "^1.0.8",
     "angular-ui-router": "^0.2.18",
     "ng-file-upload": "^12.0.4",
-    "ng-img-crop": "ngImgCrop#^0.3.2",
-    "blueimp-canvas-to-blob": "^3.3.0",
     "angular-moment": "^0.10.3",
-    "angularfire": "^2.0.1"
+    "angularfire": "^2.0.1",
+    "ng-img-crop-full-extended": "ngImgCropFullExtended#^0.5.5"
   }
 }

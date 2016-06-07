@@ -19,10 +19,12 @@
         function postBarController(Post, Storage, User, $scope) {
             var vm = this;
 
-            vm.fileValidation = {size: {max: '15MB'}, pattern: '.jpg, .png, .doc, .docx, .pdf'};
-            vm.image = null;
+            //if not inside $scope it will throw an error.
+            vm.croppedImage = null;
+            $scope.image = null;
+
+            vm.cropAspectRatio = 'square';
             vm.post = {};
-            vm.resizeImage = resizeImage;
             vm.taggedUsers = [];
             vm.setPost = setPost;
             vm.user = $scope.user;
@@ -30,19 +32,13 @@
             vm.users.splice(vm.users.$indexFor(vm.user.profile.$id), 1);
             vm.querySearch = querySearch;
 
-            function resizeImage(width, height) {
-                var w = width - 10;
-                var h = height - 10;
-                return {width: w, height: h, quality: 1.0};
-            }
-
             function setPost(post) {
                 post.author = vm.user.profile.$id;
                 if (post.author && post.caption) {
                     var newPost = Post.push();
 
-                    if (vm.image) {
-                        var upload = Storage.ref().child('posts').child(newPost.key).put(vm.image);
+                    if ($scope.image) {
+                        var upload = Storage.ref().child('posts').child(newPost.key).put(vm.croppedImage);
                         upload.on('state_changed', function (snapshot) {
                             $scope.$apply(function () {
                                 vm.progress = parseInt(100.0 * snapshot.bytesTransferred / snapshot.totalBytes);
@@ -74,7 +70,8 @@
                             }
 
                             //-------------->Clean up variables.
-                            vm.image = null;
+                            vm.croppedImage = null;
+                            $scope.image = null;
                             vm.post = {};
                             vm.progress = null;
                             vm.taggedUsers = [];

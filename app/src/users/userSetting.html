@@ -14,11 +14,11 @@
         <div flex-gt-xs="30" layout="column">
             <!-- Image section -->
             <md-card ng-show="!US.progress">
-                <img class="md-avatar" ngf-select ng-model="US.originalAvatar" ngf-accept="'image/*'" ng-show="!US.originalAvatar" ng-src="{{ U.user.profile.avatar }}">
+                <img class="md-avatar" ngf-select ngf-accept="'image/*'" ng-show="!US.originalAvatar" ng-src="{{ U.user.profile.avatar }}">
 
-                <div ng-show="US.originalAvatar" ngf-drop ng-model="US.picFile" ngf-pattern="image/*" class="cropArea">
-                    <img-crop area-type="square" image="US.originalAvatar | ngfDataUrl"
-                              result-image="US.croppedAvatar" result-image-size=500></img-crop>
+                <div ng-show="US.originalAvatar" ngf-drop ngf-pattern="image/*" class="cropArea">
+                    <img-crop area-type="square" image="US.originalAvatar" result-image=""
+                              result-blob="US.croppedAvatar" result-image-size="300" result-image-quality="1.0"></img-crop>
                 </div>
             </md-card>
 

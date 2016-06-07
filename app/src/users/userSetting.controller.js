@@ -17,7 +17,6 @@
 
         function updateUser(user) {
             if (vm.originalAvatar) {
-                vm.croppedAvatar = window.dataURLtoBlob(vm.croppedAvatar);
                 var storageRef = Storage.ref();
                 var upload = storageRef.child('avatars').child(user.$id).put(vm.croppedAvatar);
                 upload.on('state_changed', function (snapshot) {
