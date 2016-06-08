@@ -62,9 +62,10 @@
 
             function deletePost() {
                 if (vm.user.profile.$id === vm.author.$id) {
-                    if (vm.post.image) {
-                        var imageRef = Storage.refFromURL(vm.post.image);
-                        imageRef.delete().then(function () {
+                    if (vm.post.image || vm.post.document) {
+                        var file = (vm.post.image || vm.post.document);
+                        var fileRef = Storage.refFromURL(file);
+                        fileRef.delete().then(function () {
                             vm.post.destroy(vm.user.followers);
                         });
                     } else {

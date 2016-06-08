@@ -1,22 +1,23 @@
 <md-card>
-    <div ng-show="image" ngf-pattern="image/*" class="cropArea">
-        <img-crop ng-if="pb.cropAspectRatio === 'square'" area-type="square" image="image" result-image=""
+    <!-- Image Section -->
+    <div ng-if="pb.image" ngf-pattern="image/*" class="cropArea">
+        <img-crop ng-if="pb.cropAspectRatio === 'square'" area-type="square" image="pb.image" result-image=""
                   init-max-area="true"
                   result-blob="pb.croppedImage" result-image-format="'image/jpeg'" result-image-size="1000"
                   result-image-quality="0.5">
         </img-crop>
-        <img-crop ng-if="pb.cropAspectRatio === 'landscape'" area-type="rectangle" image="image" result-image=""
+        <img-crop ng-if="pb.cropAspectRatio === 'landscape'" area-type="rectangle" image="pb.image" result-image=""
                   init-max-area="true"
                   result-blob="pb.croppedImage" aspect-ratio="1.3333333" result-image-format="'image/jpeg'"
                   result-image-size="{w:1024, h:768}" result-image-quality="0.5">
         </img-crop>
-        <img-crop ng-if="pb.cropAspectRatio === 'potrait'" area-type="rectangle" image="image" result-image=""
+        <img-crop ng-if="pb.cropAspectRatio === 'potrait'" area-type="rectangle" image="pb.image" result-image=""
                   init-max-area="true"
                   result-blob="pb.croppedImage" aspect-ratio="0.75" result-image-format="'image/jpeg'"
                   result-image-size="{w:768, h:1024}" result-image-quality="0.5">
         </img-crop>
     </div>
-    <md-card-actions ng-show="image" layout="row" layout-align="center center">
+    <md-card-actions ng-if="pb.image" layout="row" layout-align="center center">
         <md-button ng-click="pb.cropAspectRatio = 'square'"
                    ng-class="{'md-primary': pb.cropAspectRatio === 'square' }">
             square
@@ -30,6 +31,12 @@
             potrait
         </md-button>
     </md-card-actions>
+
+    <!-- Document section -->
+    <md-card-content ng-if="pb.document">
+        <p>{{ pb.document.name }}</p>
+    </md-card-content>
+
     <md-card-header class="post-bar" layout="row" layout-align="start center">
         <md-card-avatar>
             <img ui-sref="user.profile({username: pb.user.profile.username})" class="md-user-avatar"
@@ -55,9 +62,9 @@
         </md-contact-chips>
     </md-card-content>
     <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-icon-button" aria-label="Image" ngf-select ng-model="image" ngf-accept="'image/*'"
-                   ng-class="{'md-primary': pb.image}">
-            <md-icon>image</md-icon>
+        <md-button class="md-icon-button" aria-label="Image" ngf-select ng-model="pb.file"
+                   ngf-accept="'.jpg,.png,.doc,.docx,.pdf'" ngf-change="pb.checkFile($file)">
+            <md-icon>attach_file</md-icon>
         </md-button>
         <md-button class="md-icon-button" aria-label="Tag to" ng-click="pb.tagTo = pb.tagTo ? false : true;"
                    ng-class="{'md-primary': pb.tagTo || pb.taggedUsers.length > 0}">

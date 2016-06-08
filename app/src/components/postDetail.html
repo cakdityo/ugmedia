@@ -32,7 +32,13 @@
     </md-card-header>
 
     <!-- Post picture section -->
-    <img ng-show="pd.post.image" ng-src="{{ pd.post.image }}" alt="">
+    <img ng-if="pd.post.image" ng-src="{{ pd.post.image }}" alt="">
+    <!-- Post document section -->
+    <md-card-actions ng-if="pd.post.document" layout="column">
+        <md-button class="md-primary" ng-href="{{ pd.post.document.url }}" target="_blank">
+            {{ pd.post.document.name }}
+        </md-button>
+    </md-card-actions>
     <br>
 
     <!-- Post content section -->
