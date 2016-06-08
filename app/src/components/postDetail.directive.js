@@ -17,7 +17,7 @@
             controllerAs: 'pd'
         };
 
-        function PostDetailController($scope, User) {
+        function PostDetailController($scope, Storage, User) {
             var vm = this;
 
             $scope.post.$loaded().then(function () {
@@ -49,7 +49,7 @@
                         text: text,
                         author: vm.user.profile.$id,
                         createdAt: firebase.database.ServerValue.TIMESTAMP
-                    }).then(function(){
+                    }).then(function () {
                         User.setNotification(vm.post.author, {
                             comment: text,
                             post: vm.post.$id,
@@ -62,7 +62,14 @@
 
             function deletePost() {
                 if (vm.user.profile.$id === vm.author.$id) {
-                    vm.post.destroy(vm.user.followers);
+                    if (vm.post.image) {
+                        var imageRef = Storage.refFromURL(vm.post.image);
+                        imageRef.delete().then(function () {
+                            vm.post.destroy(vm.user.followers);
+                        });
+                    } else {
+                        vm.post.destroy(vm.user.followers);
+                    }
                 }
             }
 

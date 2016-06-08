@@ -1,13 +1,19 @@
 <md-card>
     <div ng-show="image" ngf-pattern="image/*" class="cropArea">
-        <img-crop ng-if="pb.cropAspectRatio === 'square'" area-type="square" image="image" result-image="" init-max-area="true"
-                  result-blob="pb.croppedImage" result-image-size="1000" result-image-quality="1.0">
+        <img-crop ng-if="pb.cropAspectRatio === 'square'" area-type="square" image="image" result-image=""
+                  init-max-area="true"
+                  result-blob="pb.croppedImage" result-image-format="'image/jpeg'" result-image-size="1000"
+                  result-image-quality="0.5">
         </img-crop>
-        <img-crop ng-if="pb.cropAspectRatio === 'landscape'" area-type="rectangle" image="image" result-image="" init-max-area="true"
-                  result-blob="pb.croppedImage" aspect-ratio="1.3333333" result-image-size="{w:1024, h:768}" result-image-quality="1.0">
+        <img-crop ng-if="pb.cropAspectRatio === 'landscape'" area-type="rectangle" image="image" result-image=""
+                  init-max-area="true"
+                  result-blob="pb.croppedImage" aspect-ratio="1.3333333" result-image-format="'image/jpeg'"
+                  result-image-size="{w:1024, h:768}" result-image-quality="0.5">
         </img-crop>
-        <img-crop ng-if="pb.cropAspectRatio === 'potrait'" area-type="rectangle" image="image" result-image="" init-max-area="true"
-                  result-blob="pb.croppedImage" aspect-ratio="0.75" result-image-size="{w:768, h:1024}" result-image-quality="1.0">
+        <img-crop ng-if="pb.cropAspectRatio === 'potrait'" area-type="rectangle" image="image" result-image=""
+                  init-max-area="true"
+                  result-blob="pb.croppedImage" aspect-ratio="0.75" result-image-format="'image/jpeg'"
+                  result-image-size="{w:768, h:1024}" result-image-quality="0.5">
         </img-crop>
     </div>
     <md-card-actions ng-show="image" layout="row" layout-align="center center">
