@@ -94,6 +94,7 @@
         }
 
         function setNotification(userID, notification) {
+            notification.createdAt = firebase.database.ServerValue.TIMESTAMP;
             $firebaseRef.userNotifications.child(userID).push(notification);
         }
     }

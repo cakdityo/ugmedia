@@ -36,11 +36,12 @@
             vm.querySearch = querySearch;
 
             function checkFile(file){
+                console.log(file.type);
                 vm.document = null;
                 vm.image = null;
                 if (file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
                     vm.document = file;
-                } else if (file.type === 'image/jpg' || file.type === 'image/png'){
+                } else if (file.type === 'image/jpeg' || file.type === 'image/png'){
                     vm.image = file;
                 } else {
                     alert('File is not supported!');
