@@ -1,4 +1,12 @@
 <md-card>
+    <!-- Update Mode -->
+    <img ng-if="pb.post.image && !pb.image && !pb.document" ng-src="{{ pb.post.image }}" alt="">
+    <md-card-actions ng-if="pb.post.document && !pb.image && !pb.document" layout="column">
+        <md-button class="md-primary" ng-href="{{ pb.post.document.url }}" target="_blank">
+            {{ pb.post.document.name }}
+        </md-button>
+    </md-card-actions>
+
     <!-- Image Section -->
     <div ng-if="pb.image" ngf-pattern="image/*" class="cropArea">
         <img-crop ng-if="pb.cropAspectRatio === 'square'" area-type="square" image="pb.image" result-image=""
@@ -33,9 +41,11 @@
     </md-card-actions>
 
     <!-- Document section -->
-    <md-card-content ng-if="pb.document">
-        <p>{{ pb.document.name }}</p>
-    </md-card-content>
+    <md-card-actions ng-if="pb.document" layout="column">
+        <md-button class="md-primary">
+            {{ pb.document.name }}
+        </md-button>
+    </md-card-actions>
 
     <md-card-header class="post-bar" layout="row" layout-align="start center">
         <md-card-avatar>
@@ -43,10 +53,11 @@
                  ng-src="{{ pb.user.profile.avatar }}" alt="{{ pb.user.profile.username }}">
         </md-card-avatar>
         <md-input-container flex layout="column">
-            <label>Write something</label>
+            <label>{{ pb.post ? 'Edit post' : 'Write Something' }}</label>
             <textarea rows="2" ng-model="pb.post.caption" md-maxlength="500"></textarea>
         </md-input-container>
     </md-card-header>
+
     <md-card-content ng-show="pb.tagTo">
         <md-contact-chips
                 ng-model="pb.taggedUsers"
@@ -61,6 +72,7 @@
                 secondary-placeholder="Enter username">
         </md-contact-chips>
     </md-card-content>
+
     <md-card-actions layout="row" layout-align="end center">
         <md-button class="md-icon-button" aria-label="Image" ngf-select ng-model="pb.file"
                    ngf-accept="'.jpg,.png,.doc,.docx,.pdf'" ngf-change="pb.checkFile($file)">
@@ -70,9 +82,13 @@
                    ng-class="{'md-primary': pb.tagTo || pb.taggedUsers.length > 0}">
             <md-icon>assignment_ind</md-icon>
         </md-button>
-        <md-button class="md-raised md-primary" aria-label="Share" ng-click="pb.setPost(pb.post)">
+        <md-button ng-if="!post" class="md-raised md-primary" aria-label="Share" ng-click="pb.setPost()">
             Share
         </md-button>
+        <md-button ng-if="post" class="md-raised md-primary" aria-label="Save" ng-click="pb.updatePost()">
+            Save
+        </md-button>
     </md-card-actions>
+
     <md-progress-linear ng-if="pb.progress" md-mode="determinate" value="{{ pb.progress }}"></md-progress-linear>
 </md-card>

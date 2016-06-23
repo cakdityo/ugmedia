@@ -1,3 +1,7 @@
 <div layout-xs="column" layout-gt-xs="row" layout-align-gt-xs="center start">
-    <ug-post-detail flex-gt-xs="50" user="U.user" post="UPO.post"></ug-post-detail>
+    <div flex-gt-xs="50" layout="column">
+        <ug-post-bar ng-if="U.user.profile.$id === UPO.post.author" post="UPO.post" user="U.user"
+                     users="U.users"></ug-post-bar>
+        <ug-post-detail user="U.user" post="UPO.post"></ug-post-detail>
+    </div>
 </div>

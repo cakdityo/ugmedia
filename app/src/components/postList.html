@@ -1,5 +1,14 @@
+<md-card>
+    <md-card-content class="post-bar" layout="column">
+        <md-input-container>
+            <label>Filter post by caption</label>
+            <input ng-model="pl.searchPost">
+        </md-input-container>
+    </md-card-content>
+</md-card>
+
 <ug-post-detail
-        ng-repeat="post in pl.posts | orderBy:'-createdAt'"
+        ng-repeat="post in pl.posts | orderBy:'-createdAt' | filter:pl.searchPost"
         post="post"
         user="pl.user">
 </ug-post-detail>

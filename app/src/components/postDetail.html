@@ -72,14 +72,12 @@
     <md-card-content layout="column">
         <div layout="column" layout-gt-xs="row">
             <span class="timestamp">
-                <a href="" class="simple-link" ng-click="pd.showPostObject('likes')">{{ pd.likes.length }} likes</a>, <a
-                    href="" class="simple-link" ng-click="pd.showPostObject('comments')">{{ pd.comments.length }}
-                comments</a>
+                <a href="" class="simple-link" ng-click="pd.showPostObject('likes')">{{ pd.likes.length }} likes</a>,
+                <a href="" class="simple-link" ng-click="pd.showPostObject('comments')">{{ pd.comments.length }} comments</a>
             </span>
             <span flex></span>
             <span class="timestamp">
                 <span am-time-ago="pd.post.createdAt"></span>
-                <span ng-if="pd.post.editedAt">( Edited <span am-time-ago="pd.post.editedAt"> )</span></span>
             </span>
         </div>
         <md-divider></md-divider>

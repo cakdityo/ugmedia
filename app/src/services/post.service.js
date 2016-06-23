@@ -40,8 +40,8 @@
 
         function getComments() {
             var ref = $firebaseRef.postComments.child(this.$id);
-            var posts = $firebaseArray(ref);
-            return posts;
+            var comments = $firebaseArray(ref);
+            return comments;
         }
 
         function getLikes() {

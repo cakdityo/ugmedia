@@ -54,9 +54,11 @@
 
     <!-- User object section -->
     <div flex-offset-gt-xs="5" flex-gt-xs="50" layout="column" ui-view>
-        <ug-post-bar user="U.user" users="U.users"></ug-post-bar>
-        <br/>
-         <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->
+        <!--Wrap ng-if in ui-view root element with div so it doesn't throw an error. (angular issue)-->
+        <div>
+            <ug-post-bar ng-if="U.user.profile.$id === UP.user.profile.$id" user="U.user" users="U.users"></ug-post-bar>
+        </div>
+
         <div>
             <div ng-if="UP.user.posts.length == 0"> No post yet</div>
             <ug-post-list ng-if="UP.user.posts.length > 0" user="U.user" posts="UP.user.posts"></ug-post-list>

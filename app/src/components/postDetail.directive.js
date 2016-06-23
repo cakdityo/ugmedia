@@ -17,7 +17,7 @@
             controllerAs: 'pd'
         };
 
-        function PostDetailController($scope, Storage, User) {
+        function PostDetailController($scope, $state, Storage, User) {
             var vm = this;
 
             $scope.post.$loaded().then(function () {
@@ -63,7 +63,7 @@
             function deletePost() {
                 if (vm.user.profile.$id === vm.author.$id) {
                     if (vm.post.image || vm.post.document) {
-                        var file = (vm.post.image || vm.post.document);
+                        var file = (vm.post.image || vm.post.document.url);
                         var fileRef = Storage.refFromURL(file);
                         fileRef.delete().then(function () {
                             vm.post.destroy(vm.user.followers);
@@ -91,7 +91,7 @@
                 if (menuName === 'Copy URL') {
                     alert("URL copied!");
                 } else if (menuName === 'Edit') {
-
+                    $state.go('user.post', {postID: vm.post.$id});
                 } else if (menuName === 'Delete') {
                     vm.deletePost();
                 }

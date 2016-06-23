@@ -8,6 +8,7 @@
     function ugPostBar() {
         return {
             scope: {
+                post: '=',
                 user: '=',
                 users: '='
             },
@@ -26,17 +27,17 @@
             vm.document = null;
             vm.file = null;
             vm.image = null;
-            vm.post = {};
+            vm.post = $scope.post;
             vm.setObjects = setObjects;
             vm.setPost = setPost;
             vm.taggedUsers = [];
+            vm.updatePost = updatePost;
             vm.user = $scope.user;
             vm.users = $scope.users;
             vm.users.splice(vm.users.$indexFor(vm.user.profile.$id), 1);
             vm.querySearch = querySearch;
 
             function checkFile(file){
-                console.log(file.type);
                 vm.document = null;
                 vm.image = null;
                 if (file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
@@ -59,9 +60,9 @@
                 vm.taggedUsers = [];
             }
 
-            function setPost(post) {
-                post.author = vm.user.profile.$id;
-                if (post.author && post.caption) {
+            function setPost() {
+                vm.post.author = vm.user.profile.$id;
+                if (vm.post.author && vm.post.caption) {
                     var newPost = Post.push();
 
                     if (vm.croppedImage || vm.document) {
@@ -83,21 +84,66 @@
                             alert(error);
                         }, function () {
                             if (vm.croppedImage) {
-                                post.image = upload.snapshot.downloadURL;
+                                vm.post.image = upload.snapshot.downloadURL;
                             } else if (vm.document) {
-                                post.document = {};
-                                post.document.name = fileName;
-                                post.document.url = upload.snapshot.downloadURL;
+                                vm.post.document = {};
+                                vm.post.document.name = fileName;
+                                vm.post.document.url = upload.snapshot.downloadURL;
                             }
 
-                            Post.set(newPost.key, post);
-                            vm.setObjects(post.author, newPost.key, vm.taggedUsers, vm.user.followers);
+                            Post.set(newPost.key, vm.post);
+                            vm.setObjects(vm.post.author, newPost.key, vm.taggedUsers, vm.user.followers);
                             vm.cleanUp();
                         });
                     } else {
-                        Post.set(newPost.key, post);
-                        vm.setObjects(post.author, newPost.key, vm.taggedUsers, vm.user.followers);
+                        Post.set(newPost.key, vm.post);
+                        vm.setObjects(vm.post.author, newPost.key, vm.taggedUsers, vm.user.followers);
                         vm.cleanUp();
+                    }
+                }
+            }
+
+            function updatePost() {
+                if (vm.post.author && vm.post.caption) {
+
+                    if (vm.croppedImage || vm.document) {
+                        var currentFile, file, fileName;
+                        vm.progress = 0;
+                        //Clean data
+                        currentFile = Storage.refFromURL((vm.post.image || vm.post.document.url));
+                        currentFile.delete().then(function(){
+                            vm.post.document = null;
+                            vm.post.image = null;
+                        });
+                        if (vm.image) {
+                            file = vm.croppedImage;
+                            fileName = vm.image.name;
+                        } else if (vm.document) {
+                            file = vm.document;
+                            fileName = vm.document.name;
+                        }
+
+                        var upload = Storage.ref().child('posts').child(vm.post.$id).child(fileName).put(file);
+                        upload.on('state_changed', function (snapshot) {
+                            $scope.$apply(function () {
+                                vm.progress = parseInt(100.0 * snapshot.bytesTransferred / snapshot.totalBytes);
+                            });
+                        }, function (error) {
+                            alert(error);
+                        }, function () {
+                            if (vm.croppedImage) {
+                                vm.post.image = upload.snapshot.downloadURL;
+                            } else if (vm.document) {
+                                vm.post.document = {};
+                                vm.post.document.name = fileName;
+                                vm.post.document.url = upload.snapshot.downloadURL;
+                            }
+
+                            vm.post.$save();
+                            vm.progress = null;
+                        });
+                    } else {
+                        vm.post.$save();
                     }
                 }
             }
