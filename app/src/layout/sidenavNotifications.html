@@ -7,7 +7,7 @@
         <md-list>
             <ug-notification-detail class="notification"
                                     ng-repeat="notification in U.user.notifications | orderBy: '-createdAt'"
-                                    notification="notification"></ug-notification-detail>
+                                    notification="notification" notifications="U.user.notifications"></ug-notification-detail>
         </md-list>
     </md-content>
 </md-sidenav>

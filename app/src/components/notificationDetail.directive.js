@@ -8,17 +8,26 @@
     function ugNotificationDetail(){
         return {
             scope: {
-                notification: '='
+                notification: '=',
+                notifications: '='
             },
             templateUrl: 'src/components/notificationDetail.html',
             replace: true,
             controller: NotificationDetailController
         };
 
-        function NotificationDetailController(User, $state, $scope){
+        function NotificationDetailController(Post, User, $state, $scope){
 
             $scope.navigateToNotification = navigateToNotification;
+            $scope.post = Post.get($scope.notification.post);
             $scope.sender = User.get($scope.notification.sender);
+
+            //check if post doesn't exist, so remove the notification
+            $scope.post.$watch(function(){
+                if(!$scope.post.author){
+                    $scope.notifications.$remove($scope.notification);
+                }
+            });
 
             function navigateToNotification(notification){
                 if (notification.post){
