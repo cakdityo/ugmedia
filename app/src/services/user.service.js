@@ -70,8 +70,7 @@
             getAll: getAll,
             get: get,
             getByUsername: getByUsername,
-            setFeed: setFeed,
-            setNotification: setNotification
+            setFeed: setFeed
         };
 
         function getAll() {
@@ -93,10 +92,6 @@
             $firebaseRef.userFeeds.child(userID).child(postID).set(true);
         }
 
-        function setNotification(userID, notification) {
-            notification.createdAt = firebase.database.ServerValue.TIMESTAMP;
-            $firebaseRef.userNotifications.child(userID).push(notification);
-        }
     }
 
 })();

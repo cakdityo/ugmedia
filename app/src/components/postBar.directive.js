@@ -17,7 +17,7 @@
             controllerAs: 'pb'
         };
 
-        function postBarController(Post, Storage, User, $scope) {
+        function postBarController(Activity, Post, Storage, User, $scope) {
             var vm = this;
 
             vm.checkFile = checkFile;
@@ -37,12 +37,12 @@
             vm.users.splice(vm.users.$indexFor(vm.user.profile.$id), 1);
             vm.querySearch = querySearch;
 
-            function checkFile(file){
+            function checkFile(file) {
                 vm.document = null;
                 vm.image = null;
-                if (file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
+                if (file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
                     vm.document = file;
-                } else if (file.type === 'image/jpeg' || file.type === 'image/png'){
+                } else if (file.type === 'image/jpeg' || file.type === 'image/png') {
                     vm.image = file;
                 } else {
                     alert('File is not supported!');
@@ -50,7 +50,7 @@
                 }
             }
 
-            function cleanUp(){
+            function cleanUp() {
                 vm.croppedImage = null;
                 vm.document = null;
                 vm.file = null;
@@ -92,11 +92,23 @@
                             }
 
                             Post.set(newPost.key, vm.post);
+
+                            Activity.set({
+                                author: vm.user.profile.$id,
+                                post: newPost.key,
+                                posted: true
+                            }, null);
+
                             vm.setObjects(vm.post.author, newPost.key, vm.taggedUsers, vm.user.followers);
                             vm.cleanUp();
                         });
                     } else {
                         Post.set(newPost.key, vm.post);
+                        Activity.set({
+                            author: vm.user.profile.$id,
+                            post: newPost.key,
+                            posted: true
+                        }, null);
                         vm.setObjects(vm.post.author, newPost.key, vm.taggedUsers, vm.user.followers);
                         vm.cleanUp();
                     }
@@ -111,7 +123,7 @@
                         vm.progress = 0;
                         //Clean data
                         currentFile = Storage.refFromURL((vm.post.image || vm.post.document.url));
-                        currentFile.delete().then(function(){
+                        currentFile.delete().then(function () {
                             vm.post.document = null;
                             vm.post.image = null;
                         });
@@ -166,13 +178,13 @@
                 User.setFeed(authorID, postID);
 
                 if (taggedUsers.length > 0) {
+                    var newActivity = Activity.set({
+                        author: authorID,
+                        post: postID,
+                        tagged: true
+                    }, taggedUsers);
                     angular.forEach(taggedUsers, function (user) {
-                        Post.setTaggedUser(postID, user.$id);
-                        User.setNotification(user.$id, {
-                            sender: authorID,
-                            post: postID,
-                            tagged: true
-                        })
+                        Post.setTaggedUser(postID, user.$id, newActivity.key);
                     });
                 }
 

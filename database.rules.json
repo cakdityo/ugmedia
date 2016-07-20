@@ -27,7 +27,7 @@
   },
   "user-followers": {
     "$userID": {
-      ".write": "$userID === auth.uid",
+      ".write": "$userID !== auth.uid",
       "$userID": {
         ".write": "$userID === auth.uid"
       }
@@ -43,10 +43,9 @@
   },
   "user-notifications": {
     "$userID": {
-      ".write": "$userID === auth.uid",
+      ".write": "$userID !== auth.uid",
       "$notificationID": {
-        ".write": "newData.child('sender').val() === auth.uid",
-        ".validate": "newData.child('sender').val() !== $userID"
+        ".validate": "root.child('activities').hasChild($notificationID)"
       }
     }
   },
@@ -56,6 +55,12 @@
       "$postID": {
         ".write": "root.child('posts').child($postID).child('author').val() === auth.uid"
       }
+    }
+  },
+  "activities": {
+    "$activityID":{
+      ".write": "newData.child('author').val() === auth.uid || data.child('author').val() === auth.uid",
+      ".validate": "newData.hasChild('author')"
     }
   },
   "posts": {

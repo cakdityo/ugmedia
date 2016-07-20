@@ -18,6 +18,7 @@
 
             $firebaseRefProvider.registerUrl({
                 default: FirebaseUrl,
+                activities: FirebaseUrl + 'activities',
                 posts: FirebaseUrl + 'posts',
                 postComments: FirebaseUrl + 'post-comments',
                 postLikes: FirebaseUrl + 'post-likes',

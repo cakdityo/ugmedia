@@ -63,7 +63,7 @@
             <md-icon>favorite</md-icon>
         </md-button>
         <md-button ng-if="pd.likes.$indexFor(pd.user.profile.$id) >= 0" class="md-icon-button md-primary"
-                   ng-click="pd.setUnlikePost()">
+                   ng-click="pd.setUnlikePost(pd.likes.$getRecord(pd.user.profile.$id))">
             <md-icon>favorite</md-icon>
         </md-button>
     </md-card-actions>

@@ -6,9 +6,9 @@
         .module('app.services')
         .factory('Post', Post);
 
-    Post.$inject = ['Storage', 'User', '$firebaseArray', '$firebaseObject', '$firebaseRef'];
+    Post.$inject = ['User', '$firebaseArray', '$firebaseObject', '$firebaseRef'];
 
-    function Post(Storage, User, $firebaseArray, $firebaseObject, $firebaseRef) {
+    function Post(User, $firebaseArray, $firebaseObject, $firebaseRef) {
 
         var post = $firebaseObject.$extend({
             destroy: destroy,
@@ -61,8 +61,8 @@
             return users;
         }
 
-        function setLike(userID) {
-            $firebaseRef.postLikes.child(this.$id).child(userID).set(true);
+        function setLike(userID, activityID) {
+            $firebaseRef.postLikes.child(this.$id).child(userID).set(activityID);
         }
 
         function setUnlike(userID) {
@@ -90,8 +90,8 @@
             $firebaseRef.posts.child(key).set(post);
         }
 
-        function setTaggedUser(postID, userID) {
-            $firebaseRef.postTaggedUsers.child(postID).child(userID).set(true);
+        function setTaggedUser(postID, userID, activityID) {
+            $firebaseRef.postTaggedUsers.child(postID).child(userID).set(activityID);
         }
     }
 })();

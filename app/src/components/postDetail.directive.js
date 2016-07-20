@@ -17,7 +17,7 @@
             controllerAs: 'pd'
         };
 
-        function PostDetailController($scope, $state, Storage, User) {
+        function PostDetailController(Activity, Storage, $scope, $state) {
             var vm = this;
 
             $scope.post.$loaded().then(function () {
@@ -45,16 +45,17 @@
 
             function addComment(text) {
                 if (text && vm.user.profile.$id) {
-                    vm.comments.$add({
-                        text: text,
+                    var newActivity = Activity.set({
                         author: vm.user.profile.$id,
-                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                        comment: text,
+                        post: vm.post.$id
+                    }, [vm.author]);
+                    vm.comments.$add({
+                        activity: newActivity.key,
+                        author: vm.user.profile.$id,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP,
+                        text: text
                     }).then(function () {
-                        User.setNotification(vm.post.author, {
-                            comment: text,
-                            post: vm.post.$id,
-                            sender: vm.user.profile.$id
-                        });
                         vm.commentText = '';
                     });
                 }
@@ -75,15 +76,19 @@
             }
 
             function setLikePost() {
-                vm.post.setLike(vm.user.profile.$id);
-                User.setNotification(vm.post.author, {
+                var newActivity = Activity.set({
+                    author: vm.user.profile.$id,
                     liked: true,
-                    post: vm.post.$id,
-                    sender: vm.user.profile.$id
-                });
+                    post: vm.post.$id
+                }, [vm.author]);
+                vm.post.setLike(vm.user.profile.$id, newActivity.key);
             }
 
-            function setUnlikePost() {
+            function setUnlikePost(like) {
+                var activity = Activity.get(like.$value);
+                activity.$loaded().then(function(){
+                    activity.destroy();
+                });
                 vm.post.setUnlike(vm.user.profile.$id);
             }
 

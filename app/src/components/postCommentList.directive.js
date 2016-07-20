@@ -18,7 +18,7 @@
             controllerAs: 'pcl'
         };
 
-        function PostCommentListController($scope){
+        function PostCommentListController(Activity, $scope){
             var vm = this;
 
             vm.comments = $scope.comments;
@@ -26,6 +26,10 @@
 
             function deleteComment(comment){
                 if (comment){
+                    var activity = Activity.get(comment.activity);
+                    activity.$loaded().then(function(){
+                        activity.destroy();
+                    });
                     vm.comments.$remove(comment);
                 }
             }
