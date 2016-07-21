@@ -28,7 +28,7 @@
                 if (comment){
                     var activity = Activity.get(comment.activity);
                     activity.$loaded().then(function(){
-                        activity.destroy();
+                        activity.destroy([$scope.id.postAuthor]);
                     });
                     vm.comments.$remove(comment);
                 }

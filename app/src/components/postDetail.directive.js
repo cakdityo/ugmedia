@@ -87,7 +87,7 @@
             function setUnlikePost(like) {
                 var activity = Activity.get(like.$value);
                 activity.$loaded().then(function(){
-                    activity.destroy();
+                    activity.destroy([vm.author.$id]);
                 });
                 vm.post.setUnlike(vm.user.profile.$id);
             }

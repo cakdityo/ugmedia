@@ -1,4 +1,4 @@
-(function(){
+(function () {
 
     'use strict';
 
@@ -8,7 +8,7 @@
 
     Activity.$inject = ['Post', 'User', '$firebaseArray', '$firebaseObject', '$firebaseRef'];
 
-    function Activity(Post, User, $firebaseArray, $firebaseObject, $firebaseRef){
+    function Activity(Post, User, $firebaseArray, $firebaseObject, $firebaseRef) {
 
         var activity = $firebaseObject.$extend({
             destroy: destroy,
@@ -16,25 +16,22 @@
             getPost: getPost
         });
 
-        function destroy(){
+        function destroy(receiverIDs) {
             var activity = this;
-            var receivers = $firebaseArray($firebaseRef.activities.child(activity.$id).child('receivers'));
-            receivers.$loaded().then(function(){
-                if (receivers.length > 0){
-                    angular.forEach(receivers, function(receiver){
-                        $firebaseRef.userNotifications.child(receiver.$id).child(activity.$id).set(null);
-                    });
-                }
-            });
+            if (receiverIDs.length > 0) {
+                angular.forEach(receiverIDs, function (receiverID) {
+                    $firebaseRef.userNotifications.child(receiverID).child(activity.$id).set(null);
+                });
+            }
             $firebaseRef.activities.child(activity.$id).set(null);
         }
 
-        function getAuthor(){
+        function getAuthor() {
             var author = User.get(this.author);
             return author;
         }
 
-        function getPost(){
+        function getPost() {
             var post = Post.get(this.post);
             return post;
         }
@@ -44,25 +41,17 @@
             set: set
         };
 
-        function get(activityID){
+        function get(activityID) {
             var activityRef = $firebaseRef.activities.child(activityID);
             return new activity(activityRef);
         }
 
         //receivers is array
-        function set(activity, receivers){
+        function set(activity, receivers) {
             activity.createdAt = firebase.database.ServerValue.TIMESTAMP;
-            if (receivers){
-                activity.receivers = {};
-                angular.forEach(receivers, function(receiver){
-                    if (receiver.$id !== activity.author) {
-                        activity['receivers'][receiver.$id] = true;
-                    }
-                });
-            }
             var newActivity = $firebaseRef.activities.push(activity);
-            if (receivers){
-                angular.forEach(receivers, function(receiver){
+            if (receivers) {
+                angular.forEach(receivers, function (receiver) {
                     if (receiver.$id !== activity.author) {
                         $firebaseRef.userNotifications.child(receiver.$id).child(newActivity.key).set(true);
                     }

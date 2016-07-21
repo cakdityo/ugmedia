@@ -22,6 +22,26 @@
 
         function destroy(authorFollowers) {
             var post = this;
+            var postID = post.$id; //fixing undefined value that comes after post has been deleted
+            var postAuthor = post.author; //fixing undefined value that comes after post has been deleted
+            var activities = $firebaseArray($firebaseRef.activities.orderByChild('post').equalTo(post.$id));
+            activities.$loaded().then(function(){
+                angular.forEach(activities, function(activity){
+                    var activityID = activity.$id;
+                    if (activity.tagged) {
+                        var users = $firebaseArray($firebaseRef.postTaggedUsers.child(postID));
+                        users.$loaded().then(function(){
+                            angular.forEach(users, function(user){
+                                $firebaseRef.userNotifications.child(user.$id).child(activityID).set(null);
+                            });
+                            activities.$remove(activity);
+                        });
+                    } else {
+                        $firebaseRef.userNotifications.child(postAuthor).child(activityID).set(null);
+                        activities.$remove(activity);
+                    }
+                });
+            });
             $firebaseRef.userFeeds.child(post.author).child(post.$id).set(null);
             angular.forEach(authorFollowers, function(follower){
                 $firebaseRef.userFeeds.child(follower.$id).child(post.$id).set(null);

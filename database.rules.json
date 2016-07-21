@@ -45,6 +45,7 @@
     "$userID": {
       ".write": "$userID !== auth.uid",
       "$notificationID": {
+        ".write": "!data.exists() || !newData.exists()",
         ".validate": "root.child('activities').hasChild($notificationID)"
       }
     }
@@ -58,8 +59,9 @@
     }
   },
   "activities": {
+    ".indexOn": "post",
     "$activityID":{
-      ".write": "newData.child('author').val() === auth.uid || data.child('author').val() === auth.uid",
+      ".write": "newData.child('author').val() === auth.uid || !newData.exists()",
       ".validate": "newData.hasChild('author')"
     }
   },
