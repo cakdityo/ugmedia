@@ -6,7 +6,7 @@
     <md-content>
         <md-list>
             <ug-notification-detail class="notification"
-                                    ng-repeat="notification in U.user.notifications | orderBy: '-createdAt'"
+                                    ng-repeat="notification in sn.notifications | orderBy: '-createdAt'"
                                     notification="notification" notifications="U.user.notifications"></ug-notification-detail>
         </md-list>
     </md-content>

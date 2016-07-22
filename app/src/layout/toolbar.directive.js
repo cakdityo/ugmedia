@@ -5,14 +5,14 @@
         .module('app.layout')
         .directive('ugToolbar', ugToolbar);
 
-    function ugToolbar($mdSidenav){
+    function ugToolbar(){
         return {
             templateUrl: 'src/layout/toolbar.html',
             controller: ugToolbarController,
             controllerAs: 'tb'
         };
 
-        function ugToolbarController($state){
+        function ugToolbarController($mdSidenav, $state){
             var vm = this;
 
             vm.goToUser = goToUser;

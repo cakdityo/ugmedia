@@ -1,10 +1,10 @@
 <md-list-item>
-    <img ng-src="{{ sender.avatar }}" class="md-avatar"
-         alt="{{ sender.username }}"
-         ui-sref="user.profile({username: sender.username})">
+    <img ng-src="{{ author.avatar }}" class="md-avatar"
+         alt="{{ author.username }}"
+         ui-sref="user.profile({username: author.username})" ng-click="sidenavToggle();">
 
     <p>
-        <strong>{{ sender.username }}</strong>
+        <strong>{{ author.username }}</strong>
         <span ng-if="notification.comment"> commented on your post: {{ notification.comment }}</span>
         <span ng-if="notification.tagged"> tagged you in a post</span>
         <span ng-if="notification.liked"> liked your post</span>
