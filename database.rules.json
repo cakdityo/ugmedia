@@ -109,7 +109,7 @@
   },
   "post-tagged-users": {
     "$postID": {
-      ".write": "root.child('posts').child($postID).child('author').val() === auth.uid",
+      ".write": "root.child('posts').child($postID).child('author').val() === auth.uid || data.exists()",
       "$userID": {
         ".validate": "$userID !== auth.uid"
       }

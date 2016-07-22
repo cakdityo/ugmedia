@@ -34,6 +34,7 @@
                             angular.forEach(users, function(user){
                                 $firebaseRef.userNotifications.child(user.$id).child(activityID).set(null);
                             });
+                            $firebaseRef.postTaggedUsers.child(post.$id).set(null);
                             activities.$remove(activity);
                         });
                     } else {
@@ -49,7 +50,6 @@
             $firebaseRef.userPosts.child(post.author).child(post.$id).set(null);
             $firebaseRef.postComments.child(post.$id).set(null);
             $firebaseRef.postLikes.child(post.$id).set(null);
-            $firebaseRef.postTaggedUsers.child(post.$id).set(null);
             $firebaseRef.posts.child(post.$id).set(null);
         }
 
