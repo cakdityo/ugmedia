@@ -5,9 +5,9 @@
         .module('app.auth')
         .controller('AuthController', AuthController);
 
-    AuthController.$inject = ['Auth', '$firebaseRef', '$state'];
+    AuthController.$inject = ['Auth', 'User', '$firebaseRef', '$state'];
 
-    function AuthController(Auth, $firebaseRef, $state){
+    function AuthController(Auth, User, $firebaseRef, $state){
         var vm = this;
         var isNewUser = false;
 
@@ -46,10 +46,16 @@
         }
 
         function login(){
-            Auth.$signInWithEmailAndPassword(vm.user.email, vm.user.password).then(function (auth) {
-                $state.go('user');
-            }, function (error) {
-                vm.error = error;
+            var user = User.getByUsername(vm.user.username);
+            user.$loaded().then(function(){
+                user = User.get(user.$value);
+                user.$loaded().then(function(){
+                    Auth.$signInWithEmailAndPassword(user.email, vm.user.password).then(function (auth) {
+                        $state.go('user');
+                    }, function (error) {
+                        vm.error = error;
+                    });
+                });
             });
         }
     }
