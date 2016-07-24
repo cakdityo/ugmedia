@@ -61,8 +61,11 @@
   "activities": {
     ".indexOn": "post",
     "$activityID":{
-      ".write": "newData.child('author').val() === auth.uid || !newData.exists()",
-      ".validate": "newData.hasChild('author')"
+      ".write": "newData.exists() || data.exists()",
+      ".validate": "newData.hasChild('author')",
+      "unopened": {
+        ".write": "auth.uid !== null"
+      }
     }
   },
   "posts": {

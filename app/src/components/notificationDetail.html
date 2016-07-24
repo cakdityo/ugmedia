@@ -12,10 +12,10 @@
     </p>
 
     <md-icon ng-click="navigateToNotification(notification)" class="md-secondary"
-             aria-label="Notification">
+             aria-label="Notification" ng-class="{'md-primary': notification.unopened}">
         <span ng-if="notification.comment">comment</span>
         <span ng-if="notification.liked">favorite</span>
-        <span ng-if="notification.tagged"> assignment_ind</span>
+        <span ng-if="notification.tagged">assignment_ind</span>
     </md-icon>
 
     <md-divider ng-if="!$last"></md-divider>

@@ -1,7 +1,7 @@
 <div id="content" layout="row">
     <ug-sidenav-user layout="vertical"></ug-sidenav-user>
     <div layout="column" flex>
-        <ug-toolbar></ug-toolbar>
+        <ug-toolbar unopened="U.unopened"></ug-toolbar>
         <md-content ui-view layout-margin>
             <div layout-xs="column" layout-gt-xs="row" layout-align-gt-xs="center center">
                 <div flex-gt-xs="50">
@@ -16,5 +16,5 @@
             </div>
         </md-content>
     </div>
-    <ug-sidenav-notifications layout="vertical" notifications="U.user.notifications"></ug-sidenav-notifications>
+    <ug-sidenav-notifications layout="vertical" notifications="U.notifications"></ug-sidenav-notifications>
 </div>

@@ -26,21 +26,13 @@
                     <img class="user-search-avatar" ng-src="{{ user.avatar }}" alt="user.username">
                     <span> {{user.username}} </span>
                 </span>
-                <!--<span class="item-metadata">-->
-                    <!--<span class="item-metastat">-->
-                        <!--<strong>{{item.watchers}}</strong> watchers-->
-                    <!--</span>-->
-                    <!--<span class="item-metastat">-->
-                        <!--<strong>{{item.forks}}</strong> forks-->
-                    <!--</span>-->
-                <!--</span>-->
             </md-item-template>
             <md-not-found>
                 No matches found
             </md-not-found>
         </md-autocomplete>
         <md-button class="md-icon-button" ng-click="tb.toggleSidenavNotifications()">
-            <md-icon>notifications</md-icon>
+            {{ unopened.length }}
         </md-button>
     </div>
 </md-toolbar>

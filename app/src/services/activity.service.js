@@ -48,6 +48,7 @@
 
         //receivers is array
         function set(activity, receivers) {
+            activity.unopened = true;
             activity.createdAt = firebase.database.ServerValue.TIMESTAMP;
             var newActivity = $firebaseRef.activities.push(activity);
             if (receivers) {
