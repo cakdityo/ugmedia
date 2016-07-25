@@ -5,9 +5,9 @@
         .module('app.user')
         .controller('UserController', UserController);
 
-    UserController.$inject = ['Activity', 'Auth', 'user','users', '$state'];
+    UserController.$inject = ['Activity', 'Auth', 'user','users', '$mdToast', '$state'];
 
-    function UserController(Activity, Auth, user, users, $state){
+    function UserController(Activity, Auth, user, users, $mdToast, $state){
         var vm = this;
 
         //Initialize the authenticated users data
@@ -34,6 +34,23 @@
                 notification.$loaded().then(function(){
                     if (notification.unopened){
                         vm.unopened.push(notification);
+                        var author = notification.getAuthor();
+                        var textContent = '';
+                        author.$loaded().then(function(){
+                            if (notification.comment){
+                                textContent = ' commented on your post';
+                            } else if (notification.liked){
+                                textContent = ' liked your post';
+                            } else if (notification.tagged){
+                                textContent = ' tagged you on a post';
+                            }
+                            $mdToast.show(
+                                $mdToast.simple()
+                                .textContent(author.username + textContent)
+                                .position('top right')
+                                .hideDelay(3000)
+                            );
+                        });
                     }
                     vm.notifications.push(notification);
                 });
