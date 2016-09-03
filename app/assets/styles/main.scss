@@ -1,6 +1,6 @@
-html{
-  min-height:100%;/* make sure it is at least as tall as the viewport */
-  position:relative;
+html {
+  min-height: 100%; /* make sure it is at least as tall as the viewport */
+  position: relative;
 }
 
 body {
@@ -8,28 +8,28 @@ body {
 }
 
 #content {
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-  overflow:hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
 }
 
-.ug-avatar{
+.ug-avatar {
   border-radius: 50%;
   height: 100%;
   width: 100%;
   padding: 4px;
 }
 
-.avatar-75{
+.avatar-75 {
   margin-top: 12px !important;
   height: 75px !important;
   width: 75px !important;
 }
 
-.header{
+.header {
   height: 79px;
   width: auto;
 }
@@ -47,7 +47,7 @@ body {
   letter-spacing: -1px;
 }
 
-.user-object-button{
+.user-object-button {
   line-height: 25px;
   font-size: 12px;
 }
@@ -96,7 +96,7 @@ md-list-item.list-object {
 
 .timestamp {
   font-size: 14px;
-  color: rgba(0,0,0,0.54);
+  color: rgba(0, 0, 0, 0.54);
   font-weight: 400;
   letter-spacing: 0.010em;
   line-height: 24px;
@@ -113,7 +113,7 @@ md-list-item.notification > button {
 
 span.user-search {
 
- }
+}
 
 span.user-search > .user-search-avatar {
   display: inline-block;
@@ -128,4 +128,21 @@ span.user-search > .user-search-avatar {
   right: 0px;
   font-size: 0.7em;
   font-weight: bold;
+}
+
+.login-content {
+  padding: 20px;
+}
+
+input.auth-input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 0 0 20px 0;
+}
+
+img.auth-avatar {
+  border-radius: 50%;
+  height: 75px !important;
+  width: 75px !important;
 }

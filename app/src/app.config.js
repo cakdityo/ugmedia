@@ -23,6 +23,7 @@
                 postComments: FirebaseUrl + 'post-comments',
                 postLikes: FirebaseUrl + 'post-likes',
                 postTaggedUsers: FirebaseUrl + 'post-tagged-users',
+                search: FirebaseUrl + 'search',
                 userFeeds: FirebaseUrl + 'user-feeds',
                 userFollowers: FirebaseUrl + 'user-followers',
                 userFollowing: FirebaseUrl + 'user-following',
@@ -36,7 +37,7 @@
                 .state('auth', {
                     url: '/',
                     templateUrl: 'src/auth/auth.html',
-                    controller: 'AuthController as vm',
+                    controller: 'AuthController as ac',
                     resolve: {
                         requireNoAuth: function (Auth, $state) {
                             return Auth.$requireSignIn().then(function (auth) {

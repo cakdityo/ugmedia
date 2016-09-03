@@ -103,3 +103,17 @@ span.user-search > .user-search-avatar {
   right: 0px;
   font-size: 0.7em;
   font-weight: bold; }
+
+.login-content {
+  padding: 20px; }
+
+input.auth-input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 0 0 20px 0; }
+
+img.auth-avatar {
+  border-radius: 50%;
+  height: 75px !important;
+  width: 75px !important; }

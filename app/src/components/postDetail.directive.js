@@ -61,19 +61,19 @@
                 }
             }
 
-            function deletePost() {
-                if (vm.user.profile.$id === vm.author.$id) {
-                    if (vm.post.image || vm.post.document) {
-                        var file = (vm.post.image || vm.post.document.url);
-                        var fileRef = Storage.refFromURL(file);
-                        fileRef.delete().then(function () {
+                function deletePost() {
+                    if (vm.user.profile.$id === vm.author.$id) {
+                        if (vm.post.image || vm.post.document) {
+                            var file = (vm.post.image || vm.post.document.url);
+                            var fileRef = Storage.refFromURL(file);
+                            fileRef.delete().then(function () {
+                                vm.post.destroy(vm.user.followers);
+                            });
+                        } else {
                             vm.post.destroy(vm.user.followers);
-                        });
-                    } else {
-                        vm.post.destroy(vm.user.followers);
+                        }
                     }
                 }
-            }
 
             function setLikePost() {
                 var newActivity = Activity.set({

@@ -1,22 +1,25 @@
-<md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">
-    <div flex-xs flex-gt-xs="30">
-        <md-card>
-            <md-toolbar>
-                <div class="md-toolbar-tools">
-                    <h2>UGMEDIA</h2>
-                </div>
-            </md-toolbar>
-            <md-card-content layout="column">
-                <md-input-container>
-                    <label>Username</label>
-                    <input type="text" ng-model="vm.user.username">
-                </md-input-container>
-                <md-input-container>
-                    <label>Password</label>
-                    <input type="password" ng-model="vm.user.password">
-                </md-input-container>
-                <md-button class="md-raised md-primary" ng-click="vm.login()">Login</md-button>
-            </md-card-content>
-        </md-card>
-    </div>
-</md-content>
+<md-button class="md-primary md-raised" ng-click="ac.showLogin($event)">
+    login
+</md-button>
+<!--<md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">-->
+    <!--<div flex-xs flex-gt-xs="30">-->
+        <!--<md-card>-->
+            <!--<md-toolbar>-->
+                <!--<div class="md-toolbar-tools">-->
+                    <!--<h2>UGMEDIA</h2>-->
+                <!--</div>-->
+            <!--</md-toolbar>-->
+            <!--<md-card-content layout="column">-->
+                <!--<md-input-container>-->
+                    <!--<label>Username</label>-->
+                    <!--<input type="text" ng-model="vm.user.username">-->
+                <!--</md-input-container>-->
+                <!--<md-input-container>-->
+                    <!--<label>Password</label>-->
+                    <!--<input type="password" ng-model="vm.user.password">-->
+                <!--</md-input-container>-->
+                <!--<md-button class="md-raised md-primary" ng-click="vm.login()">Login</md-button>-->
+            <!--</md-card-content>-->
+        <!--</md-card>-->
+    <!--</div>-->
+<!--</md-content>-->

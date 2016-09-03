@@ -15,22 +15,25 @@
                 ng-show="tb.search"
                 md-selected-item="tb.selectedUser"
                 md-search-text="tb.searchText"
-                md-items="user in U.users | filter: tb.searchText"
-                md-item-text="user.username"
-                md-selected-item-change="tb.goToUser(user.username)"
+                md-items="user in tb.searchUsers(tb.searchText)"
+                md-item-text="user._source.username"
+                md-selected-item-change="tb.goToUser(user._source.username)"
                 md-autoselect="false"
                 md-min-length="2"
                 placeholder="Search users">
             <md-item-template>
                 <span class="user-search">
-                    <img class="user-search-avatar" ng-src="{{ user.avatar }}" alt="user.username">
-                    <span> {{user.username}} </span>
+                    <img class="user-search-avatar" ng-src="{{ user._source.avatar }}" alt="user._source.username">
+                    <span> {{user._source.username}} </span>
                 </span>
             </md-item-template>
             <md-not-found>
                 No matches found
             </md-not-found>
         </md-autocomplete>
+        <div ng-repeat="user in users.hits">
+            {{ user._source.username }}
+        </div>
         <md-button class="md-icon-button" ng-click="tb.toggleSidenavNotifications()" ng-class="{'md-accent': unopened.length > 0}">
             <span class="notification-length" ng-if="unopened.length > 0">{{ unopened.length }}</span>
             <md-icon>notifications</md-icon>
