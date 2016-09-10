@@ -8,23 +8,24 @@
     function ugToolbar() {
         return {
             scope: {
-                unopened: '='
+                unopened: '=',
+                users: '='
             },
             templateUrl: 'src/layout/toolbar.html',
             controller: ugToolbarController,
             controllerAs: 'tb'
         };
 
-        function ugToolbarController($firebaseObject, $firebaseRef, $mdSidenav, $scope, $state) {
+        function ugToolbarController($mdSidenav, $scope, $state) {
             var vm = this;
 
             vm.searchText = '';
-            vm.users = [];
+            vm.users = $scope.users;
 
             vm.goToUser = goToUser;
-            vm.searchUsers = searchUsers;
             vm.toggleSidenavNotifications = toggleSidenavNotifications;
             vm.toggleSidenavUser = toggleSidenavUser;
+            vm.querySearch = querySearch;
 
             function goToUser(username) {
                 if (username) {
@@ -32,21 +33,9 @@
                 }
             }
 
-            function searchUsers(query) {
-                if (query) {
-                    if (!query.match(/^\*/)) {
-                        query = '*' + query;
-                    }
-                    if (!query.match(/\*$/)) {
-                        query += '*';
-                    }
-                    var req = $firebaseRef.search.child('request').push({
-                        index: 'ug-media',
-                        type: 'user',
-                        query: query
-                    });
-                    var res = $firebaseObject($firebaseRef.search.child('response').child(req.key));
-                }
+            function querySearch(query){
+                var users = query ? vm.users.filter(createFilterFor(query)) : vm.users;
+                return users;
             }
 
             function toggleSidenavNotifications() {
@@ -72,6 +61,15 @@
                 if (!$mdSidenav('user').isLockedOpen()) {
                     $mdSidenav('user').toggle();
                 }
+            }
+
+            function createFilterFor(query) {
+                var lowercaseQuery = angular.lowercase(query);
+
+                return function filterFn(user) {
+                    return (user.username.indexOf(lowercaseQuery) === 0);
+                };
+
             }
         }
     }
