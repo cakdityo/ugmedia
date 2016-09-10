@@ -5,9 +5,9 @@
         .module('app.auth')
         .controller('AuthController', AuthController);
 
-    AuthController.$inject = ['Auth', 'User', '$firebaseRef', '$mdDialog', '$state'];
+    AuthController.$inject = ['Auth', 'User', '$firebaseRef', '$state'];
 
-    function AuthController(Auth, User, $firebaseRef, $mdDialog, $state) {
+    function AuthController(Auth, User, $firebaseRef, $state) {
 
         var vm = this;
         var isNewUser = false;
@@ -21,7 +21,7 @@
 
         vm.activation = activation;
         vm.initUser = initUser;
-        vm.showLogin = showLogin;
+        vm.login = login;
 
         vm.user = {email: '', password: ''};
 
@@ -45,33 +45,20 @@
             });
         }
 
-        function showLogin(ev) {
-            $mdDialog.show({
-                controller: function ($scope, $mdDialog, $timeout) {
-                    $scope.login = function (auth) {
-                        var user = User.getByUsername(auth.username);
-                        user.$loaded().then(function () {
-                            user = User.get(user.$value);
-                            user.$loaded().then(function () {
-                                $scope.user = user;
-                                Auth.$signInWithEmailAndPassword(user.email, auth.password).then(function () {
-                                    $scope.hide
-                                    $state.go('user');
-                                    $timeout(function(){
-                                        $mdDialog.hide();
-                                    }, 3000);
-                                }, function (error) {
-                                    $scope.error = error;
-                                });
-                            });
-                        });
-                    };
-                },
-                templateUrl: 'src/auth/authLogin.template.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true
+        function login(){
+            var user = User.getByUsername(vm.user.username);
+            user.$loaded().then(function(){
+                user = User.get(user.$value);
+                user.$loaded().then(function(){
+                    vm.avatar = user.avatar;
+                    Auth.$signInWithEmailAndPassword(user.email, vm.user.password).then(function () {
+                        $state.go('user');
+                    }, function (error) {
+                        vm.error = error;
+                    });
+                });
             });
         }
+
     }
 })();

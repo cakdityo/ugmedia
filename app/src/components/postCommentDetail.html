@@ -1,4 +1,4 @@
-<md-list-item class="md-2-line md-long-text list-object">
+<md-list-item class="md-2-line md-long-text">
     <img ui-sref="user.profile({username: pcd.author.username})" ng-src="{{ pcd.author.avatar }}" alt="pcd.author.username" class="md-avatar">
     <div class="md-list-item-text">
         <h3 layout="row">
@@ -6,15 +6,14 @@
             <span flex></span>
             <span hide-xs class="timestamp" am-time-ago="pcd.comment.createdAt">
             </span>
+            <!-- Cancel button only exists if postAuthor === authenticatedUser or commentAuthor === authenticatedUser -->
+            <md-icon ng-if="$parent.id.postAuthor === $parent.id.user || pcd.author.$id === $parent.id.user" class="md-icon-button" ng-click="pcd.deleteComment(pcd.comment)" style="cursor: pointer">
+                cancel
+            </md-icon>
         </h3>
         <p>
             {{ pcd.comment.text }}
             <div hide-gt-xs class="timestamp" am-time-ago="pcd.comment.createdAt"></div>
         </p>
     </div>
-
-    <!-- Cancel button only exists if postAuthor === authenticatedUser or commentAuthor === authenticatedUser -->
-    <md-button ng-if="$parent.id.postAuthor === $parent.id.user || pcd.author.$id === $parent.id.user" class="md-icon-button" ng-click="pcd.deleteComment(pcd.comment)">
-        <md-icon>cancel</md-icon>
-    </md-button>
 </md-list-item>

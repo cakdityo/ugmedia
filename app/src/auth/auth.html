@@ -1,25 +1,16 @@
-<md-button class="md-primary md-raised" ng-click="ac.showLogin($event)">
-    login
-</md-button>
-<!--<md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">-->
-    <!--<div flex-xs flex-gt-xs="30">-->
-        <!--<md-card>-->
-            <!--<md-toolbar>-->
-                <!--<div class="md-toolbar-tools">-->
-                    <!--<h2>UGMEDIA</h2>-->
-                <!--</div>-->
-            <!--</md-toolbar>-->
-            <!--<md-card-content layout="column">-->
-                <!--<md-input-container>-->
-                    <!--<label>Username</label>-->
-                    <!--<input type="text" ng-model="vm.user.username">-->
-                <!--</md-input-container>-->
-                <!--<md-input-container>-->
-                    <!--<label>Password</label>-->
-                    <!--<input type="password" ng-model="vm.user.password">-->
-                <!--</md-input-container>-->
-                <!--<md-button class="md-raised md-primary" ng-click="vm.login()">Login</md-button>-->
-            <!--</md-card-content>-->
-        <!--</md-card>-->
-    <!--</div>-->
-<!--</md-content>-->
+<md-content class="auth-page md-padding" layout-xs="column" layout="row" layout-align="center center">
+    <md-card flex-xs flex-gt-xs="20">
+        <md-toolbar class="md-primary">
+            <div class="md-toolbar-tools">
+                <h2 class="ugmedia-logo">UGMEDIA</h2>
+            </div>
+        </md-toolbar>
+        <img class="md-card-image" ng-src="{{ ac.avatar ? ac.avatar : '/assets/images/logo_gunadarma.png' }}" alt="Gunadarma">
+        <md-card-content layout="column">
+            <input type="text" ng-model="ac.user.username" placeholder="Username">
+            <input type="password" ng-model="ac.user.password" placeholder="Password">
+            <md-button class="md-raised md-primary" ng-click="ac.login()">Login</md-button>
+            <p style="color: red">{{ ac.error.message }}</p>
+        </md-card-content>
+    </md-card>
+</md-content>

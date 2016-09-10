@@ -6,6 +6,23 @@ html {
 body {
   height: 100%; }
 
+.ugmedia-logo {
+  font-weight: bold !important;
+  font-size: 1.3em !important; }
+
+.auth-page {
+  min-height: 681px;
+  background-color: #ddd; }
+
+.auth-page > md-card > md-card-content > input {
+  padding: 5px;
+  margin: 9px; }
+
+md-content > div {
+  min-height: 608px;
+  background-color: #eee;
+  padding: 15px; }
+
 #content {
   position: absolute;
   top: 0;
@@ -70,7 +87,7 @@ body {
 .post-bar + md-card-actions {
   margin-top: 0; }
 
-md-list-item.list-object {
+md-list-item {
   margin-top: 0 !important;
   margin-bottom: 0 !important; }
 

@@ -4,7 +4,7 @@
     angular
         .module('app')
         .constant('FirebaseUrl', 'https://ug-media.firebaseio.com/')
-        .config(function ($firebaseRefProvider, FirebaseUrl, $stateProvider, $locationProvider) {
+        .config(function ($firebaseRefProvider, FirebaseUrl, $stateProvider, $locationProvider, $mdThemingProvider) {
 
             var config = {
                 apiKey: 'AIzaSyBad5b5cAI6AJb6B3EtkW9DN0JIC4CZ08Q',
@@ -32,6 +32,9 @@
                 userIDs: FirebaseUrl + 'userIDs',
                 users: FirebaseUrl + 'users'
             });
+
+            $mdThemingProvider.theme('default')
+                .primaryPalette('deep-purple');
 
             $stateProvider
                 .state('auth', {
