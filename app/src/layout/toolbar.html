@@ -22,10 +22,10 @@
                 md-min-length="2"
                 placeholder="Search users by username">
             <md-item-template>
-                <span class="user-search">
-                    <img class="user-search-avatar" ng-src="{{ user.avatar }}" alt="user.username">
+                <div class="user-search">
+                    <img ng-src="{{ user.avatar }}" alt="user.username">
                     <span> {{user.username}} </span>
-                </span>
+                </div>
             </md-item-template>
             <md-not-found>
                 No matches found

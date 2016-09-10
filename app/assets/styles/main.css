@@ -108,11 +108,22 @@ md-list-item {
 md-list-item.notification > button {
   line-height: 25px !important; }
 
-span.user-search > .user-search-avatar {
+.user-search {
+  padding-top: 5px;
+  height: 40px;
+  margin-bottom: 5px; }
+
+.user-search > img {
   display: inline-block;
   height: 100%;
   width: auto;
   border-radius: 50%; }
+
+.user-search > span {
+  font-weight: bold;
+  padding-left: 10px;
+  position: absolute;
+  top: 0; }
 
 .notification-length {
   position: absolute;
